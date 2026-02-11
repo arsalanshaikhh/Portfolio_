@@ -72,9 +72,7 @@ class CustomFooter extends HTMLElement {
                 <div class="footer-bottom">
                     <p>&copy; ${currentYear} Arsalan Shaikh. All rights reserved.</p>
                     <div class="made-with">
-                        <span>Made with</span>
-                        <span class="heart">♥</span>
-                        <span>and AI</span>
+                        <span>Built with code, coffee, and curiosity.</span>
                     </div>
                 </div>
             </footer>
