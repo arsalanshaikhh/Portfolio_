@@ -342,3 +342,69 @@ a:hover [data-feather] {
         display: none !important;
     }
 }
+
+/* ===== Line Clamp Utilities ===== */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ===== Blog Modal Styles ===== */
+#blog-modal .glass-card {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#blog-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+#blog-modal::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+#blog-modal::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #10b981, #14b8a6);
+    border-radius: 4px;
+}
+
+/* Article Card Hover Effect */
+#blog-articles a {
+    text-decoration: none;
+}
+
+#blog-articles a:hover h3 {
+    color: #34d399;
+}
+
+/* Light mode adjustments for modal */
+html.light #blog-modal .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+html.light #blog-modal h3 {
+    color: #1e293b;
+}
+
+html.light #blog-modal h3:hover {
+    color: #059669;
+}
+
+html.light #blog-modal p {
+    color: #64748b;
+}
+
+html.light #blog-modal .border-t {
+    border-color: rgba(0, 0, 0, 0.05);
+}

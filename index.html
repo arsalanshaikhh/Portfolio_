@@ -101,17 +101,22 @@
                 </div>
                 
                 <div class="flex flex-wrap justify-center gap-4 pt-6">
-                    <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3">
+                    <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3">
                         <i data-feather="github" class="w-5 h-5"></i>
                         View GitHub
-                        <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        <!-- <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> -->
                     </a>
-                    <a href="https://linkedin.com/in/iarsalanshaikh" target="_blank" rel="noopener noreferrer" class="group px-8 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3">
+                    <a href="https://linkedin.com/in/iarsalanshaikh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3">
                         <i data-feather="linkedin" class="w-5 h-5"></i>
                         Connect on LinkedIn
-                        <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        <!-- <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> -->
                     </a>
-                     <a href="https://drive.google.com/file/d/1dL4xU7mZBfo6jfqb60XgGSoXRVfj0sP2/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="px-8 py-4 border-2 border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 flex items-center gap-3">
+                    <button id="read-blogs-btn" class="group px-7 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-emerald-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-3">
+                        <i data-feather="book-open" class="w-5 h-5"></i>
+                        Read My Blogs
+                        <!-- <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> -->
+                    </button>
+                     <a href="https://drive.google.com/file/d/1dL4xU7mZBfo6jfqb60XgGSoXRVfj0sP2/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="px-7 py-4 border-2 border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 flex items-center gap-3">
                         <i data-feather="download" class="w-5 h-5"></i>
                         Download Resume
                     </a>
@@ -178,6 +183,9 @@
                         <span class="skill-chip">Django</span>
                         <span class="skill-chip">RESTful APIs</span>
                         <span class="skill-chip">Microservices</span>
+                        <span class="skill-chip">WebSockets</span>
+                        <span class="skill-chip">WebRTC</span>
+                        <span class="skill-chip">Celery</span>
                     </div>
                 </div>
 
@@ -186,12 +194,13 @@
                         <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-green-500/25 transition-shadow">
                             <i data-feather="database" class="w-6 h-6 text-white"></i>
                         </div>
-                        <h3 class="text-xl font-semibold text-green-400">Databases</h3>
+                        <h3 class="text-xl font-semibold text-green-400">Databases & Caching</h3>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="skill-chip">MongoDB</span>
                         <span class="skill-chip">PostgreSQL</span>
                         <span class="skill-chip">MySQL</span>
+                        <span class="skill-chip">Redis</span>
                     </div>
                 </div>
 
@@ -205,6 +214,7 @@
                     <div class="flex flex-wrap gap-2">
                         <span class="skill-chip">Docker</span>
                         <span class="skill-chip">Jest</span>
+                        <span class="skill-chip">React Testing Library</span>
                         <span class="skill-chip">Plotly.js</span>
                         <span class="skill-chip">Git</span>
                         <span class="skill-chip">CI/CD</span>
@@ -219,7 +229,7 @@
                         <h3 class="text-xl font-semibold text-purple-400">AI & Productivity</h3>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="skill-chip">Claude</span>
+                        <span class="skill-chip">Claude Code</span>
                         <span class="skill-chip">OpenAI</span>
                         <span class="skill-chip">GitHub Copilot</span>
                         <span class="skill-chip">AI Agent Management</span>
@@ -868,6 +878,46 @@
             </div>
         </div>
     </section>
+
+    <!-- Blog Modal -->
+    <div id="blog-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+        <div class="glass-card w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-white/10">
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">My Medium Blogs</h2>
+                <button id="close-modal-btn" class="p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-400 hover:text-white">
+                    <i data-feather="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div id="blog-content" class="flex-1 overflow-y-auto p-6">
+                <!-- Loading State -->
+                <div id="blog-loading" class="flex flex-col items-center justify-center py-12">
+                    <svg class="animate-spin w-12 h-12 text-emerald-400 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <p class="text-gray-400">Fetching articles from Medium...</p>
+                </div>
+                
+                <!-- Error State -->
+                <div id="blog-error" class="hidden flex-col items-center justify-center py-12 text-center">
+                    <i data-feather="alert-circle" class="w-12 h-12 text-red-400 mb-4"></i>
+                    <p class="text-gray-300 mb-2">Unable to fetch articles</p>
+                    <p class="text-gray-500 text-sm mb-4">Please try again later or visit my Medium profile directly.</p>
+                    <a href="https://medium.com/@arsalan-shaikh" target="_blank" rel="noopener noreferrer" class="px-6 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg font-medium hover:shadow-lg hover:shadow-emerald-500/25 transition-all">
+                        Visit Medium Profile
+                    </a>
+                </div>
+                
+                <!-- Articles Grid -->
+                <div id="blog-articles" class="hidden grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Articles will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <custom-footer></custom-footer>

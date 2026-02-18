@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initFormHandler();
     initCardHoverEffects();
     initNavbarScroll();
+    initBlogModal();
 });
 
 // ===== Smooth Scroll Navigation =====
@@ -342,3 +343,301 @@ window.portfolioUtils = {
     getCurrentYear,
     initTypingAnimation
 };
+
+// ===== Blog Modal Functionality =====
+function initBlogModal() {
+    const blogBtn = document.getElementById('read-blogs-btn');
+    const modal = document.getElementById('blog-modal');
+    const closeBtn = document.getElementById('close-modal-btn');
+    
+    if (!blogBtn || !modal) return;
+    
+    // Open modal
+    blogBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        fetchMediumArticles();
+        feather.replace();
+    });
+    
+    // Close modal
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    };
+    
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Close on backdrop click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+}
+
+// ===== Fetch Medium Articles via RSS =====
+async function fetchMediumArticles() {
+    const loadingEl = document.getElementById('blog-loading');
+    const errorEl = document.getElementById('blog-error');
+    const articlesEl = document.getElementById('blog-articles');
+    
+    // Reset states
+    loadingEl.classList.remove('hidden');
+    loadingEl.classList.add('flex');
+    errorEl.classList.add('hidden');
+    errorEl.classList.remove('flex');
+    articlesEl.classList.add('hidden');
+    
+    const RSS_URL = 'https://medium.com/feed/@arsalan-shaikh';
+    // Add cache-busting to ensure fresh data
+    const cacheBuster = `?t=${Date.now()}`;
+    
+    try {
+        let articles = null;
+        
+        // Method 1: allorigins.win - gets all items from RSS (try this first as it has no limits)
+        console.log('Trying allorigins.win...');
+        try {
+            const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}&t=${Date.now()}`);
+            const data = await response.json();
+            
+            if (data.contents) {
+                console.log('allorigins: Raw XML length:', data.contents.length);
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data.contents, 'text/xml');
+                const items = xml.querySelectorAll('item');
+                console.log(`allorigins: Found ${items.length} items in RSS feed`);
+                
+                if (items.length > 0) {
+                    articles = parseRSSItems(items);
+                    console.log(`allorigins: Parsed ${articles.length} articles`);
+                }
+            }
+        } catch (e) {
+            console.log('allorigins failed:', e.message);
+        }
+        
+        // Method 2: rss2json API with count=50
+        if (!articles || articles.length === 0) {
+            console.log('Trying rss2json API...');
+            try {
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`);
+                const data = await response.json();
+                console.log('rss2json response:', data);
+                
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    articles = data.items.filter(item => item.title && item.link);
+                    console.log(`rss2json: Found ${articles.length} articles`);
+                }
+            } catch (e) {
+                console.log('rss2json failed:', e.message);
+            }
+        }
+        
+        // Method 3: corsproxy.io
+        if (!articles || articles.length === 0) {
+            console.log('Trying corsproxy.io...');
+            try {
+                const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(RSS_URL)}`);
+                if (response.ok) {
+                    const text = await response.text();
+                    console.log('corsproxy: Response length:', text.length);
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(text, 'text/xml');
+                    const items = xml.querySelectorAll('item');
+                    console.log(`corsproxy: Found ${items.length} items`);
+                    
+                    if (items.length > 0) {
+                        articles = parseRSSItems(items);
+                    }
+                }
+            } catch (e) {
+                console.log('corsproxy failed:', e.message);
+            }
+        }
+        
+        // Method 4: allorigins raw
+        if (!articles || articles.length === 0) {
+            console.log('Trying allorigins raw...');
+            try {
+                const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`);
+                if (response.ok) {
+                    const text = await response.text();
+                    console.log('allorigins raw: Response length:', text.length);
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(text, 'text/xml');
+                    const items = xml.querySelectorAll('item');
+                    console.log(`allorigins raw: Found ${items.length} items`);
+                    
+                    if (items.length > 0) {
+                        articles = parseRSSItems(items);
+                    }
+                }
+            } catch (e) {
+                console.log('allorigins raw failed:', e.message);
+            }
+        }
+        
+        // Method 5: codetabs proxy
+        if (!articles || articles.length === 0) {
+            console.log('Trying codetabs proxy...');
+            try {
+                const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(RSS_URL)}`);
+                if (response.ok) {
+                    const text = await response.text();
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(text, 'text/xml');
+                    const items = xml.querySelectorAll('item');
+                    console.log(`codetabs: Found ${items.length} items`);
+                    
+                    if (items.length > 0) {
+                        articles = parseRSSItems(items);
+                    }
+                }
+            } catch (e) {
+                console.log('codetabs failed:', e.message);
+            }
+        }
+        
+        if (!articles || articles.length === 0) {
+            throw new Error('Unable to fetch articles from Medium');
+        }
+        
+        console.log(`Total articles to display: ${articles.length}`);
+        renderArticles(articles);
+        
+        loadingEl.classList.add('hidden');
+        loadingEl.classList.remove('flex');
+        articlesEl.classList.remove('hidden');
+        
+    } catch (error) {
+        console.error('Error fetching Medium articles:', error);
+        loadingEl.classList.add('hidden');
+        loadingEl.classList.remove('flex');
+        errorEl.classList.remove('hidden');
+        errorEl.classList.add('flex');
+        feather.replace();
+    }
+}
+
+// ===== Parse RSS Items from XML =====
+function parseRSSItems(items) {
+    console.log(`parseRSSItems: Processing ${items.length} items`);
+    
+    const parsed = Array.from(items).map((item, index) => {
+        const title = item.querySelector('title')?.textContent || '';
+        const link = item.querySelector('link')?.textContent || '';
+        const pubDate = item.querySelector('pubDate')?.textContent || '';
+        
+        // Get content - try content:encoded first, then description
+        let content = '';
+        const allElements = item.querySelectorAll('*');
+        for (const el of allElements) {
+            if (el.localName === 'encoded' || el.tagName.toLowerCase().includes('encoded')) {
+                content = el.textContent;
+                break;
+            }
+        }
+        if (!content) {
+            content = item.querySelector('description')?.textContent || '';
+        }
+        
+        const thumbnail = extractImageFromContent(content) || '';
+        
+        console.log(`Item ${index}: title="${title.substring(0, 50)}...", link="${link}"`);
+        
+        return { title, link, pubDate, content, description: content, thumbnail };
+    });
+    
+    const filtered = parsed.filter(item => item.title && item.link);
+    console.log(`parseRSSItems: ${filtered.length} items after filtering`);
+    
+    return filtered;
+}
+
+// ===== Render Articles =====
+function renderArticles(articles) {
+    const articlesEl = document.getElementById('blog-articles');
+    
+    console.log(`renderArticles: Rendering ${articles.length} articles`);
+    
+    articlesEl.innerHTML = articles.map((article, index) => {
+        console.log(`Rendering article ${index}: ${article.title}`);
+        
+        // Extract thumbnail from content or use default
+        let thumbnail = article.thumbnail || extractImageFromContent(article.content) || 'https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png';
+        
+        // Clean description (remove HTML tags and truncate)
+        const description = stripHtml(article.description || article.content || '')
+            .substring(0, 150)
+            .trim() + '...';
+        
+        // Format date
+        const pubDate = new Date(article.pubDate);
+        const formattedDate = pubDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+        
+        return `
+            <a href="${article.link}" target="_blank" rel="noopener noreferrer" 
+               class="glass-card p-4 flex flex-col gap-3 hover:scale-[1.02] transition-transform duration-300 group no-underline">
+                <div class="relative overflow-hidden rounded-lg aspect-video bg-slate-800">
+                    <img src="${thumbnail}" alt="${escapeHtml(article.title)}" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                         onerror="this.src='https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="flex-1 flex flex-col gap-2">
+                    <h3 class="text-lg font-semibold text-gray-100 group-hover:text-emerald-400 transition-colors line-clamp-2">
+                        ${escapeHtml(article.title)}
+                    </h3>
+                    <p class="text-sm text-gray-400 line-clamp-2 flex-1">
+                        ${escapeHtml(description)}
+                    </p>
+                    <div class="flex items-center justify-between mt-2 pt-2 border-t border-white/5">
+                        <span class="text-xs text-gray-500">${formattedDate}</span>
+                        <span class="text-xs text-emerald-400 flex items-center gap-1">
+                            Read more
+                            <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        `;
+    }).join('');
+}
+
+// ===== Helper Functions =====
+function extractImageFromContent(content) {
+    if (!content) return null;
+    const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
+    return imgMatch ? imgMatch[1] : null;
+}
+
+function stripHtml(html) {
+    if (!html) return '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
