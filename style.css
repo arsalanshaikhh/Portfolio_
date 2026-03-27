@@ -1,68 +1,85 @@
-/* Portfolio Website - Custom Styles */
+/**
+ * Portfolio Website - Custom Styles
+ * Main stylesheet for the portfolio website
+ * Contains all custom CSS variables, components, and responsive styles
+ */
 
 /* ===== CSS Variables ===== */
+/* Color palette and design tokens used throughout the website */
 :root {
-    --primary: #22d3ee;
-    --secondary: #a78bfa;
-    --accent: #a855f7;
-    --background: #0f172a;
-    --surface: rgba(255, 255, 255, 0.03);
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
+    --primary: #22d3ee;           /* Primary cyan color */
+    --secondary: #a78bfa;         /* Secondary violet color */
+    --accent: #a855f7;            /* Accent purple color */
+    --background: #0f172a;        /* Dark background color */
+    --surface: rgba(255, 255, 255, 0.03); /* Surface/glass effect background */
+    --text-primary: #f1f5f9;      /* Primary text color */
+    --text-secondary: #94a3b8;    /* Secondary text color */
 }
 
 /* ===== Glass Card Effect ===== */
+/* Creates the distinctive glassmorphism effect used throughout the website */
+/* Combines transparency, blur, and subtle borders for a modern look */
 .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);      /* Semi-transparent white background */
+    backdrop-filter: blur(10px);                /* Background blur effect */
+    -webkit-backdrop-filter: blur(10px);        /* Safari support for backdrop-filter */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+    border-radius: 16px;                        /* Rounded corners */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);  /* Soft shadow for depth */
+    transition: all 0.3s ease;                  /* Smooth transition for hover effects */
 }
 
+/* Hover state for glass cards */
 .glass-card:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.15);    /* Slightly brighter border on hover */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
 }
 
 /* ===== Skill Chips ===== */
+/* Styling for skill badges displayed in the skills section */
+/* Uses cyan color scheme with hover effects */
 .skill-chip {
     display: inline-block;
     padding: 6px 14px;
-    background: rgba(6, 182, 212, 0.1);
-    border: 1px solid rgba(6, 182, 212, 0.2);
-    border-radius: 20px;
+    background: rgba(6, 182, 212, 0.1);          /* Subtle cyan background */
+    border: 1px solid rgba(6, 182, 212, 0.2);    /* Cyan border */
+    border-radius: 20px;                          /* Pill-shaped */
     font-size: 0.875rem;
-    color: #22d3ee;
-    transition: all 0.2s ease;
+    color: #22d3ee;                               /* Cyan text */
+    transition: all 0.2s ease;                    /* Smooth hover transition */
 }
 
+/* Hover state for skill chips */
 .skill-chip:hover {
-    background: rgba(6, 182, 212, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+    background: rgba(6, 182, 212, 0.2);           /* Stronger cyan background on hover */
+    transform: translateY(-2px);                  /* Lift effect */
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2); /* Shadow on hover */
 }
 
 /* ===== Tech Tags ===== */
+/* Styling for technology badges in project cards */
+/* Uses violet color scheme with hover effects */
 .tech-tag {
     display: inline-block;
     padding: 4px 10px;
-    background: rgba(139, 92, 246, 0.1);
-    border: 1px solid rgba(139, 92, 246, 0.2);
-    border-radius: 12px;
+    background: rgba(139, 92, 246, 0.1);         /* Subtle violet background */
+    border: 1px solid rgba(139, 92, 246, 0.2);   /* Violet border */
+    border-radius: 12px;                         /* Rounded corners */
     font-size: 0.75rem;
-    color: #a78bfa;
-    transition: all 0.2s ease;
+    color: #a78bfa;                              /* Violet text */
+    transition: all 0.2s ease;                   /* Smooth hover transition */
 }
 
+/* Hover state for tech tags */
 .tech-tag:hover {
-    background: rgba(139, 92, 246, 0.2);
-    transform: translateY(-1px);
+    background: rgba(139, 92, 246, 0.2);         /* Stronger violet background on hover */
+    transform: translateY(-1px);                 /* Lift effect */
 }
 
 /* ===== Animations ===== */
+/* Keyframe animations used throughout the website */
+
+/* Fade in animation from bottom */
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -74,6 +91,7 @@
     }
 }
 
+/* Fade in and up animation */
 @keyframes fade-in-up {
     from {
         opacity: 0;
@@ -85,6 +103,7 @@
     }
 }
 
+/* Floating animation for elements */
 @keyframes float {
     0%, 100% {
         transform: translateY(0);
@@ -94,6 +113,7 @@
     }
 }
 
+/* Pulsing glow animation */
 @keyframes pulse-glow {
     0%, 100% {
         box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
@@ -103,6 +123,7 @@
     }
 }
 
+/* Gradient background shift animation */
 @keyframes gradient-shift {
     0% {
         background-position: 0% 50%;
@@ -115,23 +136,29 @@
     }
 }
 
+/* Animation classes */
+
+/* Fade in animation */
 .animate-fade-in {
     animation: fade-in 0.8s ease-out forwards;
 }
 
+/* Fade in and up animation */
 .animate-fade-in-up {
     animation: fade-in-up 0.8s ease-out forwards;
 }
 
+/* Floating animation */
 .animate-float {
     animation: float 3s ease-in-out infinite;
 }
 
+/* Pulsing glow animation */
 .pulse-glow {
     animation: pulse-glow 2s infinite;
 }
 
-/* Staggered animation delays */
+/* Staggered animation delays for sequential animations */
 .stagger-1 { animation-delay: 0.1s; }
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }
@@ -139,99 +166,121 @@
 .stagger-5 { animation-delay: 0.5s; }
 
 /* ===== Smooth Scroll ===== */
+/* Enables smooth scrolling behavior for anchor links */
 html {
     scroll-behavior: smooth;
 }
 
 /* ===== Custom Scrollbar ===== */
+/* Custom styling for scrollbars in WebKit browsers */
+/* Firefox styling is also included */
+
+/* WebKit scrollbar width */
 ::-webkit-scrollbar {
     width: 10px;
 }
 
+/* Scrollbar track (background) */
 ::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
 }
 
+/* Scrollbar thumb (draggable part) */
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #06b6d4, #8b5cf6);
+    background: linear-gradient(to bottom, #06b6d4, #8b5cf6); /* Gradient from cyan to violet */
     border-radius: 5px;
 }
 
+/* Scrollbar thumb hover state */
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #0891b2, #7c3aed);
+    background: linear-gradient(to bottom, #0891b2, #7c3aed); /* Darker gradient on hover */
 }
 
-/* Firefox scrollbar */
+/* Firefox scrollbar styling */
 * {
-    scrollbar-width: thin;
-    scrollbar-color: #06b6d4 rgba(0, 0, 0, 0.1);
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #06b6d4 rgba(0, 0, 0, 0.1); /* Track and thumb colors */
 }
 
 /* ===== Light Mode Styles ===== */
+/* Overrides for light theme when html.light class is present */
+/* Uses lighter color palette for day mode */
+
+/* CSS variable overrides for light mode */
 html.light {
-    --background: #f8fafc;
-    --surface: rgba(0, 0, 0, 0.03);
+    --background: #f8fafc;              /* Light gray background */
+    --surface: rgba(0, 0, 0, 0.03);     /* Semi-transparent dark surface */
 }
 
+/* Body styles in light mode */
 html.light body {
-    background: linear-gradient(to bottom right, #f8fafc, #e2e8f0) !important;
-    color: #1e293b !important;
+    background: linear-gradient(to bottom right, #f8fafc, #e2e8f0) !important; /* Light gradient */
+    color: #1e293b !important;          /* Dark text */
 }
 
+/* Glass card effect in light mode */
 html.light .glass-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.8);      /* Semi-transparent white */
+    border: 1px solid rgba(0, 0, 0, 0.05);     /* Subtle dark border */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); /* Soft shadow */
 }
 
+/* Skill chips in light mode */
 html.light .skill-chip {
-    background: rgba(6, 182, 212, 0.08);
-    border: 1px solid rgba(6, 182, 212, 0.15);
-    color: #0e7490;
+    background: rgba(6, 182, 212, 0.08);       /* Very subtle cyan */
+    border: 1px solid rgba(6, 182, 212, 0.15); /* Cyan border */
+    color: #0e7490;                            /* Dark cyan text */
 }
 
+/* Tech tags in light mode */
 html.light .tech-tag {
-    background: rgba(139, 92, 246, 0.08);
-    border: 1px solid rgba(139, 92, 246, 0.15);
-    color: #6d28d9;
+    background: rgba(139, 92, 246, 0.08);     /* Very subtle violet */
+    border: 1px solid rgba(139, 92, 246, 0.15); /* Violet border */
+    color: #6d28d9;                           /* Dark violet text */
 }
 
-html.light .text-gray-100 { color: #1e293b !important; }
-html.light .text-gray-300 { color: #475569 !important; }
-html.light .text-gray-400 { color: #64748b !important; }
-html.light .text-gray-500 { color: #94a3b8 !important; }
+/* Text color overrides for light mode */
+html.light .text-gray-100 { color: #1e293b !important; } /* Dark text */
+html.light .text-gray-300 { color: #475569 !important; } /* Medium dark text */
+html.light .text-gray-400 { color: #64748b !important; } /* Medium text */
+html.light .text-gray-500 { color: #94a3b8 !important; } /* Light text */
 
+/* Form element overrides for light mode */
 html.light input,
 html.light textarea {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border-color: #e2e8f0 !important;
-    color: #1e293b !important;
+    background: rgba(255, 255, 255, 0.9) !important; /* Light background */
+    border-color: #e2e8f0 !important;                /* Light border */
+    color: #1e293b !important;                       /* Dark text */
 }
 
 /* ===== Selection Color ===== */
+/* Custom text selection color to match theme */
 ::selection {
-    background: rgba(6, 182, 212, 0.3);
-    color: white;
+    background: rgba(6, 182, 212, 0.3); /* Cyan selection background */
+    color: white;                        /* White text */
 }
 
 /* ===== Focus Styles ===== */
+/* Visible focus styles for accessibility */
 button:focus,
 a:focus,
 input:focus,
 textarea:focus {
-    outline: 2px solid rgba(6, 182, 212, 0.5);
+    outline: 2px solid rgba(6, 182, 212, 0.5); /* Cyan outline */
     outline-offset: 2px;
 }
 
 /* ===== Form Styles ===== */
+/* Placeholder text styling */
 input::placeholder,
 textarea::placeholder {
-    color: #64748b;
+    color: #64748b; /* Gray placeholder text */
 }
 
 /* ===== Button Styles ===== */
+/* Primary button styling with gradient background */
 .btn-primary {
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6); /* Cyan to violet gradient */
     color: white;
     padding: 12px 24px;
     border-radius: 12px;
@@ -239,93 +288,107 @@ textarea::placeholder {
     transition: all 0.3s ease;
 }
 
+/* Hover state for primary button */
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3); /* Shadow on hover */
 }
 
 /* ===== Mobile Responsive ===== */
+/* Responsive adjustments for different screen sizes */
+
+/* Tablet and smaller screens */
 @media (max-width: 768px) {
     .glass-card {
-        border-radius: 12px;
+        border-radius: 12px; /* Reduced border radius for smaller cards */
     }
     
     .skill-chip,
     .tech-tag {
-        font-size: 0.75rem;
-        padding: 4px 10px;
+        font-size: 0.75rem; /* Smaller text */
+        padding: 4px 10px;  /* Reduced padding */
     }
     
     h1 {
-        font-size: 2.5rem !important;
+        font-size: 2.5rem !important; /* Smaller heading */
     }
     
     h2 {
-        font-size: 1.75rem !important;
+        font-size: 1.75rem !important; /* Smaller heading */
     }
 }
 
+/* Mobile screens */
 @media (max-width: 480px) {
     .glass-card {
-        padding: 1rem !important;
+        padding: 1rem !important; /* Reduced padding */
     }
     
     h1 {
-        font-size: 2rem !important;
+        font-size: 2rem !important; /* Even smaller heading */
     }
 }
 
 /* ===== Gradient Text ===== */
+/* Text with gradient background effect */
 .gradient-text {
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6); /* Cyan to violet gradient */
+    -webkit-background-clip: text; /* For Safari */
+    -webkit-text-fill-color: transparent; /* For Safari */
+    background-clip: text; /* Standard property */
 }
 
 /* ===== Section Transitions ===== */
+/* Smooth transitions for section elements */
 section {
     opacity: 1;
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 /* ===== Link Hover Effects ===== */
+/* Smooth transitions for link hover states */
 a {
     transition: color 0.2s ease, transform 0.2s ease;
 }
 
 /* ===== Icon Hover Effects ===== */
+/* Hover effects for Feather icons */
 [data-feather] {
     transition: transform 0.2s ease;
 }
 
 a:hover [data-feather] {
-    transform: scale(1.1);
+    transform: scale(1.1); /* Slightly enlarge icon on hover */
 }
 
 /* ===== Card Hover Glow ===== */
+/* Enhanced glow effect for glass cards with glow class */
 .glass-card.glow:hover {
-    box-shadow: 0 0 30px rgba(6, 182, 212, 0.15),
-                0 0 60px rgba(139, 92, 246, 0.1);
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.15), /* Inner cyan glow */
+                0 0 60px rgba(139, 92, 246, 0.1);   /* Outer violet glow */
 }
 
 /* ===== Loading State ===== */
+/* Visual indicator for loading states */
 .loading {
-    opacity: 0.7;
-    pointer-events: none;
+    opacity: 0.7;              /* Semi-transparent */
+    pointer-events: none;      /* Disable interactions */
 }
 
 /* ===== Success State ===== */
+/* Success state styling (green gradient) */
 .success {
-    background: linear-gradient(135deg, #10b981, #059669) !important;
+    background: linear-gradient(135deg, #10b981, #059669) !important; /* Green gradient */
 }
 
 /* ===== Error State ===== */
+/* Error state styling (red border) */
 .error {
-    border-color: #ef4444 !important;
+    border-color: #ef4444 !important; /* Red border */
 }
 
 /* ===== Print Styles ===== */
+/* Print-specific styles for when user prints the page */
 @media print {
     body {
         background: white !important;
@@ -344,6 +407,7 @@ a:hover [data-feather] {
 }
 
 /* ===== Line Clamp Utilities ===== */
+/* Utilities for limiting text to specific number of lines */
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -359,11 +423,13 @@ a:hover [data-feather] {
 }
 
 /* ===== Blog Modal Styles ===== */
+/* Styling for the blog modal popup */
 #blog-modal .glass-card {
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.95); /* Dark semi-transparent background */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
 }
 
+/* Scrollbar styling for blog modal */
 #blog-modal::-webkit-scrollbar {
     width: 8px;
 }
@@ -374,7 +440,7 @@ a:hover [data-feather] {
 }
 
 #blog-modal::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #10b981, #14b8a6);
+    background: linear-gradient(to bottom, #10b981, #14b8a6); /* Green gradient */
     border-radius: 4px;
 }
 
@@ -384,27 +450,27 @@ a:hover [data-feather] {
 }
 
 #blog-articles a:hover h3 {
-    color: #34d399;
+    color: #34d399; /* Green on hover */
 }
 
 /* Light mode adjustments for modal */
 html.light #blog-modal .glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95); /* Light semi-transparent background */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle dark border */
 }
 
 html.light #blog-modal h3 {
-    color: #1e293b;
+    color: #1e293b; /* Dark text */
 }
 
 html.light #blog-modal h3:hover {
-    color: #059669;
+    color: #059669; /* Green on hover */
 }
 
 html.light #blog-modal p {
-    color: #64748b;
+    color: #64748b; /* Gray text */
 }
 
 html.light #blog-modal .border-t {
-    border-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05); /* Light border */
 }

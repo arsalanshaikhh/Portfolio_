@@ -1,20 +1,40 @@
+/**
+ * Custom Navbar Component
+ * A web component that provides the main navigation bar for the portfolio website
+ * Features: fixed positioning, glassmorphism effect, theme toggle, mobile menu
+ */
 class CustomNavbar extends HTMLElement {
+    /**
+     * Constructor initializes the shadow DOM for encapsulated styling
+     */
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
+    /**
+     * Lifecycle callback when element is connected to the DOM
+     * Renders the navbar and initializes event listeners
+     */
     connectedCallback() {
         this.render();
         this.initEventListeners();
     }
 
+    /**
+     * Renders the navbar HTML and CSS within the shadow DOM
+     * Includes responsive styles and glassmorphism effects
+     */
     render() {
         this.shadowRoot.innerHTML = `
             <style>
+                /* Host element - fixed navbar with glassmorphism */
                 :host { display: block; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
+                /* Scrolled state - darker background with shadow */
                 :host(.scrolled) { background: rgba(15, 23, 42, 0.95); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+                /* Navigation container */
                 nav { max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+                /* Logo styling with gradient text */
                 .logo { font-size: 1.5rem; font-weight: bold; background: linear-gradient(135deg, #06b6d4, #8b5cf6); background-clip: text; -webkit-background-clip: text; color: transparent; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s ease; }
                 .logo:hover { transform: scale(1.05); }
                 .logo svg { width: 28px; height: 28px; }
@@ -36,6 +56,7 @@ class CustomNavbar extends HTMLElement {
                 @media (max-width: 768px) { .nav-links { display: none; } .mobile-menu-button { display: flex; } nav { padding: 0.875rem 1rem; } }
             </style>
             <nav>
+                <!-- Logo with gradient text and icon -->
                 <a href="#hero" class="logo">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <defs><linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#06b6d4"/><stop offset="100%" style="stop-color:#8b5cf6"/></linearGradient></defs>
@@ -43,6 +64,7 @@ class CustomNavbar extends HTMLElement {
                     </svg>
                     AS
                 </a>
+                <!-- Desktop navigation links -->
                 <ul class="nav-links">
                     <li><a href="#hero">Home</a></li>
                     <li><a href="#career">About</a></li>
@@ -51,6 +73,7 @@ class CustomNavbar extends HTMLElement {
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <!-- Navigation actions (theme toggle, mobile menu) -->
                 <div class="nav-actions">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                         <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -60,6 +83,7 @@ class CustomNavbar extends HTMLElement {
                     </button>
                 </div>
             </nav>
+            <!-- Mobile menu (hidden on desktop) -->
             <div class="mobile-menu" id="mobile-menu">
                 <div class="mobile-menu-links">
                     <a href="#hero">Home</a><a href="#career">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
@@ -68,37 +92,50 @@ class CustomNavbar extends HTMLElement {
         `;
     }
 
+    /**
+     * Initializes all event listeners for the navbar component
+     * Sets up theme toggle, mobile menu, scroll behavior, and theme persistence
+     */
     initEventListeners() {
         const themeToggle = this.shadowRoot.getElementById('theme-toggle');
         const mobileMenuButton = this.shadowRoot.getElementById('mobile-menu-button');
         const mobileMenu = this.shadowRoot.getElementById('mobile-menu');
         const mobileLinks = this.shadowRoot.querySelectorAll('.mobile-menu-links a');
 
+        // Theme toggle functionality
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
+                // Toggle light/dark class on document element
                 document.documentElement.classList.toggle('light');
+                // Also toggle on the navbar itself for styling
                 this.classList.toggle('light');
+                // Save preference to localStorage
                 localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
             });
         }
 
+        // Mobile menu toggle functionality
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
+                // Toggle mobile menu visibility
                 mobileMenu.classList.toggle('active');
             });
         }
 
+        // Close mobile menu when a link is clicked
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('active');
             });
         });
 
+        // Navbar scroll behavior - add scrolled class when user scrolls down
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) this.classList.add('scrolled');
             else this.classList.remove('scrolled');
         });
 
+        // Load saved theme preference from localStorage
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.documentElement.classList.add('light');

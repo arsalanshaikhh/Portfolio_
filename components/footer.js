@@ -1,21 +1,40 @@
+/**
+ * Custom Footer Component
+ * A web component that provides the footer section for the portfolio website
+ * Features: social links, quick links, contact info, and dynamic copyright year
+ */
 class CustomFooter extends HTMLElement {
+    /**
+     * Constructor initializes the shadow DOM for encapsulated styling
+     */
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
+    /**
+     * Lifecycle callback when element is connected to the DOM
+     * Renders the footer with dynamic year and all sections
+     */
     connectedCallback() {
         const currentYear = new Date().getFullYear();
         
         this.shadowRoot.innerHTML = `
             <style>
+                /* Host element - footer container with gradient background */
                 :host { display: block; margin-top: 4rem; background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent); border-top: 1px solid rgba(255, 255, 255, 0.1); }
+                /* Footer layout */
                 footer { max-width: 1280px; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+                /* Grid layout for footer sections */
                 .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+                /* Section headings with gradient text */
                 .footer-section h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; background: linear-gradient(to right, #06b6d4, #8b5cf6); background-clip: text; -webkit-background-clip: text; color: transparent; }
+                /* Section text and links */
                 .footer-section p, .footer-section a { color: #94a3b8; text-decoration: none; line-height: 1.6; transition: color 0.2s ease; }
                 .footer-section a:hover { color: #06b6d4; }
+                /* Social links container */
                 .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+                /* Individual social link styling */
                 .social-link { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
                 .social-link:hover { background: rgba(6, 182, 212, 0.2); border-color: #06b6d4; transform: translateY(-2px); }
                 .social-link svg { width: 20px; height: 20px; stroke: #94a3b8; stroke-width: 2; fill: none; }
@@ -32,6 +51,7 @@ class CustomFooter extends HTMLElement {
             </style>
             <footer>
                 <div class="footer-content">
+                    <!-- About section with social links -->
                     <div class="footer-section">
                         <h3>About Arsalan</h3>
                         <p>AI-driven Full Stack Developer specializing in modern web technologies and AI-assisted development workflows. Building scalable digital solutions with cutting-edge technologies.</p>
@@ -52,6 +72,7 @@ class CustomFooter extends HTMLElement {
                                 </svg>                            </a>
                         </div>
                     </div>
+                    <!-- Quick navigation links -->
                     <div class="footer-section">
                         <h3>Quick Links</h3>
                         <ul class="footer-links">
@@ -62,10 +83,12 @@ class CustomFooter extends HTMLElement {
                             <li><a href="#projects">Projects</a></li>
                         </ul>
                     </div>
+                    <!-- Technologies section -->
                     <div class="footer-section">
                         <h3>Technologies</h3>
                         <p>MERN Stack • Django • React • Node.js • AI/ML • REST APIs • Microservices • Docker • Cloud Deployment</p>
                     </div>
+                    <!-- Contact information -->
                     <div class="footer-section">
                         <h3>Get In Touch</h3>
                         <p><strong>Email:</strong> arsalan.developer7@gmail.com</p>
@@ -74,6 +97,7 @@ class CustomFooter extends HTMLElement {
                     </div>
                 </div>
                 <div class="footer-divider"></div>
+                <!-- Footer bottom with copyright -->
                 <div class="footer-bottom">
                     <p>&copy; ${currentYear} Arsalan Shaikh. All rights reserved.</p>
                     <div class="made-with">

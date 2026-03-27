@@ -1,18 +1,25 @@
-// Portfolio Website JavaScript
-// Enhanced functionality with smooth animations and interactions
+/**
+ * Portfolio Website JavaScript
+ * Main entry point for all interactive functionality
+ * Initializes all website features when DOM is fully loaded
+ */
 
 document.addEventListener('DOMContentLoaded', function() {
-    initSmoothScroll();
-    initScrollAnimations();
-    initScrollProgress();
-    initParallaxEffect();
-    initFormHandler();
-    initCardHoverEffects();
-    initNavbarScroll();
-    initBlogModal();
+    // Initialize all website functionalities
+    initSmoothScroll();           // Smooth scrolling for anchor links
+    initScrollAnimations();       // Scroll-triggered animations
+    initScrollProgress();         // Progress bar indicator
+    initParallaxEffect();         // Parallax background effects
+    initFormHandler();            // Contact form handling
+    initCardHoverEffects();       // Interactive card effects
+    initNavbarScroll();           // Navbar scroll behavior
+    initBlogModal();              // Blog modal functionality
 });
 
-// ===== Smooth Scroll Navigation =====
+/**
+ * ===== Smooth Scroll Navigation =====
+ * Enables smooth scrolling behavior for all anchor links
+ */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -33,16 +40,23 @@ function initSmoothScroll() {
     });
 }
 
-// ===== Scroll Animations with Intersection Observer =====
+/**
+ * ===== Scroll Animations with Intersection Observer =====
+ * Implements scroll-triggered animations using Intersection Observer API
+ * Animates elements as they enter the viewport
+ */
 function initScrollAnimations() {
+    // Configuration for Intersection Observer
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.1,           // Trigger when 10% of element is visible
+        rootMargin: '0px 0px -50px 0px'  // Start animation slightly before element enters viewport
     };
 
+    // Create observer instance
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Animate element into view
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
                 entry.target.classList.add('animated');
@@ -50,20 +64,28 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe all sections and cards
+    // Observe all sections and cards for animation
     const animatedElements = document.querySelectorAll('section > .container, .glass-card');
     animatedElements.forEach((el, index) => {
+        // Skip elements that already have fade-in animation
         if (!el.classList.contains('animate-fade-in')) {
+            // Set initial state for animation
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
+            // Add staggered delay for smooth animation sequence
             el.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`;
             observer.observe(el);
         }
     });
 }
 
-// ===== Scroll Progress Bar =====
+/**
+ * ===== Scroll Progress Bar =====
+ * Creates and manages a visual progress bar indicating scroll position
+ * Bar appears at top of page and fills as user scrolls down
+ */
 function initScrollProgress() {
+    // Create progress bar element
     const progressBar = document.createElement('div');
     progressBar.id = 'scroll-progress';
     progressBar.style.cssText = `
@@ -78,12 +100,15 @@ function initScrollProgress() {
     `;
     document.body.appendChild(progressBar);
 
+    // Throttle scroll events for performance
     let ticking = false;
     
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
+                // Calculate scroll percentage
                 const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                // Update progress bar width
                 progressBar.style.width = Math.min(scrollPercent, 100) + '%';
                 ticking = false;
             });
@@ -92,22 +117,33 @@ function initScrollProgress() {
     });
 }
 
-// ===== Parallax Effect =====
+/**
+ * ===== Parallax Effect =====
+ * Creates subtle parallax scrolling effects on elements with data-parallax attribute
+ * Uses requestAnimationFrame for smooth performance
+ */
 function initParallaxEffect() {
+    // Throttle scroll events for performance
     let ticking = false;
     
+    /**
+     * Updates parallax position based on scroll position
+     * @param {number} scrolled - Current vertical scroll position
+     */
     function updateParallax() {
         const scrolled = window.pageYOffset;
         const parallaxElements = document.querySelectorAll('[data-parallax]');
         
         parallaxElements.forEach(el => {
+            // Get parallax speed from data attribute, default to 0.5
             const speed = parseFloat(el.dataset.parallax) || 0.5;
+            // Apply parallax transform
             el.style.transform = `translateY(${scrolled * speed}px)`;
         });
         
         ticking = false;
     }
-
+    
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(updateParallax);
@@ -116,7 +152,11 @@ function initParallaxEffect() {
     });
 }
 
-// ===== Form Handler =====
+/**
+ * ===== Form Handler =====
+ * Manages contact form submission, validation, and user feedback
+ * Handles loading states, success messages, and form reset
+ */
 function initFormHandler() {
     const form = document.getElementById('contact-form');
     
@@ -177,6 +217,11 @@ function initFormHandler() {
     }
 }
 
+/**
+ * Validates form input fields using HTML5 validation API
+ * @param {HTMLInputElement|HTMLTextAreaElement} input - The input element to validate
+ * @returns {boolean} - True if input is valid, false otherwise
+ */
 function validateInput(input) {
     const isValid = input.checkValidity();
     
@@ -191,17 +236,22 @@ function validateInput(input) {
     return isValid;
 }
 
-// ===== Card Hover Effects =====
+/**
+ * ===== Card Hover Effects =====
+ * Adds interactive hover effects to glass cards including lift and tilt animations
+ */
 function initCardHoverEffects() {
     const cards = document.querySelectorAll('.glass-card');
     
     cards.forEach(card => {
+        // Lift effect on hover
         card.addEventListener('mouseenter', function(e) {
             if (!this.classList.contains('no-hover')) {
                 this.style.transform = 'translateY(-5px)';
             }
         });
         
+        // Reset lift effect on mouse leave
         card.addEventListener('mouseleave', function(e) {
             if (!this.classList.contains('no-hover')) {
                 this.style.transform = 'translateY(0)';
@@ -219,10 +269,12 @@ function initCardHoverEffects() {
                 const rotateX = (y - centerY) / 20;
                 const rotateY = (centerX - x) / 20;
                 
+                // Apply 3D tilt effect
                 this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
             }
         });
         
+        // Reset tilt effect on mouse leave
         card.addEventListener('mouseleave', function(e) {
             if (this.classList.contains('tilt-effect')) {
                 this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
@@ -231,7 +283,11 @@ function initCardHoverEffects() {
     });
 }
 
-// ===== Navbar Scroll Effect =====
+/**
+ * ===== Navbar Scroll Effect =====
+ * Adds scroll-based styling to the navbar
+ * Changes appearance when user scrolls down past threshold
+ */
 function initNavbarScroll() {
     const navbar = document.querySelector('custom-navbar');
     
@@ -241,6 +297,7 @@ function initNavbarScroll() {
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
             
+            // Add scrolled class when past threshold
             if (currentScrollY > 100) {
                 navbar.classList.add('scrolled');
             } else {
@@ -252,7 +309,16 @@ function initNavbarScroll() {
     }
 }
 
-// ===== Typing Animation (Optional) =====
+/**
+ * ===== Typing Animation (Optional) =====
+ * Creates a typing animation effect for text elements
+ * @param {HTMLElement} element - The DOM element to animate
+ * @param {string[]} texts - Array of strings to type through
+ * @param {Object} options - Configuration options for the animation
+ * @param {number} options.typeSpeed - Speed of typing in milliseconds (default: 100)
+ * @param {number} options.deleteSpeed - Speed of deleting in milliseconds (default: 50)
+ * @param {number} options.pauseTime - Pause time at end of each text in milliseconds (default: 2000)
+ */
 function initTypingAnimation(element, texts, options = {}) {
     const {
         typeSpeed = 100,
@@ -264,37 +330,57 @@ function initTypingAnimation(element, texts, options = {}) {
     let charIndex = 0;
     let isDeleting = false;
     
+    /**
+     * Types or deletes characters to create animation effect
+     */
     function type() {
         const currentText = texts[textIndex];
         
         if (isDeleting) {
+            // Remove character when deleting
             element.textContent = currentText.substring(0, charIndex - 1);
             charIndex--;
         } else {
+            // Add character when typing
             element.textContent = currentText.substring(0, charIndex + 1);
             charIndex++;
         }
         
+        // Set speed based on current action
         let timeout = isDeleting ? deleteSpeed : typeSpeed;
         
+        // Handle end of text
         if (!isDeleting && charIndex === currentText.length) {
+            // Pause at end of text before deleting
             timeout = pauseTime;
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
+            // Move to next text when finished deleting
             isDeleting = false;
             textIndex = (textIndex + 1) % texts.length;
-            timeout = 500;
+            timeout = 500; // Short pause before next text
         }
         
+        // Schedule next frame
         setTimeout(type, timeout);
     }
     
+    // Start the animation
     type();
 }
 
-// ===== Utility Functions =====
+/**
+ * ===== Utility Functions =====
+ * Collection of helper functions for performance and common operations
+ */
 
-// Debounce function for performance
+/**
+ * Debounce function for performance optimization
+ * Limits the rate at which a function can fire
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Wait time in milliseconds
+ * @returns {Function} - Debounced function
+ */
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -307,7 +393,13 @@ function debounce(func, wait) {
     };
 }
 
-// Throttle function for performance
+/**
+ * Throttle function for performance optimization
+ * Ensures a function is only called once per time period
+ * @param {Function} func - Function to throttle
+ * @param {number} limit - Time limit in milliseconds
+ * @returns {Function} - Throttled function
+ */
 function throttle(func, limit) {
     let inThrottle;
     return function(...args) {
@@ -319,7 +411,11 @@ function throttle(func, limit) {
     };
 }
 
-// Check if element is in viewport
+/**
+ * Check if element is currently visible in viewport
+ * @param {HTMLElement} element - DOM element to check
+ * @returns {boolean} - True if element is in viewport, false otherwise
+ */
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -330,7 +426,10 @@ function isInViewport(element) {
     );
 }
 
-// Get current year for footer
+/**
+ * Get current year for dynamic copyright updates
+ * @returns {number} - Current year
+ */
 function getCurrentYear() {
     return new Date().getFullYear();
 }
