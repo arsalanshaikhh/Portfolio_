@@ -83,6 +83,14 @@ class CustomFooter extends HTMLElement {
                             <li><a href="#projects">Projects</a></li>
                         </ul>
                     </div>
+                    <!-- Resume Downloads -->
+                    <div class="footer-section">
+                        <h3>Resume</h3>
+                        <ul class="footer-links">
+                            <li><a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_FullStack_Developer_CV.pdf" target="_blank" rel="noopener noreferrer">Full Stack Developer</a></li>
+                            <li><a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_Frontend_Developer_CV.pdf" target="_blank" rel="noopener noreferrer">Frontend Developer</a></li>
+                        </ul>
+                    </div>
                     <!-- Technologies section -->
                     <div class="footer-section">
                         <h3>Technologies</h3>
