@@ -6,6 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all website functionalities
+    initLandingLoader();
     refreshFeatherIcons();
     initSmoothScroll();           // Smooth scrolling for anchor links
     initScrollAnimations();       // Scroll-triggered animations
@@ -15,6 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
     initCardHoverEffects();       // Interactive card effects
     initBlogModal();              // Blog modal functionality
 });
+
+function initLandingLoader() {
+    const loader = document.getElementById('landing-loader');
+    if (!loader) return;
+
+    window.setTimeout(() => {
+        loader.classList.add('is-hidden');
+        document.body.classList.remove('page-loading');
+
+        window.setTimeout(() => {
+            loader.remove();
+        }, 500);
+    }, 2000);
+}
 
 function refreshFeatherIcons() {
     if (window.feather) {
