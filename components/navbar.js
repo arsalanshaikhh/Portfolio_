@@ -70,6 +70,7 @@ class CustomNavbar extends HTMLElement {
                     <li><a href="#career">About</a></li>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#experience">Experience</a></li>
+                    <li><a href="#education">Education</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -86,7 +87,7 @@ class CustomNavbar extends HTMLElement {
             <!-- Mobile menu (hidden on desktop) -->
             <div class="mobile-menu" id="mobile-menu">
                 <div class="mobile-menu-links">
-                    <a href="#hero">Home</a><a href="#career">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+                    <a href="#hero">Home</a><a href="#career">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
                 </div>
             </div>
         `;
