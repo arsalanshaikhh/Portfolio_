@@ -6,15 +6,21 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all website functionalities
+    refreshFeatherIcons();
     initSmoothScroll();           // Smooth scrolling for anchor links
     initScrollAnimations();       // Scroll-triggered animations
     initScrollProgress();         // Progress bar indicator
     initParallaxEffect();         // Parallax background effects
     initFormHandler();            // Contact form handling
     initCardHoverEffects();       // Interactive card effects
-    initNavbarScroll();           // Navbar scroll behavior
     initBlogModal();              // Blog modal functionality
 });
+
+function refreshFeatherIcons() {
+    if (window.feather) {
+        feather.replace({ width: 20, height: 20, 'stroke-width': 1.9 });
+    }
+}
 
 /**
  * ===== Smooth Scroll Navigation =====
@@ -159,45 +165,67 @@ function initParallaxEffect() {
  */
 function initFormHandler() {
     const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
     
     if (form) {
-        form.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
+
+            const inputs = form.querySelectorAll('input, textarea');
+            const allValid = Array.from(inputs).every(validateInput);
+            if (!allValid) {
+                if (status) {
+                    status.textContent = 'Please complete the required fields before continuing.';
+                    status.classList.add('text-red-400');
+                    status.classList.remove('text-gray-400', 'text-emerald-400');
+                }
+                return;
+            }
             
             const submitButton = form.querySelector('button[type="submit"]');
             const originalContent = submitButton.innerHTML;
+            const formData = new FormData(form);
+            const name = (formData.get('name') || '').toString().trim();
+            const email = (formData.get('email') || '').toString().trim();
+            const message = (formData.get('message') || '').toString().trim();
+            const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+            const body = encodeURIComponent([
+                `Name: ${name}`,
+                `Email: ${email}`,
+                '',
+                message
+            ].join('\n'));
             
-            // Show loading state
             submitButton.innerHTML = `
                 <svg class="animate-spin w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Sending...
+                Opening Email...
             `;
             submitButton.disabled = true;
-            
-            // Simulate form submission (replace with actual API call)
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Show success state
+
+            window.location.href = `mailto:arsalan.developer7@gmail.com?subject=${subject}&body=${body}`;
+
             submitButton.innerHTML = `
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                Message Sent!
+                Email Ready
             `;
             submitButton.classList.add('success');
-            
-            // Reset form
-            form.reset();
-            
-            // Reset button after 3 seconds
+
+            if (status) {
+                status.textContent = 'Your email app should open with the message prefilled. If it does not, email me directly at arsalan.developer7@gmail.com.';
+                status.classList.add('text-emerald-400');
+                status.classList.remove('text-gray-400', 'text-red-400');
+            }
+
             setTimeout(() => {
                 submitButton.innerHTML = originalContent;
                 submitButton.classList.remove('success');
                 submitButton.disabled = false;
-                feather.replace();
+                refreshFeatherIcons();
             }, 3000);
         });
         
@@ -281,32 +309,6 @@ function initCardHoverEffects() {
             }
         });
     });
-}
-
-/**
- * ===== Navbar Scroll Effect =====
- * Adds scroll-based styling to the navbar
- * Changes appearance when user scrolls down past threshold
- */
-function initNavbarScroll() {
-    const navbar = document.querySelector('custom-navbar');
-    
-    if (navbar) {
-        let lastScrollY = window.scrollY;
-        
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            
-            // Add scrolled class when past threshold
-            if (currentScrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-            
-            lastScrollY = currentScrollY;
-        });
-    }
 }
 
 /**
@@ -457,7 +459,7 @@ function initBlogModal() {
         modal.classList.add('flex');
         document.body.style.overflow = 'hidden';
         fetchMediumArticles();
-        feather.replace();
+        refreshFeatherIcons();
     });
     
     // Close modal
@@ -498,6 +500,7 @@ async function fetchMediumArticles() {
     articlesEl.classList.add('hidden');
     
     const RSS_URL = 'https://medium.com/feed/@arsalan-shaikh';
+    const CACHE_KEY = 'medium-articles-cache-v1';
     // Add cache-busting to ensure fresh data
     const cacheBuster = `?t=${Date.now()}`;
     
@@ -613,6 +616,7 @@ async function fetchMediumArticles() {
         }
         
         console.log(`Total articles to display: ${articles.length}`);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(articles.slice(0, 12)));
         renderArticles(articles);
         
         loadingEl.classList.add('hidden');
@@ -621,11 +625,23 @@ async function fetchMediumArticles() {
         
     } catch (error) {
         console.error('Error fetching Medium articles:', error);
+        const cachedArticles = localStorage.getItem(CACHE_KEY);
+        if (cachedArticles) {
+            try {
+                renderArticles(JSON.parse(cachedArticles));
+                loadingEl.classList.add('hidden');
+                loadingEl.classList.remove('flex');
+                articlesEl.classList.remove('hidden');
+                return;
+            } catch (cacheError) {
+                console.error('Error reading cached Medium articles:', cacheError);
+            }
+        }
         loadingEl.classList.add('hidden');
         loadingEl.classList.remove('flex');
         errorEl.classList.remove('hidden');
         errorEl.classList.add('flex');
-        feather.replace();
+        refreshFeatherIcons();
     }
 }
 

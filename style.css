@@ -7,32 +7,42 @@
 /* ===== CSS Variables ===== */
 /* Color palette and design tokens used throughout the website */
 :root {
-    --primary: #22d3ee;           /* Primary cyan color */
-    --secondary: #a78bfa;         /* Secondary violet color */
-    --accent: #a855f7;            /* Accent purple color */
-    --background: #0f172a;        /* Dark background color */
-    --surface: rgba(255, 255, 255, 0.03); /* Surface/glass effect background */
-    --text-primary: #f1f5f9;      /* Primary text color */
+    --primary: #38bdf8;           /* Primary sky color */
+    --secondary: #2dd4bf;         /* Secondary teal color */
+    --accent: #f59e0b;            /* Accent amber color */
+    --background: #071521;        /* Dark background color */
+    --background-soft: #0c2233;   /* Elevated background color */
+    --surface: rgba(10, 27, 40, 0.72); /* Surface/glass effect background */
+    --surface-border: rgba(125, 211, 252, 0.14);
+    --text-primary: #e2e8f0;      /* Primary text color */
     --text-secondary: #94a3b8;    /* Secondary text color */
+}
+
+body.site-shell {
+    background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(45, 212, 191, 0.14), transparent 24%),
+        linear-gradient(135deg, var(--background), var(--background-soft) 50%, #04111b 100%);
+    color: var(--text-primary);
 }
 
 /* ===== Glass Card Effect ===== */
 /* Creates the distinctive glassmorphism effect used throughout the website */
 /* Combines transparency, blur, and subtle borders for a modern look */
 .glass-card {
-    background: rgba(255, 255, 255, 0.03);      /* Semi-transparent white background */
+    background: var(--surface);                  /* Semi-transparent brand background */
     backdrop-filter: blur(10px);                /* Background blur effect */
     -webkit-backdrop-filter: blur(10px);        /* Safari support for backdrop-filter */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+    border: 1px solid var(--surface-border);    /* Subtle branded border */
     border-radius: 16px;                        /* Rounded corners */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);  /* Soft shadow for depth */
+    box-shadow: 0 20px 45px rgba(2, 12, 20, 0.24);  /* Soft shadow for depth */
     transition: all 0.3s ease;                  /* Smooth transition for hover effects */
 }
 
 /* Hover state for glass cards */
 .glass-card:hover {
-    border-color: rgba(255, 255, 255, 0.15);    /* Slightly brighter border on hover */
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
+    border-color: rgba(45, 212, 191, 0.35);     /* Slightly brighter border on hover */
+    box-shadow: 0 26px 55px rgba(2, 12, 20, 0.32); /* Increased shadow on hover */
 }
 
 /* ===== Skill Chips ===== */
@@ -41,19 +51,19 @@
 .skill-chip {
     display: inline-block;
     padding: 6px 14px;
-    background: rgba(6, 182, 212, 0.1);          /* Subtle cyan background */
-    border: 1px solid rgba(6, 182, 212, 0.2);    /* Cyan border */
+    background: rgba(56, 189, 248, 0.12);        /* Subtle sky background */
+    border: 1px solid rgba(56, 189, 248, 0.22);  /* Sky border */
     border-radius: 20px;                          /* Pill-shaped */
     font-size: 0.875rem;
-    color: #22d3ee;                               /* Cyan text */
+    color: var(--primary);                        /* Branded text */
     transition: all 0.2s ease;                    /* Smooth hover transition */
 }
 
 /* Hover state for skill chips */
 .skill-chip:hover {
-    background: rgba(6, 182, 212, 0.2);           /* Stronger cyan background on hover */
+    background: rgba(56, 189, 248, 0.2);          /* Stronger sky background on hover */
     transform: translateY(-2px);                  /* Lift effect */
-    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2); /* Shadow on hover */
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.22); /* Shadow on hover */
 }
 
 /* ===== Tech Tags ===== */
@@ -62,17 +72,17 @@
 .tech-tag {
     display: inline-block;
     padding: 4px 10px;
-    background: rgba(139, 92, 246, 0.1);         /* Subtle violet background */
-    border: 1px solid rgba(139, 92, 246, 0.2);   /* Violet border */
+    background: rgba(45, 212, 191, 0.12);        /* Subtle teal background */
+    border: 1px solid rgba(45, 212, 191, 0.2);   /* Teal border */
     border-radius: 12px;                         /* Rounded corners */
     font-size: 0.75rem;
-    color: #a78bfa;                              /* Violet text */
+    color: var(--secondary);                     /* Teal text */
     transition: all 0.2s ease;                   /* Smooth hover transition */
 }
 
 /* Hover state for tech tags */
 .tech-tag:hover {
-    background: rgba(139, 92, 246, 0.2);         /* Stronger violet background on hover */
+    background: rgba(45, 212, 191, 0.2);         /* Stronger teal background on hover */
     transform: translateY(-1px);                 /* Lift effect */
 }
 
@@ -116,10 +126,10 @@
 /* Pulsing glow animation */
 @keyframes pulse-glow {
     0%, 100% {
-        box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.28);
     }
     50% {
-        box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+        box-shadow: 0 0 40px rgba(45, 212, 191, 0.26);
     }
 }
 
@@ -187,7 +197,7 @@ html {
 
 /* Scrollbar thumb (draggable part) */
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #06b6d4, #8b5cf6); /* Gradient from cyan to violet */
+    background: linear-gradient(to bottom, var(--primary), var(--secondary)); /* Gradient from sky to teal */
     border-radius: 5px;
 }
 
@@ -199,7 +209,7 @@ html {
 /* Firefox scrollbar styling */
 * {
     scrollbar-width: thin; /* Thin scrollbar */
-    scrollbar-color: #06b6d4 rgba(0, 0, 0, 0.1); /* Track and thumb colors */
+    scrollbar-color: var(--primary) rgba(0, 0, 0, 0.1); /* Track and thumb colors */
 }
 
 /* ===== Light Mode Styles ===== */
@@ -256,7 +266,7 @@ html.light textarea {
 /* ===== Selection Color ===== */
 /* Custom text selection color to match theme */
 ::selection {
-    background: rgba(6, 182, 212, 0.3); /* Cyan selection background */
+    background: rgba(56, 189, 248, 0.3); /* Sky selection background */
     color: white;                        /* White text */
 }
 
@@ -266,7 +276,7 @@ button:focus,
 a:focus,
 input:focus,
 textarea:focus {
-    outline: 2px solid rgba(6, 182, 212, 0.5); /* Cyan outline */
+    outline: 2px solid rgba(45, 212, 191, 0.5); /* Teal outline */
     outline-offset: 2px;
 }
 
@@ -280,7 +290,7 @@ textarea::placeholder {
 /* ===== Button Styles ===== */
 /* Primary button styling with gradient background */
 .btn-primary {
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6); /* Cyan to violet gradient */
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Sky to teal gradient */
     color: white;
     padding: 12px 24px;
     border-radius: 12px;
@@ -291,7 +301,7 @@ textarea::placeholder {
 /* Hover state for primary button */
 .btn-primary:hover {
     transform: translateY(-2px); /* Lift effect */
-    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3); /* Shadow on hover */
+    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.28); /* Shadow on hover */
 }
 
 /* ===== Mobile Responsive ===== */
@@ -332,7 +342,7 @@ textarea::placeholder {
 /* ===== Gradient Text ===== */
 /* Text with gradient background effect */
 .gradient-text {
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6); /* Cyan to violet gradient */
+    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Sky to teal gradient */
     -webkit-background-clip: text; /* For Safari */
     -webkit-text-fill-color: transparent; /* For Safari */
     background-clip: text; /* Standard property */
@@ -353,8 +363,12 @@ a {
 
 /* ===== Icon Hover Effects ===== */
 /* Hover effects for Feather icons */
-[data-feather] {
+[data-feather],
+.feather {
     transition: transform 0.2s ease;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 a:hover [data-feather] {
@@ -364,8 +378,8 @@ a:hover [data-feather] {
 /* ===== Card Hover Glow ===== */
 /* Enhanced glow effect for glass cards with glow class */
 .glass-card.glow:hover {
-    box-shadow: 0 0 30px rgba(6, 182, 212, 0.15), /* Inner cyan glow */
-                0 0 60px rgba(139, 92, 246, 0.1);   /* Outer violet glow */
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.16), /* Inner sky glow */
+                0 0 60px rgba(45, 212, 191, 0.12);   /* Outer teal glow */
 }
 
 /* ===== Loading State ===== */
@@ -425,8 +439,8 @@ a:hover [data-feather] {
 /* ===== Blog Modal Styles ===== */
 /* Styling for the blog modal popup */
 #blog-modal .glass-card {
-    background: rgba(15, 23, 42, 0.95); /* Dark semi-transparent background */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+    background: rgba(7, 21, 33, 0.94); /* Dark semi-transparent background */
+    border: 1px solid rgba(125, 211, 252, 0.12); /* Subtle branded border */
 }
 
 /* Scrollbar styling for blog modal */
@@ -440,7 +454,7 @@ a:hover [data-feather] {
 }
 
 #blog-modal::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #10b981, #14b8a6); /* Green gradient */
+    background: linear-gradient(to bottom, #38bdf8, #2dd4bf); /* Sky to teal gradient */
     border-radius: 4px;
 }
 
@@ -450,7 +464,7 @@ a:hover [data-feather] {
 }
 
 #blog-articles a:hover h3 {
-    color: #34d399; /* Green on hover */
+    color: #2dd4bf; /* Teal on hover */
 }
 
 /* Light mode adjustments for modal */

@@ -22,23 +22,23 @@ class CustomFooter extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>
                 /* Host element - footer container with gradient background */
-                :host { display: block; margin-top: 4rem; background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent); border-top: 1px solid rgba(255, 255, 255, 0.1); }
+                :host { display: block; margin-top: 4rem; background: linear-gradient(to top, rgba(7, 21, 33, 0.92), transparent); border-top: 1px solid rgba(125, 211, 252, 0.12); }
                 /* Footer layout */
                 footer { max-width: 1280px; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
                 /* Grid layout for footer sections */
                 .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
                 /* Section headings with gradient text */
-                .footer-section h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; background: linear-gradient(to right, #06b6d4, #8b5cf6); background-clip: text; -webkit-background-clip: text; color: transparent; }
+                .footer-section h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem; background: linear-gradient(to right, #38bdf8, #2dd4bf); background-clip: text; -webkit-background-clip: text; color: transparent; }
                 /* Section text and links */
                 .footer-section p, .footer-section a { color: #94a3b8; text-decoration: none; line-height: 1.6; transition: color 0.2s ease; }
-                .footer-section a:hover { color: #06b6d4; }
+                .footer-section a:hover { color: #38bdf8; }
                 /* Social links container */
                 .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
                 /* Individual social link styling */
                 .social-link { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-                .social-link:hover { background: rgba(6, 182, 212, 0.2); border-color: #06b6d4; transform: translateY(-2px); }
+                .social-link:hover { background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
                 .social-link svg { width: 20px; height: 20px; stroke: #94a3b8; stroke-width: 2; fill: none; }
-                .social-link:hover svg { stroke: #06b6d4; }
+                .social-link:hover svg { stroke: #38bdf8; }
                 .footer-links { list-style: none; padding: 0; margin: 0; }
                 .footer-links li { margin-bottom: 0.5rem; }
                 .footer-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 2rem 0; }
