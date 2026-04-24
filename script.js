@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollProgress();         // Progress bar indicator
     initParallaxEffect();         // Parallax background effects
     initFormHandler();            // Contact form handling
+    initResumeDropdown();         // Resume menu for mouse, keyboard, and touch
     initCardHoverEffects();       // Interactive card effects
     initBlogModal();              // Blog modal functionality
 });
@@ -28,13 +29,42 @@ function initLandingLoader() {
         window.setTimeout(() => {
             loader.remove();
         }, 500);
-    }, 2000);
+    }, 700);
 }
 
 function refreshFeatherIcons() {
     if (window.feather) {
         feather.replace({ width: 20, height: 20, 'stroke-width': 1.9 });
     }
+}
+
+function initResumeDropdown() {
+    const dropdown = document.querySelector('.resume-dropdown');
+    const toggle = dropdown?.querySelector('summary');
+    const menu = document.getElementById('resume-menu');
+
+    if (!dropdown || !toggle || !menu) return;
+
+    const setOpen = (isOpen) => {
+        dropdown.toggleAttribute('open', isOpen);
+    };
+
+    dropdown.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            setOpen(false);
+            toggle.focus();
+        }
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setOpen(false));
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+        if (!dropdown.contains(event.target)) {
+            setOpen(false);
+        }
+    });
 }
 
 /**
@@ -284,44 +314,26 @@ function validateInput(input) {
  * Adds interactive hover effects to glass cards including lift and tilt animations
  */
 function initCardHoverEffects() {
-    const cards = document.querySelectorAll('.glass-card');
+    const cards = document.querySelectorAll('.glass-card.tilt-effect');
     
     cards.forEach(card => {
-        // Lift effect on hover
-        card.addEventListener('mouseenter', function(e) {
-            if (!this.classList.contains('no-hover')) {
-                this.style.transform = 'translateY(-5px)';
-            }
-        });
-        
-        // Reset lift effect on mouse leave
-        card.addEventListener('mouseleave', function(e) {
-            if (!this.classList.contains('no-hover')) {
-                this.style.transform = 'translateY(0)';
-            }
-        });
-        
         // Add subtle tilt effect on mouse move
         card.addEventListener('mousemove', function(e) {
-            if (this.classList.contains('tilt-effect')) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                // Apply 3D tilt effect
-                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-            }
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+
+            // Apply 3D tilt effect
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
         });
         
         // Reset tilt effect on mouse leave
         card.addEventListener('mouseleave', function(e) {
-            if (this.classList.contains('tilt-effect')) {
-                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            }
+            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
         });
     });
 }
@@ -465,16 +477,19 @@ function initBlogModal() {
     const blogBtn = document.getElementById('read-blogs-btn');
     const modal = document.getElementById('blog-modal');
     const closeBtn = document.getElementById('close-modal-btn');
+    let lastFocusedElement = null;
     
     if (!blogBtn || !modal) return;
     
     // Open modal
     blogBtn.addEventListener('click', () => {
+        lastFocusedElement = document.activeElement;
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         document.body.style.overflow = 'hidden';
         fetchMediumArticles();
         refreshFeatherIcons();
+        closeBtn?.focus();
     });
     
     // Close modal
@@ -482,9 +497,10 @@ function initBlogModal() {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
         document.body.style.overflow = '';
+        lastFocusedElement?.focus?.();
     };
     
-    closeBtn.addEventListener('click', closeModal);
+    closeBtn?.addEventListener('click', closeModal);
     
     // Close on backdrop click
     modal.addEventListener('click', (e) => {
@@ -705,7 +721,9 @@ function renderArticles(articles) {
         console.log(`Rendering article ${index}: ${article.title}`);
         
         // Extract thumbnail from content or use default
-        let thumbnail = article.thumbnail || extractImageFromContent(article.content) || 'https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png';
+        const fallbackThumbnail = 'https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png';
+        const articleUrl = getSafeUrl(article.link, 'https://medium.com/@arsalan-shaikh');
+        const thumbnail = getSafeUrl(article.thumbnail || extractImageFromContent(article.content), fallbackThumbnail);
         
         // Clean description (remove HTML tags and truncate)
         const description = stripHtml(article.description || article.content || '')
@@ -721,10 +739,10 @@ function renderArticles(articles) {
         });
         
         return `
-            <a href="${article.link}" target="_blank" rel="noopener noreferrer" 
+            <a href="${articleUrl}" target="_blank" rel="noopener noreferrer" 
                class="glass-card p-4 flex flex-col gap-3 hover:scale-[1.02] transition-transform duration-300 group no-underline">
                 <div class="relative overflow-hidden rounded-lg aspect-video bg-slate-800">
-                    <img src="${thumbnail}" alt="${escapeHtml(article.title)}" 
+                    <img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(article.title)}" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                          onerror="this.src='https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png'">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -770,4 +788,13 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+function getSafeUrl(value, fallback) {
+    try {
+        const url = new URL(value, window.location.href);
+        return ['http:', 'https:', 'mailto:', 'tel:'].includes(url.protocol) ? url.href : fallback;
+    } catch {
+        return fallback;
+    }
 }

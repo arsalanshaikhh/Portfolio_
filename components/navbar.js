@@ -38,8 +38,8 @@ class CustomNavbar extends HTMLElement {
                 .logo { font-size: 1.5rem; font-weight: bold; background: linear-gradient(135deg, #38bdf8, #2dd4bf); background-clip: text; -webkit-background-clip: text; color: transparent; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s ease; }
                 .logo:hover { transform: scale(1.05); }
                 .logo svg { width: 28px; height: 28px; }
-                .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; margin: 0; padding: 0; }
-                .nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.2s ease; position: relative; padding: 0.5rem 0; }
+                .nav-links { display: flex; gap: 1.25rem; align-items: center; list-style: none; margin: 0; padding: 0; }
+                .nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.2s ease; position: relative; padding: 0.5rem 0; white-space: nowrap; }
                 .nav-links a:hover { color: #38bdf8; }
                 .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(to right, #38bdf8, #2dd4bf); transition: width 0.3s ease; border-radius: 1px; }
                 .nav-links a:hover::after { width: 100%; }
@@ -48,12 +48,21 @@ class CustomNavbar extends HTMLElement {
                 .theme-toggle:hover, .mobile-menu-button:hover { background: rgba(255, 255, 255, 0.15); transform: scale(1.05); }
                 .theme-toggle svg, .mobile-menu-button svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; fill: none; }
                 .mobile-menu-button { display: none; }
-                .mobile-menu { display: none; position: fixed; top: 73px; left: 0; right: 0; background: rgba(7, 21, 33, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(125, 211, 252, 0.12); padding: 1rem; }
+                :host(.light) { background: rgba(255, 255, 255, 0.86); border-bottom-color: rgba(15, 23, 42, 0.1); }
+                :host(.light.scrolled) { background: rgba(255, 255, 255, 0.96); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12); }
+                :host(.light) .nav-links a { color: #334155; }
+                :host(.light) .nav-links a:hover { color: #0891b2; }
+                :host(.light) .theme-toggle,
+                :host(.light) .mobile-menu-button { background: rgba(15, 23, 42, 0.06); border-color: rgba(15, 23, 42, 0.12); color: #334155; }
+                .mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(7, 21, 33, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(125, 211, 252, 0.12); padding: 1rem; }
                 .mobile-menu.active { display: block; }
                 .mobile-menu-links { display: flex; flex-direction: column; gap: 0.5rem; }
                 .mobile-menu-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; padding: 0.875rem 1rem; border-radius: 10px; transition: all 0.2s ease; }
                 .mobile-menu-links a:hover { background: rgba(255, 255, 255, 0.1); color: #38bdf8; }
-                @media (max-width: 768px) { .nav-links { display: none; } .mobile-menu-button { display: flex; } nav { padding: 0.875rem 1rem; } }
+                :host(.light) .mobile-menu { background: rgba(255, 255, 255, 0.98); border-bottom-color: rgba(15, 23, 42, 0.1); }
+                :host(.light) .mobile-menu-links a { color: #334155; }
+                :host(.light) .mobile-menu-links a:hover { background: rgba(14, 165, 233, 0.1); color: #0891b2; }
+                @media (max-width: 1024px) { .nav-links { display: none; } .mobile-menu-button { display: flex; } nav { padding: 0.875rem 1rem; } }
             </style>
             <nav>
                 <!-- Logo with gradient text and icon -->
@@ -72,6 +81,7 @@ class CustomNavbar extends HTMLElement {
                     <li><a href="#experience">Experience</a></li>
                     <li><a href="#education">Education</a></li>
                     <li><a href="#projects">Projects</a></li>
+                    <li><a href="#projects2">Featured</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <!-- Navigation actions (theme toggle, mobile menu) -->
@@ -79,7 +89,7 @@ class CustomNavbar extends HTMLElement {
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                         <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                     </button>
-                    <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu">
+                    <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
                         <svg class="menu-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                     </button>
                 </div>
@@ -87,7 +97,7 @@ class CustomNavbar extends HTMLElement {
             <!-- Mobile menu (hidden on desktop) -->
             <div class="mobile-menu" id="mobile-menu">
                 <div class="mobile-menu-links">
-                    <a href="#hero">Home</a><a href="#career">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#education">Education</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+                    <a href="#hero">Home</a><a href="#career">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#projects2">Featured</a><a href="#education">Education</a><a href="#contact">Contact</a>
                 </div>
             </div>
         `;
@@ -119,7 +129,16 @@ class CustomNavbar extends HTMLElement {
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
                 // Toggle mobile menu visibility
-                mobileMenu.classList.toggle('active');
+                const isOpen = mobileMenu.classList.toggle('active');
+                mobileMenuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            this.shadowRoot.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenuButton.focus();
+                }
             });
         }
 
@@ -127,6 +146,7 @@ class CustomNavbar extends HTMLElement {
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('active');
+                mobileMenuButton?.setAttribute('aria-expanded', 'false');
             });
         });
 

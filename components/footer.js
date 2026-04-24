@@ -23,6 +23,7 @@ class CustomFooter extends HTMLElement {
             <style>
                 /* Host element - footer container with gradient background */
                 :host { display: block; margin-top: 4rem; background: linear-gradient(to top, rgba(7, 21, 33, 0.92), transparent); border-top: 1px solid rgba(125, 211, 252, 0.12); }
+                :host-context(html.light) { background: linear-gradient(to top, rgba(226, 232, 240, 0.9), transparent); border-top-color: rgba(15, 23, 42, 0.1); }
                 /* Footer layout */
                 footer { max-width: 1280px; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
                 /* Grid layout for footer sections */
@@ -32,6 +33,9 @@ class CustomFooter extends HTMLElement {
                 /* Section text and links */
                 .footer-section p, .footer-section a { color: #94a3b8; text-decoration: none; line-height: 1.6; transition: color 0.2s ease; }
                 .footer-section a:hover { color: #38bdf8; }
+                :host-context(html.light) .footer-section p,
+                :host-context(html.light) .footer-section a { color: #475569; }
+                :host-context(html.light) .footer-bottom { color: #64748b; }
                 /* Social links container */
                 .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
                 /* Individual social link styling */
