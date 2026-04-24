@@ -41,8 +41,9 @@ class CustomNavbar extends HTMLElement {
                 .nav-links { display: flex; gap: 1.25rem; align-items: center; list-style: none; margin: 0; padding: 0; }
                 .nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.2s ease; position: relative; padding: 0.5rem 0; white-space: nowrap; }
                 .nav-links a:hover { color: #38bdf8; }
+                .nav-links a.active { color: #38bdf8; }
                 .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(to right, #38bdf8, #2dd4bf); transition: width 0.3s ease; border-radius: 1px; }
-                .nav-links a:hover::after { width: 100%; }
+                .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
                 .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
                 .theme-toggle, .mobile-menu-button { width: 42px; height: 42px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
                 .theme-toggle:hover, .mobile-menu-button:hover { background: rgba(255, 255, 255, 0.15); transform: scale(1.05); }
@@ -54,15 +55,17 @@ class CustomNavbar extends HTMLElement {
                 :host(.light) .nav-links a:hover { color: #0891b2; }
                 :host(.light) .theme-toggle,
                 :host(.light) .mobile-menu-button { background: rgba(15, 23, 42, 0.06); border-color: rgba(15, 23, 42, 0.12); color: #334155; }
-                .mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(7, 21, 33, 0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(125, 211, 252, 0.12); padding: 1rem; }
-                .mobile-menu.active { display: block; }
+                .mobile-menu { position: absolute; top: 100%; left: 0; right: 0; background: rgba(7, 21, 33, 0.995); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(125, 211, 252, 0.18); padding: 0 1rem; opacity: 0; transform: translateY(-10px); max-height: 0; overflow: hidden; pointer-events: none; transition: opacity 0.22s ease, transform 0.22s ease, max-height 0.22s ease, padding 0.22s ease; box-shadow: 0 22px 45px rgba(0, 0, 0, 0.32); }
+                .mobile-menu.active { opacity: 1; transform: translateY(0); max-height: 34rem; padding: 1rem; pointer-events: auto; }
                 .mobile-menu-links { display: flex; flex-direction: column; gap: 0.5rem; }
                 .mobile-menu-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; padding: 0.875rem 1rem; border-radius: 10px; transition: all 0.2s ease; }
                 .mobile-menu-links a:hover { background: rgba(255, 255, 255, 0.1); color: #38bdf8; }
+                .mobile-menu-links a.active { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
                 :host(.light) .mobile-menu { background: rgba(255, 255, 255, 0.98); border-bottom-color: rgba(15, 23, 42, 0.1); }
                 :host(.light) .mobile-menu-links a { color: #334155; }
                 :host(.light) .mobile-menu-links a:hover { background: rgba(14, 165, 233, 0.1); color: #0891b2; }
                 @media (max-width: 1024px) { .nav-links { display: none; } .mobile-menu-button { display: flex; } nav { padding: 0.875rem 1rem; } }
+                @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; } }
             </style>
             <nav>
                 <!-- Logo with gradient text and icon -->
@@ -112,6 +115,7 @@ class CustomNavbar extends HTMLElement {
         const mobileMenuButton = this.shadowRoot.getElementById('mobile-menu-button');
         const mobileMenu = this.shadowRoot.getElementById('mobile-menu');
         const mobileLinks = this.shadowRoot.querySelectorAll('.mobile-menu-links a');
+        const navLinks = this.shadowRoot.querySelectorAll('a[href^="#"]');
 
         // Theme toggle functionality
         if (themeToggle) {
@@ -154,7 +158,10 @@ class CustomNavbar extends HTMLElement {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) this.classList.add('scrolled');
             else this.classList.remove('scrolled');
+            this.updateActiveLink(navLinks);
         });
+
+        this.updateActiveLink(navLinks);
 
         // Load saved theme preference from localStorage
         const savedTheme = localStorage.getItem('theme');
@@ -162,6 +169,23 @@ class CustomNavbar extends HTMLElement {
             document.documentElement.classList.add('light');
             this.classList.add('light');
         }
+    }
+
+    updateActiveLink(navLinks) {
+        const sectionIds = Array.from(navLinks)
+            .map(link => link.getAttribute('href'))
+            .filter(href => href && href.length > 1);
+        let activeId = '#hero';
+        sectionIds.forEach((href) => {
+            const section = document.querySelector(href);
+            if (section && section.getBoundingClientRect().top <= 110) {
+                activeId = href;
+            }
+        });
+
+        navLinks.forEach((link) => {
+            link.classList.toggle('active', link.getAttribute('href') === activeId);
+        });
     }
 }
 

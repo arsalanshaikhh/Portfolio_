@@ -22,14 +22,20 @@ function initLandingLoader() {
     const loader = document.getElementById('landing-loader');
     if (!loader) return;
 
-    window.setTimeout(() => {
+    const hideLoader = () => {
         loader.classList.add('is-hidden');
         document.body.classList.remove('page-loading');
 
         window.setTimeout(() => {
             loader.remove();
         }, 500);
-    }, 700);
+    };
+
+    if (document.readyState === 'complete') {
+        window.requestAnimationFrame(hideLoader);
+    } else {
+        window.addEventListener('load', () => window.requestAnimationFrame(hideLoader), { once: true });
+    }
 }
 
 function refreshFeatherIcons() {
@@ -97,6 +103,10 @@ function initSmoothScroll() {
  * Animates elements as they enter the viewport
  */
 function initScrollAnimations() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+    }
+
     // Configuration for Intersection Observer
     const observerOptions = {
         threshold: 0.1,           // Trigger when 10% of element is visible
@@ -115,8 +125,8 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe all sections and cards for animation
-    const animatedElements = document.querySelectorAll('section > .container, .glass-card');
+    // Observe only section containers so long pages do not feel sluggish or dim while scrolling.
+    const animatedElements = document.querySelectorAll('section > .container');
     animatedElements.forEach((el, index) => {
         // Skip elements that already have fade-in animation
         if (!el.classList.contains('animate-fade-in')) {
@@ -124,7 +134,8 @@ function initScrollAnimations() {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             // Add staggered delay for smooth animation sequence
-            el.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`;
+            const delay = Math.min(index * 0.03, 0.18);
+            el.style.transition = `opacity 0.45s ease ${delay}s, transform 0.45s ease ${delay}s`;
             observer.observe(el);
         }
     });
@@ -143,11 +154,12 @@ function initScrollProgress() {
         position: fixed;
         top: 0;
         left: 0;
-        height: 3px;
+        height: 2px;
         background: linear-gradient(to right, #06b6d4, #8b5cf6);
         z-index: 9999;
         transition: width 0.1s ease;
         width: 0%;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
     `;
     document.body.appendChild(progressBar);
 

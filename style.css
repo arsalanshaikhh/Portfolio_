@@ -27,6 +27,12 @@ body.site-shell {
     overflow-x: hidden;
 }
 
+.motion-safe-hover {
+    transition-property: transform, box-shadow, border-color, background-color, color;
+    transition-duration: 0.24s;
+    transition-timing-function: ease;
+}
+
 body.page-loading {
     overflow: hidden;
 }
@@ -182,6 +188,48 @@ body.page-loading {
     100% {
         background-position: 0% 50%;
     }
+}
+
+.project-preview {
+    position: relative;
+    height: 12rem;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(124, 58, 237, 0.16)),
+        radial-gradient(circle at top right, rgba(45, 212, 191, 0.22), transparent 34%),
+        #081c2a;
+}
+
+.project-preview::before {
+    content: '';
+    position: absolute;
+    inset: 1.25rem;
+    border-radius: 0.9rem;
+    background:
+        linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        rgba(15, 23, 42, 0.72);
+    background-size: 34px 34px;
+    border: 1px solid rgba(125, 211, 252, 0.18);
+    box-shadow: 0 18px 36px rgba(2, 12, 20, 0.28);
+}
+
+.project-preview::after {
+    content: '';
+    position: absolute;
+    left: 2.1rem;
+    right: 2.1rem;
+    bottom: 2rem;
+    height: 3.6rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.6), rgba(45, 212, 191, 0.28));
+    clip-path: polygon(0 62%, 16% 38%, 31% 50%, 48% 22%, 66% 44%, 82% 18%, 100% 34%, 100% 100%, 0 100%);
+    opacity: 0.78;
+}
+
+.project-preview > * {
+    position: relative;
+    z-index: 1;
 }
 
 @keyframes landing-loader-spin {
@@ -360,8 +408,8 @@ textarea::placeholder {
 
     #hero {
         min-height: auto !important;
-        padding-top: 6.5rem !important;
-        padding-bottom: 3rem !important;
+        padding-top: 5.5rem !important;
+        padding-bottom: 2.5rem !important;
     }
 
     #hero .space-y-8 > :not([hidden]) ~ :not([hidden]) {
@@ -409,11 +457,15 @@ textarea::placeholder {
     }
     
     h1 {
-        font-size: 2.5rem !important; /* Smaller heading */
+        font-size: 2.35rem !important; /* Smaller heading */
     }
     
     h2 {
-        font-size: 1.75rem !important; /* Smaller heading */
+        font-size: 1.6rem !important; /* Smaller heading */
+    }
+
+    .text-justify {
+        text-align: left !important;
     }
 }
 
@@ -445,7 +497,7 @@ textarea::placeholder {
     }
     
     h1 {
-        font-size: 2rem !important; /* Even smaller heading */
+        font-size: 1.95rem !important; /* Even smaller heading */
     }
 
     .landing-loader__spinner {
@@ -501,6 +553,15 @@ a:hover [data-feather] {
     transform: translateY(0);
 }
 
+.resume-dropdown[open] > summary {
+    border-color: rgba(45, 212, 191, 0.65);
+    background: rgba(15, 118, 110, 0.16);
+}
+
+.resume-dropdown[open] > summary svg:last-child {
+    transform: rotate(180deg);
+}
+
 .resume-dropdown summary::-webkit-details-marker {
     display: none;
 }
@@ -517,6 +578,43 @@ a:hover [data-feather] {
 .loading {
     opacity: 0.7;              /* Semi-transparent */
     pointer-events: none;      /* Disable interactions */
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .hover\:scale-105:hover {
+        transform: scale(1.025) !important;
+    }
+
+    .hover\:scale-\[1\.02\]:hover {
+        transform: scale(1.012) !important;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .hover\:scale-105:hover,
+    .hover\:scale-\[1\.02\]:hover,
+    .hover\:-translate-y-1:hover {
+        transform: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    .landing-loader {
+        display: none !important;
+    }
+
+    body.page-loading {
+        overflow: auto;
+    }
 }
 
 /* ===== Success State ===== */
