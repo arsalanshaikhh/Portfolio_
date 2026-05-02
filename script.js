@@ -186,6 +186,12 @@ function initScrollProgress() {
  * Uses requestAnimationFrame for smooth performance
  */
 function initParallaxEffect() {
+    // Check if there are any parallax elements to avoid unnecessary processing
+    const parallaxElements = document.querySelectorAll('[data-parallax]');
+    if (parallaxElements.length === 0) {
+        return; // Exit early if no parallax elements exist
+    }
+    
     // Throttle scroll events for performance
     let ticking = false;
     
@@ -195,7 +201,6 @@ function initParallaxEffect() {
      */
     function updateParallax() {
         const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('[data-parallax]');
         
         parallaxElements.forEach(el => {
             // Get parallax speed from data attribute, default to 0.5
@@ -493,6 +498,22 @@ function initBlogModal() {
     
     if (!blogBtn || !modal) return;
     
+    // Focusable elements selector
+    const focusableSelectors = [
+        'a[href]',
+        'area[href]',
+        'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
+        'select:not([disabled]):not([aria-hidden])',
+        'textarea:not([disabled]):not([aria-hidden])',
+        'button:not([disabled]):not([aria-hidden])',
+        'iframe',
+        'object',
+        'embed',
+        '[tabindex]:not([tabindex="-1"]):not([disabled]):not([aria-hidden])',
+        '[contenteditable]:not([contenteditable="false"]):not([aria-hidden])'
+    ];
+    const focusableElementsString = focusableSelectors.join(',');
+    
     // Open modal
     blogBtn.addEventListener('click', () => {
         lastFocusedElement = document.activeElement;
@@ -501,7 +522,21 @@ function initBlogModal() {
         document.body.style.overflow = 'hidden';
         fetchMediumArticles();
         refreshFeatherIcons();
-        closeBtn?.focus();
+        
+        // Force reflow to ensure transition works
+        void modal.offsetWidth;
+        
+        // Focus on close button or first focusable element
+        setTimeout(() => {
+            if (closeBtn && !closeBtn.disabled) {
+                closeBtn.focus();
+            } else {
+                const focusableElements = modal.querySelectorAll(focusableElementsString);
+                if (focusableElements.length > 0) {
+                    focusableElements[0].focus();
+                }
+            }
+        }, 10);
     });
     
     // Close modal
@@ -525,6 +560,29 @@ function initBlogModal() {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
             closeModal();
+        }
+    });
+    
+    // Trap focus inside modal
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            const focusableElements = modal.querySelectorAll(focusableElementsString);
+            if (focusableElements.length === 0) return;
+            
+            const firstFocusable = focusableElements[0];
+            const lastFocusable = focusableElements[focusableElements.length - 1];
+            
+            if (e.shiftKey) { // shift + tab
+                if (document.activeElement === firstFocusable) {
+                    e.preventDefault();
+                    lastFocusable.focus();
+                }
+            } else { // tab
+                if (document.activeElement === lastFocusable) {
+                    e.preventDefault();
+                    firstFocusable.focus();
+                }
+            }
         }
     });
 }

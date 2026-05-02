@@ -45,10 +45,13 @@
         <div class="landing-loader__spinner"></div>
     </div>
     <!-- ===== Navigation ===== -->
-    <custom-navbar></custom-navbar>
- 
+    <nav aria-label="Primary navigation">
+        <custom-navbar></custom-navbar>
+    </nav>
+  
     <!-- ===== Hero Section - Centered ===== -->
-    <section id="hero" class="relative min-h-[92vh] lg:min-h-screen flex items-start justify-center overflow-visible pt-28 lg:pt-32 pb-16">
+    <main id="main-content">
+        <section id="hero" class="relative min-h-[92vh] lg:min-h-screen flex items-start justify-center overflow-visible pt-28 lg:pt-32 pb-16">
         <div class="absolute inset-0 opacity-20">
             <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10"></div>
             <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -151,11 +154,11 @@
             </div>
         </div>
         
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden lg:block">
             <a href="#career" class="text-gray-500 hover:text-cyan-400 transition-colors">
                 <i data-feather="chevron-down" class="w-8 h-8"></i>
             </a>
-        </div>
+        </div> -->
     </section>
 
      <!-- ===== Career Summary ===== -->
@@ -1034,6 +1037,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
             </div>
         </div>
     </div>
+</main>
 
     <!-- Footer -->
     <custom-footer></custom-footer>
