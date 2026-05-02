@@ -18,7 +18,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Arsalan Shaikh - AI-Driven Full Stack Developer">
     <meta property="og:description" content="Building scalable digital products with AI-enhanced development workflows. Expert in MERN stack, Django, and modern web technologies.">
-    <meta property="og:url" content="https://arsalanshaikh.dev/">
+
     <meta property="og:site_name" content="Arsalan Shaikh Portfolio">
     <meta property="og:image" content="https://arsalanshaikh.dev/assets/my-avatar.png">
     <meta property="og:image:width" content="500">
@@ -75,6 +75,12 @@
     <script src="components/footer.js" defer></script>
 </head>
 <body class="site-shell text-gray-100 min-h-screen page-loading">
+    <noscript>
+        <style>
+            body.page-loading { overflow: auto !important; }
+            #landing-loader { display: none !important; }
+        </style>
+    </noscript>
     <!-- Skip to main content for keyboard accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -89,20 +95,20 @@
      <!-- ===== Hero Section - Centered ===== -->
      <main id="main-content" role="main">
         <section id="hero" class="relative min-h-[92vh] lg:min-h-screen flex items-start justify-center overflow-visible pt-28 lg:pt-32 pb-16">
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10"></div>
-            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(156, 146, 172, 0.1)" stroke-width="1"/>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
-        </div>
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10"></div>
+                <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(156, 146, 172, 0.1)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
+            </div>
         
-        <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" aria-hidden="true"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse animate-delay-1s" aria-hidden="true"></div>
         
         <div class="container mx-auto px-6 relative z-10">
             <div class="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
@@ -114,9 +120,9 @@
                     Available for opportunities
                 </div>
                 
-                <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent leading-tight">
-                    Arsalan Shaikh
-                </h1>
+                 <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent leading-tight" translate="no">
+                     Arsalan Shaikh
+                 </h1>
                 
                 <div class="space-y-3">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl text-gray-300 font-light">AI-Driven Full Stack Developer</h2>
@@ -144,58 +150,55 @@
                 </div>
                 
                 <div class="hero-actions flex flex-wrap justify-center gap-4 pt-6 pb-10">
-                    <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
-                        <i data-feather="github" class="w-5 h-5"></i>
-                        View GitHub
-                        <!-- <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> -->
-                    </a>
-                    <a href="https://linkedin.com/in/iarsalanshaikh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
-                        <i data-feather="linkedin" class="w-5 h-5"></i>
-                        Connect on LinkedIn
-                        <!-- <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> -->
-                    </a>
-                    <button id="read-blogs-btn" class="group px-7 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-emerald-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
-                        <i data-feather="book-open" class="w-5 h-5"></i>
-                        Read My Blogs
-                        <!-- <i data-feather="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i> -->
-                    </button>
-                    <!-- Resume Dropdown -->
-                    <details class="resume-dropdown relative group">
-                        <summary class="px-7 py-4 border-2 border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 flex items-center gap-2 cursor-pointer list-none">
-                            <i data-feather="download" class="w-5 h-5"></i>
-                            Download Resume
-                            <i data-feather="chevron-down" class="w-4 h-4"></i>
-                        </summary>
-                        <div id="resume-menu" class="resume-menu absolute top-full mt-2 left-0 w-64 bg-slate-800 border border-gray-600 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_FullStack_Developer_CV.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-4 hover:bg-slate-700/50 transition-colors rounded-t-xl">
-                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center">
-                                    <i data-feather="code" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-white font-semibold">Full Stack Developer</div>
-                                    <div class="text-gray-400 text-xs">MERN, Django, AI Integration</div>
-                                </div>
-                            </a>
-                            <a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_Frontend_Developer_CV.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-4 hover:bg-slate-700/50 transition-colors rounded-b-xl">
-                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 flex items-center justify-center">
-                                    <i data-feather="layout" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-white font-semibold">Frontend Developer</div>
-                                    <div class="text-gray-400 text-xs">React, UI/UX, Modern JS</div>
-                                </div>
-                            </a>
-                        </div>
-                    </details>
+                      <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                          <i data-feather="github" class="w-5 h-5"></i>
+                          View <span translate="no">GitHub</span>
+                      </a>
+                      <a href="https://linkedin.com/in/iarsalanshaikh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                          <i data-feather="linkedin" class="w-5 h-5"></i>
+                          Connect on <span translate="no">LinkedIn</span>
+                      </a>
+                      <a href="https://medium.com/@arsalan-shaikh" target="_blank" rel="noopener noreferrer" id="read-blogs-btn" class="group px-7 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-emerald-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2" translate="no">
+                          <i data-feather="book-open" class="w-5 h-5"></i>
+                          Read My Blogs
+                      </a>
+<!-- Resume Dropdown -->
+                     <div class="relative group">
+                         <button id="resume-button" aria-haspopup="true" aria-expanded="false" class="px-7 py-4 border-2 border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 flex items-center gap-2 cursor-pointer w-full">
+                             <i data-feather="download" class="w-5 h-5"></i>
+                             Download Resume
+                             <i data-feather="chevron-down" class="w-4 h-4"></i>
+                         </button>
+                         <div id="resume-menu" class="resume-menu absolute top-full mt-2 left-0 w-64 bg-slate-800 border border-gray-600 rounded-xl shadow-lg opacity-0 invisible transition-all duration-300 z-50" role="menu" aria-labelledby="resume-button">
+                             <a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_FullStack_Developer_CV.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-4 hover:bg-slate-700/50 transition-colors rounded-t-xl" role="menuitem">
+                                 <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center">
+                                     <i data-feather="code" class="w-5 h-5 text-white"></i>
+                                 </div>
+                                 <div class="text-left">
+                                     <div class="text-white font-semibold">Full Stack Developer</div>
+                                     <div class="text-gray-400 text-xs">MERN, Django, AI Integration</div>
+                                 </div>
+                             </a>
+                             <a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_Frontend_Developer_CV.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-4 hover:bg-slate-700/50 transition-colors rounded-b-xl" role="menuitem">
+                                 <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 flex items-center justify-center">
+                                     <i data-feather="layout" class="w-5 h-5 text-white"></i>
+                                 </div>
+                                 <div class="text-left">
+                                     <div class="text-white font-semibold">Frontend Developer</div>
+                                     <div class="text-gray-400 text-xs">React, UI/UX, Modern JS</div>
+                                 </div>
+                             </a>
+                         </div>
+                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden lg:block">
-            <a href="#career" class="text-gray-500 hover:text-cyan-400 transition-colors">
-                <i data-feather="chevron-down" class="w-8 h-8"></i>
-            </a>
-        </div>
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden lg:block">
+    <a href="#career" class="text-gray-500 hover:text-cyan-400 transition-colors" aria-label="Scroll to career section">
+        <i data-feather="chevron-down" class="w-8 h-8"></i>
+    </a>
+</div>
     </section>
 
      <!-- ===== Career Summary ===== -->
@@ -330,7 +333,7 @@
             <h2 class="text-3xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Professional Experience</h2>
             <div class="max-w-5xl mx-auto space-y-8">
                 <div class="glass-card p-6 lg:p-8 relative group">
-                    <!-- <div class="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-cyan-500 to-violet-500 ml-6 hidden lg:block rounded-full"></div> -->
+
                     <div class="flex gap-6">
                         <div class="hidden lg:flex w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-cyan-400 items-center justify-center flex-shrink-0">
                             <i data-feather="briefcase" class="w-6 h-6 text-white"></i>
@@ -343,7 +346,7 @@
                                 <span class="text-gray-500">•</span>
                                 <span class="text-gray-400">Remote</span>
                             </div>
-                            <!-- <p class="text-cyan-400 mb-4">May 2023 - Present</p> -->
+
                             <ul class="space-y-3 text-gray-300">
                                 <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Developed and maintained scalable MERN and Django applications with performance-focused architecture</span></li>
                                 <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Built an admin dashboard with ticket management and user analytics using React and Material UI</span></li>
@@ -357,50 +360,47 @@
 
                 <div class="glass-card p-6 lg:p-8 relative group">
                     <!-- <div class="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-violet-500 to-purple-500 ml-6 hidden lg:block rounded-full"></div> -->
-                    <div class="flex gap-6">
-                        <div class="hidden lg:flex w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 items-center justify-center flex-shrink-0">
-                            <i data-feather="book-open" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex flex-wrap items-center gap-2 mb-2">
-                                <h3 class="text-xl font-semibold text-violet-400">Full Stack Developer Trainee</h3>
-                                <span class="text-gray-500">•</span>
-                                <span class="text-gray-400">Masai School</span>
-                                <span class="text-gray-500">•</span>
-                                <span class="text-gray-400">Full Time Bootcamp</span>
-                            </div>
-                            <!-- <p class="text-purple-400 mb-4">Apr 2022 - Apr 2023</p> -->
-                            <ul class="space-y-3 text-gray-300">
-                                <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Completed 2,160+ hours of full-time training with hands-on projects</span></li>
-                                <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Built and deployed multiple end-to-end web applications using agile practices</span></li>
-                                <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Gained expertise in backend API development and microservices architecture</span></li>
-                            </ul>
-                        </div>
-                    </div>
+<div class="flex gap-6">
+    <div class="hidden lg:flex w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 items-center justify-center flex-shrink-0">
+        <i data-feather="book-open" class="w-6 h-6 text-white"></i>
+    </div>
+    <div class="flex-1">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
+            <h3 class="text-xl font-semibold text-violet-400">Full Stack Developer Trainee</h3>
+            <span class="text-gray-500">•</span>
+            <span class="text-gray-400">Masai School</span>
+            <span class="text-gray-500">•</span>
+            <span class="text-gray-400">Full Time Bootcamp</span>
+        </div>
+        <ul class="space-y-3 text-gray-300">
+            <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Completed 2,160+ hours of full-time training with hands-on projects</span></li>
+            <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Built and deployed multiple end-to-end web applications using agile practices</span></li>
+            <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Gained expertise in backend API development and microservices architecture</span></li>
+        </ul>
+    </div>
+</div>
                 </div>
 
-                <div class="glass-card p-6 lg:p-8 relative group">
-                    <!-- <div class="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-green-500 to-emerald-500 ml-6 hidden lg:block rounded-full"></div> -->
-                    <div class="flex gap-6">
-                        <div class="hidden lg:flex w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 items-center justify-center flex-shrink-0">
-                            <i data-feather="zap" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex flex-wrap items-center gap-2 mb-2">
-                                <h3 class="text-xl font-semibold text-green-400">Design Engineer</h3>
-                                <span class="text-gray-500">•</span>
-                                <span class="text-gray-400">BECIS (Berkeley Energy) & SunShot Technologies</span>
-                                <span class="text-gray-500">•</span>
-                                <span class="text-gray-400">Pune</span>
-                            </div>
-                            <!-- <p class="text-emerald-400 mb-4">Jun 2020 - Oct 2021</p> -->
-                            <ul class="space-y-3 text-gray-300">
-                                <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Designed and analyzed rooftop and ground-mounted solar structures using StaadPro and AutoCAD</span></li>
-                                <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Prepared RCC and structural designs, reinforcement detailing, and load calculations</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+<div class="glass-card p-6 lg:p-8 relative group">
+    <div class="flex gap-6">
+        <div class="hidden lg:flex w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 items-center justify-center flex-shrink-0">
+            <i data-feather="zap" class="w-6 h-6 text-white"></i>
+        </div>
+        <div class="flex-1">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+                <h3 class="text-xl font-semibold text-green-400">Design Engineer</h3>
+                <span class="text-gray-500">•</span>
+                <span class="text-gray-400">BECIS (Berkeley Energy) & SunShot Technologies</span>
+                <span class="text-gray-500">•</span>
+                <span class="text-gray-400">Pune</span>
+            </div>
+            <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Designed and analyzed rooftop and ground-mounted solar structures using StaadPro and AutoCAD</span></li>
+                <li class="flex items-start gap-3"><i data-feather="check-circle" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i><span>Prepared RCC and structural designs, reinforcement detailing, and load calculations</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
             </div>
         </div>
@@ -801,49 +801,45 @@ ATS compatibility scoring and job description matching via OpenRouter API.
         <div class="container mx-auto px-6">
             <h2 class="text-3xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Education</h2>
             <div class="max-w-4xl mx-auto space-y-6">
-                <div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
-                        <i data-feather="award" class="w-6 h-6 text-white"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-cyan-400">Full Stack Development Program</h3>
-                        <p class="text-violet-400 mb-1">Masai School</p>
-                        <!-- <p class="text-gray-400 text-sm">Apr 2022 - Apr 2023</p> -->
-                    </div>
-                </div>
+<div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
+    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+        <i data-feather="award" class="w-6 h-6 text-white"></i>
+    </div>
+    <div>
+        <h3 class="text-xl font-semibold text-cyan-400">Full Stack Development Program</h3>
+        <p class="text-violet-400 mb-1">Masai School</p>
+    </div>
+</div>
 
-                <div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center flex-shrink-0">
-                        <i data-feather="book" class="w-6 h-6 text-white"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-violet-400">Master of Engineering (M.E)</h3>
-                        <p class="text-purple-400 mb-1">Savitribai Phule University, Pune</p>
-                        <!-- <p class="text-gray-400 text-sm">Jun 2017 - Dec 2019</p> -->
-                    </div>
-                </div>
+<div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
+    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+        <i data-feather="book" class="w-6 h-6 text-white"></i>
+    </div>
+    <div>
+        <h3 class="text-xl font-semibold text-violet-400">Master of Engineering (M.E)</h3>
+        <p class="text-purple-400 mb-1">Savitribai Phule University, Pune</p>
+    </div>
+</div>
 
-                <div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center flex-shrink-0">
-                        <i data-feather="git-branch" class="w-6 h-6 text-white"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-green-400">Bachelor of Engineering (B.E)</h3>
-                        <p class="text-emerald-400 mb-1">North Maharashtra University, Jalgaon</p>
-                        <!-- <p class="text-gray-400 text-sm">Jun 2013 - May 2016</p> -->
-                    </div>
-                </div>
+<div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
+    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center flex-shrink-0">
+        <i data-feather="git-branch" class="w-6 h-6 text-white"></i>
+    </div>
+    <div>
+        <h3 class="text-xl font-semibold text-green-400">Bachelor of Engineering (B.E)</h3>
+        <p class="text-emerald-400 mb-1">North Maharashtra University, Jalgaon</p>
+    </div>
+</div>
 
-                <div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
-                    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center flex-shrink-0">
-                        <i data-feather="tool" class="w-6 h-6 text-white"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-red-400">Diploma in Engineering</h3>
-                        <p class="text-rose-400 mb-1">Government Polytechnic, Jalgaon</p>
-                        <!-- <p class="text-gray-400 text-sm">Jun 2013 - May 2016</p> -->
-                    </div>
-                </div>
+<div class="glass-card p-6 flex items-start gap-4 hover:scale-[1.02] transition-transform">
+    <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center flex-shrink-0">
+        <i data-feather="tool" class="w-6 h-6 text-white"></i>
+    </div>
+    <div>
+        <h3 class="text-xl font-semibold text-red-400">Diploma in Engineering</h3>
+        <p class="text-rose-400 mb-1">Government Polytechnic, Jalgaon</p>
+    </div>
+</div>
             </div>
         </div>
     </section>
@@ -983,12 +979,12 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                                 <a href="mailto:arsalan.developer7@gmail.com" class="text-gray-300 hover:text-emerald-400 transition-colors">arsalan.developer7@gmail.com</a>
                             </div>
                         </div>
-                        <div class="flex gap-4 mt-8">
-                            <a href="https://linkedin.com/in/iarsalanshaikh" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-sky-500 flex items-center justify-center hover:shadow-lg hover:shadow-cyan-500/25 transition-all hover:-translate-y-1"><i data-feather="linkedin" class="w-6 h-6 text-white"></i></a>
-                            <a href="https://github.com/arsalanshaikhh" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center hover:shadow-lg hover:shadow-slate-700/30 transition-all hover:-translate-y-1"><i data-feather="github" class="w-6 h-6 text-white"></i></a>
-                            <a href="mailto:arsalan.developer7@gmail.com" title="Email" aria-label="Email" class="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center hover:shadow-lg hover:shadow-emerald-500/25 transition-all hover:-translate-y-1"><i data-feather="send" class="w-6 h-6 text-white"></i></a>
-                            <a href="https://medium.com/@arsalan-shaikh" title="Medium" aria-label="Medium" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/25 transition-all hover:-translate-y-1"><i data-feather="book-open" class="w-6 h-6 text-white"></i></a>
-                        </div>
+                         <div class="flex gap-4 mt-8">
+                             <a href="https://linkedin.com/in/iarsalanshaikh" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-sky-500 flex items-center justify-center hover:shadow-lg hover:shadow-cyan-500/25 transition-all hover:-translate-y-1" translate="no"><i data-feather="linkedin" class="w-6 h-6 text-white"></i></a>
+                             <a href="https://github.com/arsalanshaikhh" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center hover:shadow-lg hover:shadow-slate-700/30 transition-all hover:-translate-y-1" translate="no"><i data-feather="github" class="w-6 h-6 text-white"></i></a>
+                             <a href="mailto:arsalan.developer7@gmail.com" title="Email" aria-label="Email" class="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center hover:shadow-lg hover:shadow-emerald-500/25 transition-all hover:-translate-y-1" translate="no"><i data-feather="send" class="w-6 h-6 text-white"></i></a>
+                             <a href="https://medium.com/@arsalan-shaikh" title="Medium" aria-label="Medium" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/25 transition-all hover:-translate-y-1" translate="no"><i data-feather="book-open" class="w-6 h-6 text-white"></i></a>
+                         </div>
                     </div>
                 </div>
 
@@ -1064,5 +1060,18 @@ ATS compatibility scoring and job description matching via OpenRouter API.
 
     <script src="script.js"></script>
     <script>feather.replace();</script>
+    <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('SW registered: ', registration);
+      })
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+</script>
 </body>
 </html>

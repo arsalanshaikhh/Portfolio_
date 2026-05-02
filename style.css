@@ -272,6 +272,9 @@ body.page-loading {
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
 
+/* Animation delay classes */
+.animate-delay-1s { animation-delay: 1s; }
+
 /* ===== Smooth Scroll ===== */
 /* Enables smooth scrolling behavior for anchor links */
 html {
