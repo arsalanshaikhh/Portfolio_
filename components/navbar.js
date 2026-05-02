@@ -37,16 +37,19 @@ class CustomNavbar extends HTMLElement {
                 /* Logo styling with gradient text */
                 .logo { font-size: 1.5rem; font-weight: bold; background: linear-gradient(135deg, #38bdf8, #2dd4bf); background-clip: text; -webkit-background-clip: text; color: transparent; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s ease; }
                 .logo:hover { transform: scale(1.05); }
+                .logo:focus { outline: 2px solid rgba(45, 212, 191, 0.5); outline-offset: 2px; }
                 .logo svg { width: 28px; height: 28px; }
                 .nav-links { display: flex; gap: 1.25rem; align-items: center; list-style: none; margin: 0; padding: 0; }
                 .nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.2s ease; position: relative; padding: 0.5rem 0; white-space: nowrap; }
                 .nav-links a:hover { color: #38bdf8; }
                 .nav-links a.active { color: #38bdf8; }
+                .nav-links a:focus { outline: 2px solid rgba(45, 212, 191, 0.5); outline-offset: 2px; }
                 .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(to right, #38bdf8, #2dd4bf); transition: width 0.3s ease; border-radius: 1px; }
                 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
                 .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
                 .theme-toggle, .mobile-menu-button { width: 42px; height: 42px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
                 .theme-toggle:hover, .mobile-menu-button:hover { background: rgba(255, 255, 255, 0.15); transform: scale(1.05); }
+                .theme-toggle:focus, .mobile-menu-button:focus { outline: 2px solid rgba(45, 212, 191, 0.5); outline-offset: 2px; }
                 .theme-toggle svg, .mobile-menu-button svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; fill: none; }
                 .mobile-menu-button { display: none; }
                 :host(.light) { background: rgba(255, 255, 255, 0.86); border-bottom-color: rgba(15, 23, 42, 0.1); }
@@ -61,6 +64,7 @@ class CustomNavbar extends HTMLElement {
                 .mobile-menu-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; padding: 0.875rem 1rem; border-radius: 10px; transition: all 0.2s ease; }
                 .mobile-menu-links a:hover { background: rgba(255, 255, 255, 0.1); color: #38bdf8; }
                 .mobile-menu-links a.active { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
+                .mobile-menu-links a:focus { outline: 2px solid rgba(45, 212, 191, 0.5); outline-offset: 2px; }
                 :host(.light) .mobile-menu { background: rgba(255, 255, 255, 0.98); border-bottom-color: rgba(15, 23, 42, 0.1); }
                 :host(.light) .mobile-menu-links a { color: #334155; }
                 :host(.light) .mobile-menu-links a:hover { background: rgba(14, 165, 233, 0.1); color: #0891b2; }

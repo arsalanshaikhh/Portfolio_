@@ -16,9 +16,14 @@
     --surface-border: rgba(125, 211, 252, 0.14);
     --text-primary: #e2e8f0;      /* Primary text color */
     --text-secondary: #94a3b8;    /* Secondary text color */
+
+    /* Typography */
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Figtree', sans-serif;
 }
 
 body.site-shell {
+    font-family: var(--font-body);
     background:
         radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 28%),
         radial-gradient(circle at top right, rgba(45, 212, 191, 0.14), transparent 24%),
@@ -344,8 +349,8 @@ html.light .tech-tag {
 /* Text color overrides for light mode */
 html.light .text-gray-100 { color: #1e293b !important; } /* Dark text */
 html.light .text-gray-300 { color: #475569 !important; } /* Medium dark text */
-html.light .text-gray-400 { color: #64748b !important; } /* Medium text */
-html.light .text-gray-500 { color: #94a3b8 !important; } /* Light text */
+html.light .text-gray-400 { color: #6b7280 !important; } /* Improved contrast (was #64748b) */
+html.light .text-gray-500 { color: #6b7280 !important; } /* Improved contrast (was #94a3b8) for small text */
 
 /* Form element overrides for light mode */
 html.light input,
@@ -353,6 +358,26 @@ html.light textarea {
     background: rgba(255, 255, 255, 0.9) !important; /* Light background */
     border-color: #e2e8f0 !important;                /* Light border */
     color: #1e293b !important;                       /* Dark text */
+}
+
+/* ===== Skip Link ===== */
+/* Accessible skip to main content link - visible on focus only */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: var(--background);
+    padding: 8px 16px;
+    z-index: 99999;
+    transition: top 0.3s ease;
+    border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
 }
 
 /* ===== Selection Color ===== */
@@ -370,6 +395,15 @@ input:focus,
 textarea:focus {
     outline: 2px solid rgba(45, 212, 191, 0.5); /* Teal outline */
     outline-offset: 2px;
+}
+
+/* ===== Typography ===== */
+/* Distinctive font families */
+h1, h2, h3, h4, h5, h6,
+.logo,
+.skill-chip,
+.tech-tag {
+    font-family: var(--font-display);
 }
 
 /* ===== Form Styles ===== */

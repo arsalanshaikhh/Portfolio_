@@ -5,18 +5,35 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize theme (auto-detect OS preference if no saved preference)
+    initTheme();
     // Initialize all website functionalities
     initLandingLoader();
     refreshFeatherIcons();
     initSmoothScroll();           // Smooth scrolling for anchor links
     initScrollAnimations();       // Scroll-triggered animations
     initScrollProgress();         // Progress bar indicator
-    initParallaxEffect();         // Parallax background effects
     initFormHandler();            // Contact form handling
     initResumeDropdown();         // Resume menu for mouse, keyboard, and touch
     initCardHoverEffects();       // Interactive card effects
     initBlogModal();              // Blog modal functionality
 });
+
+/**
+ * ===== Theme Management =====
+ * Handles automatic OS-level theme detection and manual toggle persistence
+ */
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light');
+    } else if (!savedTheme) {
+        // Auto-detect OS preference
+        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            document.documentElement.classList.add('light');
+        }
+    }
+}
 
 function initLandingLoader() {
     const loader = document.getElementById('landing-loader');
@@ -181,49 +198,9 @@ function initScrollProgress() {
 }
 
 /**
- * ===== Parallax Effect =====
- * Creates subtle parallax scrolling effects on elements with data-parallax attribute
- * Uses requestAnimationFrame for smooth performance
- */
-function initParallaxEffect() {
-    // Check if there are any parallax elements to avoid unnecessary processing
-    const parallaxElements = document.querySelectorAll('[data-parallax]');
-    if (parallaxElements.length === 0) {
-        return; // Exit early if no parallax elements exist
-    }
-    
-    // Throttle scroll events for performance
-    let ticking = false;
-    
-    /**
-     * Updates parallax position based on scroll position
-     * @param {number} scrolled - Current vertical scroll position
-     */
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        
-        parallaxElements.forEach(el => {
-            // Get parallax speed from data attribute, default to 0.5
-            const speed = parseFloat(el.dataset.parallax) || 0.5;
-            // Apply parallax transform
-            el.style.transform = `translateY(${scrolled * speed}px)`;
-        });
-        
-        ticking = false;
-    }
-    
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    });
-}
-
-/**
- * ===== Form Handler =====
- * Manages contact form submission, validation, and user feedback
- * Handles loading states, success messages, and form reset
+ * ===== Scroll Progress Bar =====
+ * Creates and manages a visual progress bar indicating scroll position
+ * Bar appears at top of page and fills as user scrolls down
  */
 function initFormHandler() {
     const form = document.getElementById('contact-form');
@@ -267,7 +244,9 @@ function initFormHandler() {
             `;
             submitButton.disabled = true;
 
-            window.location.href = `mailto:arsalan.developer7@gmail.com?subject=${subject}&body=${body}`;
+            // Encoded email to prevent bot harvesting
+            const encodedEmail = String.fromCharCode(97,114,115,97,108,97,110,46,100,101,118,101,108,111,112,101,114,55,64,103,109,97,105,108,46,99,111,109);
+            window.location.href = `mailto:${encodedEmail}?subject=${subject}&body=${body}`;
 
             submitButton.innerHTML = `
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,7 +257,7 @@ function initFormHandler() {
             submitButton.classList.add('success');
 
             if (status) {
-                status.textContent = 'Your email app should open with the message prefilled. If it does not, email me directly at arsalan.developer7@gmail.com.';
+                status.textContent = 'Your email app should open with the message prefilled. If it does not, email me directly at ' + String.fromCharCode(97,114,115,97,108,97,110,46,100,101,118,101,108,111,112,101,114,55,64,103,109,97,105,108,46,99,111,109) + '.';
                 status.classList.add('text-emerald-400');
                 status.classList.remove('text-gray-400', 'text-red-400');
             }
@@ -814,6 +793,7 @@ function renderArticles(articles) {
                 <div class="relative overflow-hidden rounded-lg aspect-video bg-slate-800">
                     <img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(article.title)}" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                         loading="lazy" decoding="async"
                          onerror="this.src='https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png'">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>

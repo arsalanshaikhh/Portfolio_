@@ -43,6 +43,7 @@ class CustomFooter extends HTMLElement {
                 .social-link:hover { background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; transform: translateY(-2px); }
                 .social-link svg { width: 20px; height: 20px; stroke: #94a3b8; stroke-width: 2; fill: none; }
                 .social-link:hover svg { stroke: #38bdf8; }
+                .social-link:focus { outline: 2px solid rgba(45, 212, 191, 0.5); outline-offset: 2px; }
                 .footer-links { list-style: none; padding: 0; margin: 0; }
                 .footer-links li { margin-bottom: 0.5rem; }
                 .footer-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 2rem 0; }
@@ -53,7 +54,7 @@ class CustomFooter extends HTMLElement {
                 @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
                 @media (max-width: 768px) { .footer-bottom { flex-direction: column; text-align: center; } }
             </style>
-            <footer>
+            <footer role="contentinfo">
                 <div class="footer-content">
                     <!-- About section with social links -->
                     <div class="footer-section">
@@ -67,7 +68,7 @@ class CustomFooter extends HTMLElement {
                                 <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37
                                 3.37 0 0 0 8.44 16.13V20"/></svg>
                             </a>
-                            <a href="mailto:arsalan.developer7@gmail.com" title="Email" class="social-link" aria-label="Email">
+                             <a href="mailto:' + String.fromCharCode(97,114,115,97,108,97,110,46,100,101,118,101,108,111,112,101,114,55,64,103,109,97,105,108,46,99,111,109) + '" title="Email" class="social-link" aria-label="Email">
                                 <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                             </a>
                             <a href="https://medium.com/@arsalan-shaikh" title="Medium" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Medium">

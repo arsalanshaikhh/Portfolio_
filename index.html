@@ -10,47 +10,84 @@
     <meta name="keywords" content="Full Stack Developer, MERN, React, Node.js, Django, AI Development, Web Developer, Arsalan Shaikh">
     <meta name="author" content="Arsalan Shaikh">
     <meta name="robots" content="index, follow">
-    
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://arsalanshaikh.dev/">
+
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Arsalan Shaikh - AI-Driven Full Stack Developer">
     <meta property="og:description" content="Building scalable digital products with AI-enhanced development workflows. Expert in MERN stack, Django, and modern web technologies.">
-    <meta property="og:url" content="https://arsalanshaikh.dev">
+    <meta property="og:url" content="https://arsalanshaikh.dev/">
     <meta property="og:site_name" content="Arsalan Shaikh Portfolio">
-    
+    <meta property="og:image" content="https://arsalanshaikh.dev/assets/my-avatar.png">
+    <meta property="og:image:width" content="500">
+    <meta property="og:image:height" content="500">
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Arsalan Shaikh - AI-Driven Full Stack Developer">
     <meta name="twitter:description" content="Building scalable digital products with AI-enhanced development workflows.">
+    <meta name="twitter:image" content="https://arsalanshaikh.dev/assets/my-avatar.png">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Arsalan Shaikh",
+      "url": "https://arsalanshaikh.dev",
+      "image": "https://arsalanshaikh.dev/assets/my-avatar.png",
+      "sameAs": [
+        "https://github.com/arsalanshaikhh",
+        "https://linkedin.com/in/iarsalanshaikh",
+        "https://medium.com/@arsalan-shaikh"
+      ],
+      "jobTitle": "Full Stack Developer",
+      "description": "AI-driven Full Stack Developer with 3+ years of experience in MERN stack, Django, and AI-assisted development."
+    }
+    </script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/my-avatar.png">
     <link rel="apple-touch-icon" href="assets/my-avatar.png">
-    
+
+    <!-- Preconnect to external origins for performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Google Fonts: Syne (display) and Figtree (body) for distinctive typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <!-- Manifest -->
     <link rel="manifest" href="assets/site.webmanifest">
     <meta name="theme-color" content="#071521">
-    
+
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" defer></script>
+
     <!-- Components -->
     <script src="components/navbar.js" defer></script>
     <script src="components/footer.js" defer></script>
 </head>
 <body class="site-shell text-gray-100 min-h-screen page-loading">
+    <!-- Skip to main content for keyboard accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <div id="landing-loader" class="landing-loader" aria-live="polite" aria-label="Loading landing page">
         <div class="landing-loader__spinner"></div>
     </div>
-    <!-- ===== Navigation ===== -->
-    <nav aria-label="Primary navigation">
-        <custom-navbar></custom-navbar>
-    </nav>
-  
-    <!-- ===== Hero Section - Centered ===== -->
-    <main id="main-content">
+     <!-- ===== Navigation ===== -->
+     <nav aria-label="Primary navigation" role="navigation">
+         <custom-navbar></custom-navbar>
+     </nav>
+
+     <!-- ===== Hero Section - Centered ===== -->
+     <main id="main-content" role="main">
         <section id="hero" class="relative min-h-[92vh] lg:min-h-screen flex items-start justify-center overflow-visible pt-28 lg:pt-32 pb-16">
         <div class="absolute inset-0 opacity-20">
             <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10"></div>
@@ -158,7 +195,7 @@
             <a href="#career" class="text-gray-500 hover:text-cyan-400 transition-colors">
                 <i data-feather="chevron-down" class="w-8 h-8"></i>
             </a>
-        </div> -->
+        </div>
     </section>
 
      <!-- ===== Career Summary ===== -->
@@ -629,12 +666,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                             <span class="tech-tag">MongoDB</span>
                         </div>
 
-                        <div class="flex gap-4 ">
-                            <!-- <a href="#" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live Demo
-                            </a> -->
-
+                        <div class="flex gap-4">
                             <a href="https://github.com/arsalanshaikhh/PawHaven"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -717,10 +749,6 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                             <span class="tech-tag">React</span>
                             <span class="tech-tag">WebSockets</span>
                         </div>
-                        <!-- <div class="flex gap-4 ">
-                            <a href="#" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors"><i data-feather="external-link" class="w-4 h-4"></i>Live Demo</a>
-                            <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors"><i data-feather="github" class="w-4 h-4"></i>Code</a>
-                        </div> -->
                     </div>
                 </div>
 
@@ -742,10 +770,6 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                             <span class="tech-tag">Node.js</span>
                             <span class="tech-tag">MongoDB</span>
                         </div>
-                        <!-- <div class="flex gap-4">
-                            <a href="#" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors"><i data-feather="external-link" class="w-4 h-4"></i>Live Demo</a>
-                            <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors"><i data-feather="github" class="w-4 h-4"></i>Code</a>
-                        </div> -->
                     </div>
                 </div>
 
@@ -767,10 +791,6 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                             <span class="tech-tag">Express.js</span>
                             <span class="tech-tag">REST API</span>
                         </div>
-                        <!-- <div class="flex gap-4">
-                            <a href="#" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors"><i data-feather="external-link" class="w-4 h-4"></i>Live Demo</a>
-                            <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors"><i data-feather="github" class="w-4 h-4"></i>Code</a>
-                        </div> -->
                     </div>
                 </div>
             </div>
