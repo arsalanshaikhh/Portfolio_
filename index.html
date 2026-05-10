@@ -57,6 +57,11 @@
     <link rel="manifest" href="assets/site.webmanifest">
     <meta name="theme-color" content="#071521">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -88,33 +93,33 @@
         </div>
         
         <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse orb-delay"></div>
         
         <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm backdrop-blur-sm">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                <div class="hero-stagger delay-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm backdrop-blur-sm">
                     <span class="relative flex h-2 w-2">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
                     </span>
                     Available for opportunities
                 </div>
-                
-                <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent leading-tight">
+
+                <h1 class="hero-stagger delay-1 text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent leading-tight">
                     Arsalan Shaikh
                 </h1>
-                
-                <div class="space-y-3">
+
+                <div class="hero-stagger delay-2 space-y-3">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl text-gray-300 font-light">AI-Driven Full Stack Developer</h2>
                     <h3 class="text-lg sm:text-xl lg:text-2xl text-violet-400 font-medium">AI Assisted Development Specialist</h3>
                 </div>
-                
-                <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                    Building scalable digital products with AI-enhanced development workflows. 
+
+                <p class="hero-stagger delay-3 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                    Building scalable digital products with AI-enhanced development workflows.
                     Specializing in MERN stack, Django, and cutting-edge AI integration.
                 </p>
-                
-                <div class="flex flex-wrap justify-center gap-8 pt-4">
+
+                <div class="hero-stagger delay-4 flex flex-wrap justify-center gap-8 pt-4">
                     <div class="text-center">
                         <div class="text-3xl lg:text-4xl font-bold text-cyan-400">3+</div>
                         <div class="text-sm text-gray-500">Years Experience</div>
@@ -128,28 +133,28 @@
                         <div class="text-sm text-gray-500">Technologies</div>
                     </div>
                 </div>
-                
-                <div class="hero-actions flex flex-wrap justify-center gap-4 pt-6 pb-10">
-                    <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+
+                <div class="hero-stagger delay-5 hero-actions pt-6 pb-10">
+                    <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold ring-2 ring-cyan-400/30 hover:ring-cyan-400/60 hover:shadow-lg hover:shadow-cyan-500/30 transform hover:-translate-y-1 transition-all duration-300">
                         <i data-feather="github" class="w-5 h-5"></i>
                         View GitHub
                     </a>
-                    <a href="https://linkedin.com/in/iarsalanshaikh" target="_blank" rel="noopener noreferrer" class="group px-7 py-4 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                    <a href="https://linkedin.com/in/iarsalanshaikh" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300">
                         <i data-feather="linkedin" class="w-5 h-5"></i>
                         Connect on LinkedIn
                     </a>
-                    <button id="read-blogs-btn" class="group px-7 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-emerald-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                    <button id="read-blogs-btn" class="group inline-flex items-center gap-2 px-7 py-3.5 border-2 border-teal-500/60 text-teal-400 rounded-xl font-semibold hover:bg-teal-500/10 hover:border-teal-400 transform hover:-translate-y-1 transition-all duration-300">
                         <i data-feather="book-open" class="w-5 h-5"></i>
                         Read My Blogs
                     </button>
                     <!-- Resume Dropdown -->
-                    <details class="resume-dropdown relative group">
-                        <summary class="px-7 py-4 border-2 border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 flex items-center gap-2 cursor-pointer list-none">
+                    <details class="resume-dropdown relative">
+                        <summary class="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 cursor-pointer list-none">
                             <i data-feather="download" class="w-5 h-5"></i>
                             Download Resume
                             <i data-feather="chevron-down" class="w-4 h-4"></i>
                         </summary>
-                        <div id="resume-menu" class="resume-menu absolute top-full mt-2 left-0 w-64 bg-slate-800 border border-gray-600 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div id="resume-menu" class="resume-menu bg-slate-800 border border-gray-600 rounded-xl shadow-lg">
                             <a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_FullStack_Developer_CV.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-4 hover:bg-slate-700/50 transition-colors rounded-t-xl">
                                 <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center">
                                     <i data-feather="code" class="w-5 h-5 text-white"></i>
@@ -187,7 +192,7 @@
             <div class="max-w-4xl mx-auto">
                 <div class="glass-card p-8 lg:p-12">
                     <h2 class="text-3xl lg:text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Career Summary</h2>
-                    <div class="space-y-4 text-gray-300 leading-relaxed text-lg text-justify">
+                    <div class="space-y-4 text-gray-300 leading-relaxed text-lg text-left">
                         <p>With <span class="text-cyan-400 font-semibold">3+ years</span> of software development experience and <span class="text-violet-400 font-semibold">1.8 years</span> of structural design background, I bring a unique blend of engineering precision and modern development expertise to every project.</p>
                         <p>My expertise spans the <span class="text-cyan-400">MERN stack</span>, <span class="text-cyan-400">Django</span>, <span class="text-cyan-400">React</span>, <span class="text-cyan-400">Material UI</span>, and <span class="text-cyan-400">RESTful APIs</span>, enhanced by cutting-edge <span class="text-violet-400">AI tools</span> like <span class="text-violet-400">Claude</span>, <span class="text-violet-400">OpenAI</span>, and <span class="text-violet-400">GitHub Copilot</span> for rapid prototyping, intelligent debugging, and accelerated feature development.</p>
                         <p>I excel at end-to-end product development, from concept ideation through to production deployment, with a focus on clean architecture, performance optimization, and scalable microservices design.</p>
@@ -717,7 +722,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
     </section>
     <section id="projects2" class="py-20 relative">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Featured Projects</h2>
+            <h2 class="text-3xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Professional Work</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
                     <div class="project-preview flex items-center justify-center">
@@ -854,7 +859,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500 to-green-500 flex items-center justify-center">
                         <i data-feather="award" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Claude Cowork</h3>
+                    <h3 class="text-lg font-semibold text-violet-400">Claude Cowork</h3>
                     <p class="text-gray-400 text-sm mt-1">Anthropic</p>
                     <a href="https://verify.skilljar.com/c/jqeisnm3rb4q" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
 
@@ -864,7 +869,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
                         <i data-feather="codesandbox" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Claude 101</h3>
+                    <h3 class="text-lg font-semibold text-violet-400">Claude 101</h3>
                     <p class="text-gray-400 text-sm mt-1">Anthropic</p>
                     <a href="https://verify.skilljar.com/c/6jpx4tcqyac2" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
 
@@ -874,7 +879,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
                         <i data-feather="pie-chart" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Claude Code in Action</h3>
+                    <h3 class="text-lg font-semibold text-violet-400">Claude Code in Action</h3>
                     <p class="text-gray-400 text-sm mt-1">Anthropic</p>
                     <a href="https://verify.skilljar.com/c/mva7gzydpxtp" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
 
@@ -884,7 +889,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500 to-green-500 flex items-center justify-center">
                         <i data-feather="command" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">AI for All</h3>
+                    <h3 class="text-lg font-semibold text-emerald-400">AI for All</h3>
                     <p class="text-gray-400 text-sm mt-1">IT-ITeS SSC NASSCOM</p>
                     <a href="https://drive.google.com/file/d/1U6Ep0QkMCUv4xReiV3CTEZoS6dAuHuQs/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
 
@@ -894,7 +899,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
                         <i data-feather="code" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Full Stack Web Development</h3>
+                    <h3 class="text-lg font-semibold text-cyan-400">Full Stack Web Development</h3>
                     <p class="text-gray-400 text-sm mt-1">Masai School</p>
                     <a href="https://drive.google.com/file/d/19WA-jCjn_FWYkA2d9i8UtcGV0WIcGPSD/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
                 </div>
@@ -903,7 +908,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
                         <i data-feather="layers" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Django Python Framework</h3>
+                    <h3 class="text-lg font-semibold text-emerald-400">Django Python Framework</h3>
                     <p class="text-gray-400 text-sm mt-1">Industry Certification</p>
                     <a href="https://drive.google.com/file/d/1SKEqmykUPBoP2noZqIDjVGapnLevywaQ/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
 
@@ -913,7 +918,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                         <i data-feather="pen-tool" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Figma for Developers</h3>
+                    <h3 class="text-lg font-semibold text-cyan-400">Figma for Developers</h3>
                     <p class="text-gray-400 text-sm mt-1">Masai School</p>
                     <a href="https://drive.google.com/file/d/19ezEnbhaq2VU57Fvjvvo2xx9qUIDN40N/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
                 </div>
@@ -922,7 +927,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                         <i data-feather="menu" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Communication Skills</h3>
+                    <h3 class="text-lg font-semibold text-blue-400">Communication Skills</h3>
                     <p class="text-gray-400 text-sm mt-1">TCS</p>
                     <a href="https://drive.google.com/file/d/1YJdHCCmVMLEnTQbCSC6bzfXdIgjqqoYw/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
                 </div>
@@ -931,7 +936,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
                         <i data-feather="file" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Masai Coding Workshop</h3>
+                    <h3 class="text-lg font-semibold text-cyan-400">Masai Coding Workshop</h3>
                     <p class="text-gray-400 text-sm mt-1">Masai School</p>
                     <a href="https://drive.google.com/file/d/19QuJ5vgrqKuKgQCax1cezKgS9HaKukF8/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
                 </div>
@@ -940,7 +945,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
                         <i data-feather="shield" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">Basics of Web Development</h3>
+                    <h3 class="text-lg font-semibold text-cyan-400">Basics of Web Development</h3>
                     <p class="text-gray-400 text-sm mt-1">Masai School</p>
                     <a href="https://drive.google.com/file/d/19LK25kIux88a_N743J-nAHmec7nEpS9s/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
                 </div>
@@ -949,7 +954,7 @@ ATS compatibility scoring and job description matching via OpenRouter API.
                     <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500 to-green-500 flex items-center justify-center">
                         <i data-feather="circle" class="w-8 h-8 text-white"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-green-400">State Level Sepaktakraw</h3>
+                    <h3 class="text-lg font-semibold text-amber-400">State Level Sepaktakraw</h3>
                     <p class="text-gray-400 text-sm mt-1">Maharashtra Sepaktakraw Association</p>
                     <a href="https://drive.google.com/file/d/19FFaxVJ3gqE0E9wL7ZoU_9-hwGwmNZNH/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-cyan-400 hover:underline">View Certificate</a>
                 </div>

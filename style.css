@@ -5,17 +5,18 @@
  */
 
 /* ===== CSS Variables ===== */
-/* Color palette and design tokens used throughout the website */
 :root {
-    --primary: #38bdf8;           /* Primary sky color */
-    --secondary: #2dd4bf;         /* Secondary teal color */
-    --accent: #f59e0b;            /* Accent amber color */
-    --background: #071521;        /* Dark background color */
-    --background-soft: #0c2233;   /* Elevated background color */
-    --surface: rgba(10, 27, 40, 0.72); /* Surface/glass effect background */
+    --primary: #38bdf8;
+    --secondary: #2dd4bf;
+    --accent: #f59e0b;
+    --background: #071521;
+    --background-soft: #0c2233;
+    --surface: rgba(10, 27, 40, 0.72);
     --surface-border: rgba(125, 211, 252, 0.14);
-    --text-primary: #e2e8f0;      /* Primary text color */
-    --text-secondary: #94a3b8;    /* Secondary text color */
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
 }
 
 body.site-shell {
@@ -25,6 +26,12 @@ body.site-shell {
         linear-gradient(135deg, var(--background), var(--background-soft) 50%, #04111b 100%);
     color: var(--text-primary);
     overflow-x: hidden;
+    font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
 }
 
 .motion-safe-hover {
@@ -177,19 +184,6 @@ body.page-loading {
     }
 }
 
-/* Gradient background shift animation */
-@keyframes gradient-shift {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 .project-preview {
     position: relative;
     height: 12rem;
@@ -212,19 +206,6 @@ body.page-loading {
     background-size: 34px 34px;
     border: 1px solid rgba(125, 211, 252, 0.18);
     box-shadow: 0 18px 36px rgba(2, 12, 20, 0.28);
-}
-
-.project-preview::after {
-    content: '';
-    position: absolute;
-    left: 2.1rem;
-    right: 2.1rem;
-    bottom: 2rem;
-    height: 3.6rem;
-    border-radius: 0.75rem;
-    background: linear-gradient(90deg, rgba(56, 189, 248, 0.6), rgba(45, 212, 191, 0.28));
-    clip-path: polygon(0 62%, 16% 38%, 31% 50%, 48% 22%, 66% 44%, 82% 18%, 100% 34%, 100% 100%, 0 100%);
-    opacity: 0.78;
 }
 
 .project-preview > * {
@@ -266,6 +247,25 @@ body.page-loading {
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+/* Hero entrance stagger — fires only after loader exits */
+.hero-stagger {
+    opacity: 0;
+}
+
+body.loader-done .hero-stagger {
+    animation: fade-in 0.6s ease-out forwards;
+}
+
+body.loader-done .delay-0 { animation-delay: 0s; }
+body.loader-done .delay-1 { animation-delay: 0.12s; }
+body.loader-done .delay-2 { animation-delay: 0.26s; }
+body.loader-done .delay-3 { animation-delay: 0.42s; }
+body.loader-done .delay-4 { animation-delay: 0.58s; }
+body.loader-done .delay-5 { animation-delay: 0.74s; }
+
+/* Delayed orb float — second background orb */
+.orb-delay { animation-delay: 1s; }
 
 /* ===== Smooth Scroll ===== */
 /* Enables smooth scrolling behavior for anchor links */
@@ -470,26 +470,31 @@ textarea::placeholder {
 }
 
 /* Mobile screens */
-@media (max-width: 480px) {
-    section {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
-    }
-
+@media (max-width: 640px) {
     .hero-actions {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        width: min(100%, 22rem) !important;
     }
 
     .hero-actions .resume-menu {
         position: static !important;
-        display: none;
         width: 100% !important;
-        margin-top: 0.75rem !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        display: none;
+        margin-top: 0.5rem;
     }
 
-    .resume-dropdown[open] .resume-menu,
-    .resume-dropdown:focus-within .resume-menu {
-        display: block;
+    .resume-dropdown[open] .resume-menu {
+        display: block !important;
+    }
+}
+
+@media (max-width: 480px) {
+    section {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
     }
 
     .glass-card {
@@ -543,7 +548,15 @@ a:hover [data-feather] {
 }
 
 .resume-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    width: 16rem;
+    opacity: 0;
+    visibility: hidden;
     transform: translateY(8px);
+    z-index: 50;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
 }
 
 .resume-dropdown[open] .resume-menu,
@@ -564,6 +577,30 @@ a:hover [data-feather] {
 
 .resume-dropdown summary::-webkit-details-marker {
     display: none;
+}
+
+/* ===== Hero CTA Grid ===== */
+/* 2×2 grid on all screen sizes; mobile overrides are below */
+.hero-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 1rem;
+}
+
+.hero-actions > a,
+.hero-actions > button,
+.hero-actions .resume-dropdown {
+    width: 100%;
+}
+
+.hero-actions > a,
+.hero-actions > button,
+.hero-actions .resume-dropdown > summary {
+    justify-content: center;
+    width: 100%;
 }
 
 /* ===== Card Hover Glow ===== */

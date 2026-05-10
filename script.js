@@ -23,6 +23,7 @@ function initLandingLoader() {
     const hideLoader = () => {
         loader.classList.add('is-hidden');
         document.body.classList.remove('page-loading');
+        document.body.classList.add('loader-done');
 
         window.setTimeout(() => {
             loader.remove();

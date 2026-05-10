@@ -49,8 +49,6 @@ class CustomFooter extends HTMLElement {
                 .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: #64748b; font-size: 0.875rem; }
                 .footer-bottom p { margin: 0; }
                 .made-with { display: flex; align-items: center; gap: 0.5rem; }
-                .heart { color: #ef4444; animation: heartbeat 1.5s ease-in-out infinite; }
-                @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
                 @media (max-width: 768px) { .footer-bottom { flex-direction: column; text-align: center; } }
             </style>
             <footer>
@@ -75,17 +73,6 @@ class CustomFooter extends HTMLElement {
                                     <path d="M4.37 6.31c.04-.36-.1-.71-.37-.95L2 3.06V2h6.21l4.8 10.53L17.29 2H23v1.06l-1.71 1.63c-.15.11-.23.3-.2.48v13.66c-.03.18.05.37.2.48L23 20.94V22h-8.6v-1.06l1.77-1.72c.17-.17.17-.22.17-.48V8.6l-4.92 13.4h-.66L5.09 8.6v8.53c-.05.35.07.7.32.94l2.3 2.79V22H1v-1.06l2.3-2.79c.25-.24.36-.59.31-.94V6.31z"/>
                                 </svg>                            </a>
                         </div>
-                    </div>
-                    <!-- Quick navigation links -->
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <ul class="footer-links">
-                            <li><a href="#hero">Home</a></li>
-                            <li><a href="#career">About</a></li>
-                            <li><a href="#skills">Skills</a></li>
-                            <li><a href="#experience">Experience</a></li>
-                            <li><a href="#projects">Projects</a></li>
-                        </ul>
                     </div>
                     <!-- Resume Downloads -->
                     <div class="footer-section">
