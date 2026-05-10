@@ -467,7 +467,18 @@ async function fetchMediumArticles() {
     try {
         let articles = null;
 
-        // Method 1: allorigins.win
+        // Method 1: Netlify serverless function (no CORS, most reliable)
+        try {
+            const response = await fetch('/.netlify/functions/medium-feed');
+            if (response.ok) {
+                const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
+                const items = xml.querySelectorAll('item');
+                if (items.length > 0) articles = parseRSSItems(items);
+            }
+        } catch (e) { /* try next proxy */ }
+
+        // Method 2: allorigins.win
+        if (!articles || articles.length === 0) {
         try {
             const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}&t=${Date.now()}`);
             const data = await response.json();
@@ -478,8 +489,9 @@ async function fetchMediumArticles() {
                 if (items.length > 0) articles = parseRSSItems(items);
             }
         } catch (e) { /* try next proxy */ }
+        }
 
-        // Method 2: rss2json API
+        // Method 3: rss2json API
         if (!articles || articles.length === 0) {
             try {
                 const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`);
@@ -490,7 +502,7 @@ async function fetchMediumArticles() {
             } catch (e) { /* try next proxy */ }
         }
 
-        // Method 3: corsproxy.io
+        // Method 4: corsproxy.io
         if (!articles || articles.length === 0) {
             try {
                 const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(RSS_URL)}`);
@@ -502,7 +514,7 @@ async function fetchMediumArticles() {
             } catch (e) { /* try next proxy */ }
         }
 
-        // Method 4: allorigins raw
+        // Method 5: allorigins raw
         if (!articles || articles.length === 0) {
             try {
                 const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`);
@@ -514,7 +526,7 @@ async function fetchMediumArticles() {
             } catch (e) { /* try next proxy */ }
         }
 
-        // Method 5: codetabs proxy
+        // Method 6: codetabs proxy
         if (!articles || articles.length === 0) {
             try {
                 const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(RSS_URL)}`);
