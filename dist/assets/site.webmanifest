@@ -1,0 +1,21 @@
+{
+  "name": "Arsalan Shaikh Portfolio",
+  "short_name": "Arsalan",
+  "icons": [
+    {
+      "src": "assets/my-avatar.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#071521",
+  "background_color": "#071521",
+  "display": "standalone"
+}
