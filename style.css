@@ -342,10 +342,10 @@ html.light .tech-tag {
 }
 
 /* Text color overrides for light mode */
-html.light .text-gray-100 { color: #1e293b !important; } /* Dark text */
-html.light .text-gray-300 { color: #475569 !important; } /* Medium dark text */
-html.light .text-gray-400 { color: #64748b !important; } /* Medium text */
-html.light .text-gray-500 { color: #94a3b8 !important; } /* Light text */
+html.light .text-gray-100 { color: #1e293b !important; }
+html.light .text-gray-300 { color: #334155 !important; }
+html.light .text-gray-400 { color: #475569 !important; }
+html.light .text-gray-500 { color: #64748b !important; } /* darkened from #94a3b8 to pass WCAG AA on light bg */
 
 /* Form element overrides for light mode */
 html.light input,

@@ -11,7 +11,7 @@
     {
       "src": "assets/favicon.ico",
       "sizes": "48x48",
-      "type": "image/png",
+      "type": "image/x-icon",
       "purpose": "any"
     }
   ],

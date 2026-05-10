@@ -1,21 +1,19 @@
-/**
- * Portfolio Website JavaScript
- * Main entry point for all interactive functionality
- * Initializes all website features when DOM is fully loaded
- */
+const CONFIG = {
+    email: 'arsalan.developer7@gmail.com',
+    mediumFeedUrl: 'https://medium.com/feed/@arsalan-shaikh',
+    mediumProfileUrl: 'https://medium.com/@arsalan-shaikh',
+};
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all website functionalities
     initLandingLoader();
     refreshFeatherIcons();
-    initSmoothScroll();           // Smooth scrolling for anchor links
-    initScrollAnimations();       // Scroll-triggered animations
-    initScrollProgress();         // Progress bar indicator
-    initParallaxEffect();         // Parallax background effects
-    initFormHandler();            // Contact form handling
-    initResumeDropdown();         // Resume menu for mouse, keyboard, and touch
-    initCardHoverEffects();       // Interactive card effects
-    initBlogModal();              // Blog modal functionality
+    initSmoothScroll();
+    initScrollAnimations();
+    initScrollProgress();
+    initFormHandler();
+    initResumeDropdown();
+    initCardHoverEffects();
+    initBlogModal();
 });
 
 function initLandingLoader() {
@@ -181,41 +179,6 @@ function initScrollProgress() {
 }
 
 /**
- * ===== Parallax Effect =====
- * Creates subtle parallax scrolling effects on elements with data-parallax attribute
- * Uses requestAnimationFrame for smooth performance
- */
-function initParallaxEffect() {
-    // Throttle scroll events for performance
-    let ticking = false;
-    
-    /**
-     * Updates parallax position based on scroll position
-     * @param {number} scrolled - Current vertical scroll position
-     */
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        const parallaxElements = document.querySelectorAll('[data-parallax]');
-        
-        parallaxElements.forEach(el => {
-            // Get parallax speed from data attribute, default to 0.5
-            const speed = parseFloat(el.dataset.parallax) || 0.5;
-            // Apply parallax transform
-            el.style.transform = `translateY(${scrolled * speed}px)`;
-        });
-        
-        ticking = false;
-    }
-    
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    });
-}
-
-/**
  * ===== Form Handler =====
  * Manages contact form submission, validation, and user feedback
  * Handles loading states, success messages, and form reset
@@ -262,7 +225,7 @@ function initFormHandler() {
             `;
             submitButton.disabled = true;
 
-            window.location.href = `mailto:arsalan.developer7@gmail.com?subject=${subject}&body=${body}`;
+            window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
 
             submitButton.innerHTML = `
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,7 +236,7 @@ function initFormHandler() {
             submitButton.classList.add('success');
 
             if (status) {
-                status.textContent = 'Your email app should open with the message prefilled. If it does not, email me directly at arsalan.developer7@gmail.com.';
+                status.textContent = `Your email app should open with the message prefilled. If it does not, email me directly at ${CONFIG.email}.`;
                 status.classList.add('text-emerald-400');
                 status.classList.remove('text-gray-400', 'text-red-400');
             }
@@ -309,15 +272,17 @@ function initFormHandler() {
  */
 function validateInput(input) {
     const isValid = input.checkValidity();
-    
+
     if (!isValid) {
         input.classList.add('error');
         input.style.borderColor = '#ef4444';
+        input.setAttribute('aria-invalid', 'true');
     } else {
         input.classList.remove('error');
         input.style.borderColor = '';
+        input.removeAttribute('aria-invalid');
     }
-    
+
     return isValid;
 }
 
@@ -348,66 +313,6 @@ function initCardHoverEffects() {
             this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
         });
     });
-}
-
-/**
- * ===== Typing Animation (Optional) =====
- * Creates a typing animation effect for text elements
- * @param {HTMLElement} element - The DOM element to animate
- * @param {string[]} texts - Array of strings to type through
- * @param {Object} options - Configuration options for the animation
- * @param {number} options.typeSpeed - Speed of typing in milliseconds (default: 100)
- * @param {number} options.deleteSpeed - Speed of deleting in milliseconds (default: 50)
- * @param {number} options.pauseTime - Pause time at end of each text in milliseconds (default: 2000)
- */
-function initTypingAnimation(element, texts, options = {}) {
-    const {
-        typeSpeed = 100,
-        deleteSpeed = 50,
-        pauseTime = 2000
-    } = options;
-    
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    
-    /**
-     * Types or deletes characters to create animation effect
-     */
-    function type() {
-        const currentText = texts[textIndex];
-        
-        if (isDeleting) {
-            // Remove character when deleting
-            element.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            // Add character when typing
-            element.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-        }
-        
-        // Set speed based on current action
-        let timeout = isDeleting ? deleteSpeed : typeSpeed;
-        
-        // Handle end of text
-        if (!isDeleting && charIndex === currentText.length) {
-            // Pause at end of text before deleting
-            timeout = pauseTime;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            // Move to next text when finished deleting
-            isDeleting = false;
-            textIndex = (textIndex + 1) % texts.length;
-            timeout = 500; // Short pause before next text
-        }
-        
-        // Schedule next frame
-        setTimeout(type, timeout);
-    }
-    
-    // Start the animation
-    type();
 }
 
 /**
@@ -475,13 +380,11 @@ function getCurrentYear() {
     return new Date().getFullYear();
 }
 
-// Export functions for use in other scripts
 window.portfolioUtils = {
     debounce,
     throttle,
     isInViewport,
     getCurrentYear,
-    initTypingAnimation
 };
 
 // ===== Blog Modal Functionality =====
@@ -521,10 +424,26 @@ function initBlogModal() {
         }
     });
     
-    // Close on Escape key
+    // Close on Escape key + focus trapping
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        if (modal.classList.contains('hidden')) return;
+
+        if (e.key === 'Escape') {
             closeModal();
+            return;
+        }
+
+        if (e.key === 'Tab') {
+            const focusable = Array.from(modal.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            )).filter(el => !el.disabled);
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+            } else {
+                if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
         }
     });
 }
@@ -534,140 +453,90 @@ async function fetchMediumArticles() {
     const loadingEl = document.getElementById('blog-loading');
     const errorEl = document.getElementById('blog-error');
     const articlesEl = document.getElementById('blog-articles');
-    
-    // Reset states
+
     loadingEl.classList.remove('hidden');
     loadingEl.classList.add('flex');
     errorEl.classList.add('hidden');
     errorEl.classList.remove('flex');
     articlesEl.classList.add('hidden');
-    
-    const RSS_URL = 'https://medium.com/feed/@arsalan-shaikh';
+
+    const RSS_URL = CONFIG.mediumFeedUrl;
     const CACHE_KEY = 'medium-articles-cache-v1';
-    // Add cache-busting to ensure fresh data
-    const cacheBuster = `?t=${Date.now()}`;
-    
+
     try {
         let articles = null;
-        
-        // Method 1: allorigins.win - gets all items from RSS (try this first as it has no limits)
-        console.log('Trying allorigins.win...');
+
+        // Method 1: allorigins.win
         try {
             const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}&t=${Date.now()}`);
             const data = await response.json();
-            
             if (data.contents) {
-                console.log('allorigins: Raw XML length:', data.contents.length);
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(data.contents, 'text/xml');
                 const items = xml.querySelectorAll('item');
-                console.log(`allorigins: Found ${items.length} items in RSS feed`);
-                
-                if (items.length > 0) {
-                    articles = parseRSSItems(items);
-                    console.log(`allorigins: Parsed ${articles.length} articles`);
-                }
+                if (items.length > 0) articles = parseRSSItems(items);
             }
-        } catch (e) {
-            console.log('allorigins failed:', e.message);
-        }
-        
-        // Method 2: rss2json API with count=50
+        } catch (e) { /* try next proxy */ }
+
+        // Method 2: rss2json API
         if (!articles || articles.length === 0) {
-            console.log('Trying rss2json API...');
             try {
                 const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`);
                 const data = await response.json();
-                console.log('rss2json response:', data);
-                
-                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                if (data.status === 'ok' && data.items?.length > 0) {
                     articles = data.items.filter(item => item.title && item.link);
-                    console.log(`rss2json: Found ${articles.length} articles`);
                 }
-            } catch (e) {
-                console.log('rss2json failed:', e.message);
-            }
+            } catch (e) { /* try next proxy */ }
         }
-        
+
         // Method 3: corsproxy.io
         if (!articles || articles.length === 0) {
-            console.log('Trying corsproxy.io...');
             try {
                 const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(RSS_URL)}`);
                 if (response.ok) {
-                    const text = await response.text();
-                    console.log('corsproxy: Response length:', text.length);
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(text, 'text/xml');
+                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
                     const items = xml.querySelectorAll('item');
-                    console.log(`corsproxy: Found ${items.length} items`);
-                    
-                    if (items.length > 0) {
-                        articles = parseRSSItems(items);
-                    }
+                    if (items.length > 0) articles = parseRSSItems(items);
                 }
-            } catch (e) {
-                console.log('corsproxy failed:', e.message);
-            }
+            } catch (e) { /* try next proxy */ }
         }
-        
+
         // Method 4: allorigins raw
         if (!articles || articles.length === 0) {
-            console.log('Trying allorigins raw...');
             try {
                 const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`);
                 if (response.ok) {
-                    const text = await response.text();
-                    console.log('allorigins raw: Response length:', text.length);
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(text, 'text/xml');
+                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
                     const items = xml.querySelectorAll('item');
-                    console.log(`allorigins raw: Found ${items.length} items`);
-                    
-                    if (items.length > 0) {
-                        articles = parseRSSItems(items);
-                    }
+                    if (items.length > 0) articles = parseRSSItems(items);
                 }
-            } catch (e) {
-                console.log('allorigins raw failed:', e.message);
-            }
+            } catch (e) { /* try next proxy */ }
         }
-        
+
         // Method 5: codetabs proxy
         if (!articles || articles.length === 0) {
-            console.log('Trying codetabs proxy...');
             try {
                 const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(RSS_URL)}`);
                 if (response.ok) {
-                    const text = await response.text();
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(text, 'text/xml');
+                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
                     const items = xml.querySelectorAll('item');
-                    console.log(`codetabs: Found ${items.length} items`);
-                    
-                    if (items.length > 0) {
-                        articles = parseRSSItems(items);
-                    }
+                    if (items.length > 0) articles = parseRSSItems(items);
                 }
-            } catch (e) {
-                console.log('codetabs failed:', e.message);
-            }
+            } catch (e) { /* try next proxy */ }
         }
-        
+
         if (!articles || articles.length === 0) {
             throw new Error('Unable to fetch articles from Medium');
         }
-        
-        console.log(`Total articles to display: ${articles.length}`);
+
         localStorage.setItem(CACHE_KEY, JSON.stringify(articles.slice(0, 12)));
         renderArticles(articles);
-        
+
         loadingEl.classList.add('hidden');
         loadingEl.classList.remove('flex');
         articlesEl.classList.remove('hidden');
-        
+
     } catch (error) {
-        console.error('Error fetching Medium articles:', error);
         const cachedArticles = localStorage.getItem(CACHE_KEY);
         if (cachedArticles) {
             try {
@@ -676,9 +545,7 @@ async function fetchMediumArticles() {
                 loadingEl.classList.remove('flex');
                 articlesEl.classList.remove('hidden');
                 return;
-            } catch (cacheError) {
-                console.error('Error reading cached Medium articles:', cacheError);
-            }
+            } catch (e) { /* fall through to error state */ }
         }
         loadingEl.classList.add('hidden');
         loadingEl.classList.remove('flex');
@@ -690,14 +557,11 @@ async function fetchMediumArticles() {
 
 // ===== Parse RSS Items from XML =====
 function parseRSSItems(items) {
-    console.log(`parseRSSItems: Processing ${items.length} items`);
-    
-    const parsed = Array.from(items).map((item, index) => {
+    const parsed = Array.from(items).map((item) => {
         const title = item.querySelector('title')?.textContent || '';
         const link = item.querySelector('link')?.textContent || '';
         const pubDate = item.querySelector('pubDate')?.textContent || '';
-        
-        // Get content - try content:encoded first, then description
+
         let content = '';
         const allElements = item.querySelectorAll('*');
         for (const el of allElements) {
@@ -709,32 +573,23 @@ function parseRSSItems(items) {
         if (!content) {
             content = item.querySelector('description')?.textContent || '';
         }
-        
+
         const thumbnail = extractImageFromContent(content) || '';
-        
-        console.log(`Item ${index}: title="${title.substring(0, 50)}...", link="${link}"`);
-        
         return { title, link, pubDate, content, description: content, thumbnail };
     });
-    
-    const filtered = parsed.filter(item => item.title && item.link);
-    console.log(`parseRSSItems: ${filtered.length} items after filtering`);
-    
-    return filtered;
+
+    return parsed.filter(item => item.title && item.link);
 }
 
 // ===== Render Articles =====
 function renderArticles(articles) {
     const articlesEl = document.getElementById('blog-articles');
-    
-    console.log(`renderArticles: Rendering ${articles.length} articles`);
-    
-    articlesEl.innerHTML = articles.map((article, index) => {
-        console.log(`Rendering article ${index}: ${article.title}`);
+
+    articlesEl.innerHTML = articles.map((article) => {
         
         // Extract thumbnail from content or use default
         const fallbackThumbnail = 'https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png';
-        const articleUrl = getSafeUrl(article.link, 'https://medium.com/@arsalan-shaikh');
+        const articleUrl = getSafeUrl(article.link, CONFIG.mediumProfileUrl);
         const thumbnail = getSafeUrl(article.thumbnail || extractImageFromContent(article.content), fallbackThumbnail);
         
         // Clean description (remove HTML tags and truncate)
