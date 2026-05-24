@@ -126,7 +126,7 @@ class CustomNavbar extends HTMLElement {
                 document.documentElement.classList.add('theme-transition');
                 document.documentElement.classList.toggle('light');
                 this.classList.toggle('light');
-                localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+                try { localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark'); } catch (_) {}
                 clearTimeout(window._themeTransitionTimer);
                 window._themeTransitionTimer = setTimeout(() => {
                     document.documentElement.classList.remove('theme-transition');

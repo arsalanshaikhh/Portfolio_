@@ -303,6 +303,7 @@ function initFormHandler() {
             }
             
             const submitButton = form.querySelector('button[type="submit"]');
+            if (!submitButton) return;
             const originalContent = submitButton.innerHTML;
             const formData = new FormData(form);
             const name = (formData.get('name') || '').toString().trim();
@@ -476,15 +477,10 @@ function isInViewport(element) {
  * Get current year for dynamic copyright updates
  * @returns {number} - Current year
  */
-function getCurrentYear() {
-    return new Date().getFullYear();
-}
-
 window.portfolioUtils = {
     debounce,
     throttle,
     isInViewport,
-    getCurrentYear,
 };
 
 // ===== Blog Modal Functionality =====
@@ -653,7 +649,8 @@ async function fetchMediumArticles() {
         blogIsLoading = false;
 
     } catch (error) {
-        const cachedArticles = localStorage.getItem(CACHE_KEY);
+        let cachedArticles = null;
+        try { cachedArticles = localStorage.getItem(CACHE_KEY); } catch (_) {}
         if (cachedArticles) {
             try {
                 renderArticles(JSON.parse(cachedArticles));
@@ -733,7 +730,8 @@ function renderArticles(articles) {
             <a href="${articleUrl}" target="_blank" rel="noopener noreferrer" 
                class="glass-card p-4 flex flex-col gap-3 hover:scale-[1.02] transition-transform duration-300 group no-underline">
                 <div class="relative overflow-hidden rounded-lg aspect-video bg-slate-800">
-                    <img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(article.title)}" 
+                    <img src="${escapeHtml(thumbnail)}" alt="${escapeHtml(article.title)}"
+                         width="600" height="338"
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                          onerror="this.src='https://miro.medium.com/max/1200/1*5AwDJU5kQGt9U7nR3CjBQg.png'">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
