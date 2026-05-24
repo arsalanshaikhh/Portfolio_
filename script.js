@@ -199,7 +199,6 @@ function initScrollAnimations() {
  * Bar appears at top of page and fills as user scrolls down
  */
 function initScrollProgress() {
-    // Create progress bar element
     const progressBar = document.createElement('div');
     progressBar.id = 'scroll-progress';
     progressBar.style.cssText = `
@@ -215,16 +214,62 @@ function initScrollProgress() {
     `;
     document.body.appendChild(progressBar);
 
-    // Throttle scroll events for performance
+    const tooltip = document.createElement('div');
+    tooltip.id = 'scroll-tooltip';
+    tooltip.className = 'scroll-tooltip';
+    document.body.appendChild(tooltip);
+
+    const SECTION_NAMES = {
+        hero: 'Home',
+        career: 'About',
+        skills: 'Skills',
+        experience: 'Experience',
+        projects: 'Projects',
+        projects2: 'Featured',
+        education: 'Education',
+        contact: 'Contact',
+    };
+
+    const sectionIds = Object.keys(SECTION_NAMES);
+    let hideTimer = null;
+
+    const getCurrentSection = () => {
+        const scrollMid = window.scrollY + window.innerHeight / 2;
+        let current = sectionIds[0];
+        for (const id of sectionIds) {
+            const el = document.getElementById(id);
+            if (el && el.offsetTop <= scrollMid) current = id;
+        }
+        return current;
+    };
+
+    const showTooltip = (sectionId) => {
+        const name = SECTION_NAMES[sectionId] || sectionId;
+        tooltip.textContent = name;
+        tooltip.classList.add('scroll-tooltip--visible');
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => tooltip.classList.remove('scroll-tooltip--visible'), 1500);
+    };
+
     let ticking = false;
-    
+    let lastSection = null;
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             requestAnimationFrame(() => {
-                // Calculate scroll percentage
                 const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-                // Update progress bar width
                 progressBar.style.width = Math.min(scrollPercent, 100) + '%';
+
+                const section = getCurrentSection();
+                if (section !== lastSection) {
+                    lastSection = section;
+                    showTooltip(section);
+                } else {
+                    clearTimeout(hideTimer);
+                    tooltip.classList.add('scroll-tooltip--visible');
+                    hideTimer = setTimeout(() => tooltip.classList.remove('scroll-tooltip--visible'), 1500);
+                }
+
                 ticking = false;
             });
             ticking = true;
