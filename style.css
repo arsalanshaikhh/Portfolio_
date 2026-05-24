@@ -6,24 +6,67 @@
 
 /* ===== CSS Variables ===== */
 :root {
-    --primary: #38bdf8;
-    --secondary: #2dd4bf;
-    --accent: #f59e0b;
-    --background: #071521;
-    --background-soft: #0c2233;
-    --surface: rgba(10, 27, 40, 0.72);
-    --surface-border: rgba(125, 211, 252, 0.14);
-    --text-primary: #e2e8f0;
+    /* Brand colors */
+    --primary:        #38bdf8;
+    --primary-dim:    rgba(56, 189, 248, 0.15);
+    --secondary:      #2dd4bf;
+    --accent:         #f59e0b;
+    --accent-dim:     rgba(245, 158, 11, 0.15);
+    --danger:         #f87171;
+
+    /* Backgrounds */
+    --bg:             #060f1a;
+    --bg-soft:        #0b1d2e;
+    --bg-card:        rgba(8, 20, 34, 0.75);
+
+    /* Surfaces */
+    --surface:        rgba(10, 27, 40, 0.72);
+    --surface-border: rgba(125, 211, 252, 0.12);
+    --surface-hover:  rgba(45, 212, 191, 0.08);
+
+    /* Text */
+    --text-primary:   #e2e8f0;
     --text-secondary: #94a3b8;
+    --text-muted:     #475569;
+
+    /* Fonts */
     --font-display: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Spacing scale */
+    --space-xs:  0.25rem;
+    --space-sm:  0.5rem;
+    --space-md:  1rem;
+    --space-lg:  1.5rem;
+    --space-xl:  2.5rem;
+    --space-2xl: 4rem;
+
+    /* Radius */
+    --radius-sm:  8px;
+    --radius-md:  12px;
+    --radius-lg:  18px;
+    --radius-xl:  24px;
+    --radius-full: 999px;
+
+    /* Transitions */
+    --transition-fast:   0.15s ease;
+    --transition-base:   0.25s ease;
+    --transition-slow:   0.45s ease;
+
+    /* Shadows */
+    --shadow-sm:  0 4px 12px rgba(0,0,0,0.3);
+    --shadow-md:  0 8px 28px rgba(0,0,0,0.35);
+    --shadow-lg:  0 20px 50px rgba(0,0,0,0.4);
+    --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.2);
 }
 
 body.site-shell {
     background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 28%),
-        radial-gradient(circle at top right, rgba(45, 212, 191, 0.14), transparent 24%),
-        linear-gradient(135deg, var(--background), var(--background-soft) 50%, #04111b 100%);
+        radial-gradient(ellipse at 0% 0%, rgba(56, 189, 248, 0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 0%, rgba(45, 212, 191, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 100%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+        var(--bg);
     color: var(--text-primary);
     overflow-x: hidden;
     font-family: var(--font-body);
@@ -32,6 +75,52 @@ body.site-shell {
 h1, h2, h3 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+}
+
+/* Typographic scale */
+.text-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+}
+.text-headline {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+.text-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary) 0%, #818cf8 50%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+.section-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 2px;
 }
 
 .motion-safe-hover {
