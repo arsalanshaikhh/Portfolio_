@@ -2,6 +2,7 @@ const CONFIG = {
     email: 'arsalan.developer7@gmail.com',
     mediumFeedUrl: 'https://medium.com/feed/@arsalan-shaikh',
     mediumProfileUrl: 'https://medium.com/@arsalan-shaikh',
+    available: true,
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCardHoverEffects();
     initBlogModal();
     initProjectFilter();
+    initAvailabilityBadge();
 });
 
 window.addEventListener('load', function() {
@@ -781,4 +783,17 @@ function initProjectFilter() {
             if (typeof AOS !== 'undefined') AOS.refreshHard();
         });
     });
+}
+
+function initAvailabilityBadge() {
+    const dot = document.getElementById('avail-dot');
+    const text = document.getElementById('avail-text');
+    if (!dot || !text) return;
+    if (CONFIG.available) {
+        dot.classList.add('avail-dot--open');
+        text.textContent = 'Open to work';
+    } else {
+        dot.classList.add('avail-dot--busy');
+        text.textContent = 'Currently busy';
+    }
 }
