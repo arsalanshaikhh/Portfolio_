@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('load', function() {
     initAOS();
     initTypewriter();
+    if (window.feather) feather.replace({ width: 18, height: 18, 'stroke-width': 1.8 });
+    if (typeof AOS !== 'undefined') AOS.refresh();
 }, { once: true });
 
 function initLandingLoader() {
@@ -31,6 +33,9 @@ function initLandingLoader() {
         loader.classList.add('is-hidden');
         document.body.classList.remove('page-loading');
         document.body.classList.add('loader-done');
+        window.requestAnimationFrame(() => {
+            if (window.feather) feather.replace({ width: 18, height: 18, 'stroke-width': 1.8 });
+        });
 
         window.setTimeout(() => {
             loader.remove();

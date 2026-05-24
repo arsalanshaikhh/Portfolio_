@@ -1446,3 +1446,17 @@ body.cursor-hover #cursor-ring {
 section + section {
     border-top: 1px solid rgba(255,255,255,0.03);
 }
+
+/* Mobile tap targets */
+@media (max-width: 768px) {
+    .btn-primary, .btn-secondary, .btn-ghost {
+        min-height: 44px;
+    }
+    .project-filter {
+        min-height: 36px;
+        padding: 0.4rem 1rem;
+    }
+    .social-link {
+        width: 44px; height: 44px;
+    }
+}
