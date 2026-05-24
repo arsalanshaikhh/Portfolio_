@@ -1181,3 +1181,96 @@ html.light #blog-modal .border-t {
     color: var(--primary);
     font-weight: 700;
 }
+
+/* ===== Projects ===== */
+.project-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+.project-filter {
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--surface-border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+.project-filter:hover {
+    border-color: rgba(56,189,248,0.3);
+    color: var(--text-primary);
+}
+.project-filter.active {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-color: transparent;
+    color: #071521;
+    font-weight: 700;
+}
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+.project-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg) !important;
+    transition: var(--transition-base);
+}
+.project-card:hover {
+    border-color: rgba(56,189,248,0.3) !important;
+    box-shadow: var(--shadow-glow) !important;
+    transform: translateY(-3px);
+}
+.project-card.is-hidden {
+    display: none;
+}
+.project-card__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+.project-card__icon {
+    font-size: 1.75rem;
+    line-height: 1;
+}
+.project-card__links {
+    display: flex;
+    gap: 0.5rem;
+}
+.project-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--surface-border);
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+    text-decoration: none;
+}
+.project-link:hover {
+    border-color: rgba(56,189,248,0.3);
+    color: var(--primary);
+    background: var(--primary-dim);
+}
+.project-link svg { width: 14px; height: 14px; }
+.project-card__title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.375rem;
+}
+.project-card__desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex-grow: 1;
+}

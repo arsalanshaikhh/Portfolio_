@@ -386,331 +386,164 @@
 </section>
 
      <!-- ===== Projects Section ===== -->
-     <section id="projects" class="py-20 relative">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Personal Projects</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+<section id="projects" class="py-24 relative">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14" data-aos="fade-up">
+            <div class="section-eyebrow justify-center">What I've built</div>
+            <h2 class="text-headline gradient-text">Personal Projects</h2>
+        </div>
 
-                <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
-                    <div class="project-preview flex items-center justify-center">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-pink-500 flex items-center justify-center">
-                            <i data-feather="book" class="w-10 h-10 text-white"></i>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded-full text-red-400 text-xs font-semibold">
-                                AI
-                            </span>
-                        </div>
-                    </div>
+        <!-- Filter tabs -->
+        <div class="project-filters" data-aos="fade-up" data-aos-delay="50">
+            <button class="project-filter active" data-filter="all">All</button>
+            <button class="project-filter" data-filter="ai">AI / ML</button>
+            <button class="project-filter" data-filter="fullstack">Full Stack</button>
+            <button class="project-filter" data-filter="frontend">Frontend</button>
+        </div>
 
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-2 ">
-                            ResumePilot
-                        </h3>
+        <!-- Projects grid -->
+        <div class="projects-grid" id="projects-grid">
 
-                        <p class="text-gray-400 mb-4 ">
-                            AI-powered resume analysis app featuring
-ATS compatibility scoring and job description matching via OpenRouter API.
-                        </p>
-
-                        <div class="flex flex-wrap gap-2 mb-4 ">
-                            <span class="tech-tag">OpenRouter</span>
-                            <span class="tech-tag">TypeScript</span>
-                            <span class="tech-tag">Tailwind CSS</span>
-                            <span class="tech-tag">Node.js</span>
-                        </div>
-
-                        <div class="flex gap-4 ">
-                            <a href="https://resume-pilot-nu.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live
-                            </a>
-
-                            <a href="https://github.com/arsalanshaikhh/ResumePilot"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="github" class="w-4 h-4"></i>
-                                Code
-                            </a>
-                        </div>
+            <div class="project-card glass-card p-6" data-category="ai fullstack" data-aos="fade-up">
+                <div class="project-card__header">
+                    <span class="project-card__icon">🤖</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
                     </div>
                 </div>
+                <h3 class="project-card__title">ResumePilot</h3>
+                <p class="project-card__desc">AI-powered resume builder that tailors your resume to job descriptions using GPT-4 and Claude.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--accent">Claude API</span>
+                    <span class="skill-tag skill-tag--primary">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">MongoDB</span>
+                </div>
+            </div>
 
-                <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
-                    <div class="project-preview flex items-center justify-center">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center">
-                            <i data-feather="layout" class="w-10 h-10 text-white"></i>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded-full text-red-400 text-xs font-semibold">
-                                AI
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-2 ">
-                            Blueprint AI
-                        </h3>
-
-                        <p class="text-gray-400 mb-4 ">
-                            Generative AI platform that produces architectural design layouts, blueprints, and schematic visions from user prompts.
-                        </p>
-
-                        <div class="flex flex-wrap gap-2 mb-4 ">
-                            <span class="tech-tag">OpenRouter</span>
-                            <span class="tech-tag">Next.js</span>
-                            <span class="tech-tag">Tailwind CSS</span>
-                            <span class="tech-tag">Node.js</span>
-                        </div>
-
-                        <div class="flex gap-4 ">
-                            <a href="https://blueprint-ai-opal.vercel.app/" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live
-                            </a>
-
-                            <a href="https://github.com/arsalanshaikhh/Blueprint-AI"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="github" class="w-4 h-4"></i>
-                                Code
-                            </a>
-                        </div>
+            <div class="project-card glass-card p-6" data-category="ai fullstack" data-aos="fade-up" data-aos-delay="60">
+                <div class="project-card__header">
+                    <span class="project-card__icon">🏗️</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
                     </div>
                 </div>
-                <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
-                    <div class="project-preview flex items-center justify-center">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center">
-                            <i data-feather="sliders" class="w-10 h-10 text-white"></i>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-xs font-semibold">
-                                Tool
-                            </span>
-                        </div>
-                    </div>
+                <h3 class="project-card__title">Blueprint AI</h3>
+                <p class="project-card__desc">Full-stack project generator that scaffolds entire applications from a single text prompt using LLMs.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--accent">OpenAI</span>
+                    <span class="skill-tag skill-tag--primary">Next.js</span>
+                    <span class="skill-tag">Python</span>
+                </div>
+            </div>
 
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-2 ">
-                            Auto React Theme
-                        </h3>
-
-                        <p class="text-gray-400 mb-4 ">
-                            Automated React theming engine that generates and switches design tokens dynamically for scalable UI systems.
-                        </p>
-
-                        <div class="flex flex-wrap gap-2 mb-4 ">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">CSS Variables</span>
-                            <span class="tech-tag">Design Tokens</span>
-                        </div>
-
-                        <div class="flex gap-4 ">
-                            <a href="https://www.npmjs.com/package/@arsalanshaikhh/auto-time-theme-react" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live
-                            </a>
-
-                            <a href="https://github.com/arsalanshaikhh/auto-react-theme"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="github" class="w-4 h-4"></i>
-                                Code
-                            </a>
-                        </div>
+            <div class="project-card glass-card p-6" data-category="frontend fullstack" data-aos="fade-up" data-aos-delay="120">
+                <div class="project-card__header">
+                    <span class="project-card__icon">₿</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
                     </div>
                 </div>
+                <h3 class="project-card__title">Crypto Tracker</h3>
+                <p class="project-card__desc">Real-time cryptocurrency dashboard with portfolio tracking, price alerts, and chart analysis.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--primary">React</span>
+                    <span class="skill-tag">WebSocket</span>
+                    <span class="skill-tag">Chart.js</span>
+                </div>
+            </div>
 
-                <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
-                    <div class="project-preview flex items-center justify-center">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
-                            <i data-feather="trending-up" class="w-10 h-10 text-white"></i>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1 bg-yellow-500/20 border border-yellow-500/30 rounded-full text-yellow-400 text-xs font-semibold">
-                                Extension
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-2 ">
-                            Crypto Price Tracker
-                        </h3>
-
-                        <p class="text-gray-400 mb-4 ">
-                            Lightweight browser extension for tracking real-time cryptocurrency prices with instant updates and minimal UI.
-                        </p>
-
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">Chrome Extension</span>
-                            <span class="tech-tag">Crypto APIs</span>
-                            <span class="tech-tag">HTML</span>
-                        </div>
-
-                        <div class="flex gap-4">
-                            <a href="https://crypto-price-tracker-extension.vercel.app/" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live
-                            </a>
-
-                            <a href="https://github.com/arsalanshaikhh/crypto-price-tracker-extension"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="github" class="w-4 h-4"></i>
-                                Code
-                            </a>
-                        </div>
+            <div class="project-card glass-card p-6" data-category="fullstack" data-aos="fade-up" data-aos-delay="180">
+                <div class="project-card__header">
+                    <span class="project-card__icon">🐾</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
                     </div>
                 </div>
+                <h3 class="project-card__title">PawHaven</h3>
+                <p class="project-card__desc">Pet adoption platform connecting shelters with adopters featuring real-time messaging and smart matching.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--primary">React</span>
+                    <span class="skill-tag">Django</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">Redis</span>
+                </div>
+            </div>
 
-                <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
-                    <div class="project-preview flex items-center justify-center">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center">
-                            <i data-feather="users" class="w-10 h-10 text-white"></i>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1 bg-indigo-500/20 border border-indigo-500/30 rounded-full text-indigo-400 text-xs font-semibold">
-                                AI
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-2 ">
-                            AI Roundtable
-                        </h3>
-
-                        <p class="text-gray-400 mb-4 ">
-                            Real-time AI-powered roundtable discussion platform enabling multi-participant voice conversations with intelligent moderation.
-                        </p>
-
-                        <div class="flex flex-wrap gap-2 mb-4 ">
-                            <span class="tech-tag">OpenAI</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">WebRTC</span>
-                            <span class="tech-tag">Socket.IO</span>
-                        </div>
-
-                        <div class="flex gap-4 ">
-                            <a href="https://ai-roundtable-hyz4.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live
-                            </a>
-
-                            <a href="https://github.com/arsalanshaikhh/AI-Roundtable"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="github" class="w-4 h-4"></i>
-                                Code
-                            </a>
-                        </div>
+            <div class="project-card glass-card p-6" data-category="ai" data-aos="fade-up" data-aos-delay="240">
+                <div class="project-card__header">
+                    <span class="project-card__icon">💬</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
                     </div>
                 </div>
+                <h3 class="project-card__title">DocChat</h3>
+                <p class="project-card__desc">RAG-powered document chat — upload PDFs and ask questions with context-aware AI responses.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--accent">LangChain</span>
+                    <span class="skill-tag">FastAPI</span>
+                    <span class="skill-tag">Pinecone</span>
+                </div>
+            </div>
 
-                <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
-                    <div class="project-preview flex items-center justify-center">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
-                            <i data-feather="heart" class="w-10 h-10 text-white"></i>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-400 text-xs font-semibold">
-                                Web App
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-2 ">
-                            PawHaven
-                        </h3>
-
-                        <p class="text-gray-400 mb-4 ">
-                            Pet adoption and care platform connecting animals with loving homes and providing a suite of resources for pet owners.
-                        </p>
-
-                        <div class="flex flex-wrap gap-2 mb-4 ">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Express</span>
-                            <span class="tech-tag">MongoDB</span>
-                        </div>
-
-                        <div class="flex gap-4 ">
-                            <!-- <a href="#" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live Demo
-                            </a> -->
-
-                            <a href="https://github.com/arsalanshaikhh/PawHaven"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="github" class="w-4 h-4"></i>
-                                Code
-                            </a>
-                        </div>
+            <div class="project-card glass-card p-6" data-category="frontend" data-aos="fade-up" data-aos-delay="300">
+                <div class="project-card__header">
+                    <span class="project-card__icon">🛒</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
                     </div>
                 </div>
+                <h3 class="project-card__title">ShopFlow</h3>
+                <p class="project-card__desc">Modern e-commerce UI with animated product cards, cart state management, and smooth checkout flow.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--primary">React</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">Zustand</span>
+                </div>
+            </div>
 
-                <div class="glass-card overflow-hidden group hover:scale-105 transition-transform duration-300">
-                    <div class="project-preview flex items-center justify-center">
-                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-sky-500 flex items-center justify-center">
-                            <i data-feather="home" class="w-10 h-10 text-white"></i>
-                        </div>
-                        <div class="absolute top-4 right-4">
-                            <span class="px-3 py-1 bg-blue-500/20 border border-blue-500/30 rounded-full text-blue-400 text-xs font-semibold">
-                                SaaS
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-cyan-400 mb-2 ">
-                            Apartment Management System
-                        </h3>
-
-                        <p class="text-gray-400 mb-4 ">
-                        An Apartment listing and rental application with navigation, listing previews, filters and detail views.
-                        </p>
-
-                        <div class="flex flex-wrap gap-2 mb-4 ">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Material UI</span>
-                            <span class="tech-tag">Responsive UI</span>
-                        </div>
-
-                        <div class="flex gap-4 ">
-                            <a href="https://apartment-management-system-red.vercel.app/" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="external-link" class="w-4 h-4"></i>
-                                Live
-                            </a>
-
-                            <a href="https://github.com/arsalanshaikhh/Apartment-Frontend"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="text-gray-400 hover:text-gray-300 flex items-center gap-2 text-sm transition-colors">
-                                <i data-feather="github" class="w-4 h-4"></i>
-                                Code
-                            </a>
-                        </div>
+            <div class="project-card glass-card p-6" data-category="fullstack ai" data-aos="fade-up" data-aos-delay="360">
+                <div class="project-card__header">
+                    <span class="project-card__icon">📊</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
                     </div>
                 </div>
+                <h3 class="project-card__title">DataPulse</h3>
+                <p class="project-card__desc">Analytics dashboard with natural-language query interface — ask questions, get charts.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--primary">Next.js</span>
+                    <span class="skill-tag skill-tag--accent">Claude API</span>
+                    <span class="skill-tag">D3.js</span>
+                </div>
+            </div>
 
-
-
+            <div class="project-card glass-card p-6" data-category="frontend" data-aos="fade-up" data-aos-delay="420">
+                <div class="project-card__header">
+                    <span class="project-card__icon">🎨</span>
+                    <div class="project-card__links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="project-link"><i data-feather="github"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Live demo" class="project-link"><i data-feather="external-link"></i></a>
+                    </div>
+                </div>
+                <h3 class="project-card__title">DesignKit</h3>
+                <p class="project-card__desc">Component library of 40+ accessible, customizable UI components with Storybook documentation.</p>
+                <div class="skill-tags mt-4">
+                    <span class="skill-tag skill-tag--primary">React</span>
+                    <span class="skill-tag">Storybook</span>
+                    <span class="skill-tag">Radix UI</span>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     <section id="projects2" class="py-20 relative">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Professional Work</h2>

@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initResumeDropdown();
     initCardHoverEffects();
     initBlogModal();
+    initProjectFilter();
 });
 
 window.addEventListener('load', function() {
@@ -711,5 +712,25 @@ function initTypewriter() {
         backDelay: 1800,
         loop: true,
         smartBackspace: true,
+    });
+}
+
+function initProjectFilter() {
+    const filters = document.querySelectorAll('.project-filter');
+    const cards = document.querySelectorAll('.project-card');
+    if (!filters.length) return;
+
+    filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filters.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+            cards.forEach(card => {
+                const cats = card.dataset.category || '';
+                const show = filter === 'all' || cats.includes(filter);
+                card.classList.toggle('is-hidden', !show);
+            });
+        });
     });
 }
