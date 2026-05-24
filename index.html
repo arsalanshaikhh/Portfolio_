@@ -820,7 +820,12 @@
                         <span class="contact-info__icon"><i data-feather="mail"></i></span>
                         <div>
                             <p class="contact-info__label">Email</p>
-                            <a href="mailto:arsalan.developer7@gmail.com" class="contact-info__value">arsalan.developer7@gmail.com</a>
+                            <div class="copy-email-row">
+                                <a href="mailto:arsalan.developer7@gmail.com" class="contact-info__value">arsalan.developer7@gmail.com</a>
+                                <button id="copy-email-btn" class="copy-btn" aria-label="Copy email address">
+                                    <i data-feather="copy"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="contact-info__item">
@@ -910,6 +915,7 @@
     <!-- Footer -->
     <custom-footer></custom-footer>
 
+    <div id="copy-toast" class="copy-toast" aria-live="polite" aria-atomic="true">Copied!</div>
     <script src="script.js"></script>
 </body>
 </html>

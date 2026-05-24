@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initBlogModal();
     initProjectFilter();
     initAvailabilityBadge();
+    initCopyEmail();
 });
 
 window.addEventListener('load', function() {
@@ -783,6 +784,36 @@ function initProjectFilter() {
             if (typeof AOS !== 'undefined') AOS.refreshHard();
         });
     });
+}
+
+function initCopyEmail() {
+    const btn = document.getElementById('copy-email-btn');
+    const toast = document.getElementById('copy-toast');
+    if (!btn || !toast) return;
+
+    btn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(CONFIG.email);
+        } catch {
+            const ta = document.createElement('textarea');
+            ta.value = CONFIG.email;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+        }
+        showCopyToast(toast);
+    });
+}
+
+function showCopyToast(toast) {
+    toast.classList.add('copy-toast--visible');
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => {
+        toast.classList.remove('copy-toast--visible');
+    }, 2000);
 }
 
 function initAvailabilityBadge() {
