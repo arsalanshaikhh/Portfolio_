@@ -139,6 +139,9 @@ function initScrollAnimations() {
     // Observe only section containers so long pages do not feel sluggish or dim while scrolling.
     const animatedElements = document.querySelectorAll('section > .container');
     animatedElements.forEach((el, index) => {
+        // Skip if parent section uses AOS (children handle their own animation)
+        const section = el.closest('section');
+        if (section && section.querySelector('[data-aos]')) return;
         // Skip elements that already have fade-in animation
         if (!el.classList.contains('animate-fade-in')) {
             // Set initial state for animation
@@ -734,6 +737,8 @@ function initCustomCursor() {
         mouseX = e.clientX;
         mouseY = e.clientY;
         dot.style.transform = `translate(calc(-50% + ${mouseX}px), calc(-50% + ${mouseY}px))`;
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
     });
 
     const animateRing = () => {
@@ -767,6 +772,7 @@ function initProjectFilter() {
                 const show = filter === 'all' || cats.includes(filter);
                 card.classList.toggle('is-hidden', !show);
             });
+            if (typeof AOS !== 'undefined') AOS.refreshHard();
         });
     });
 }
