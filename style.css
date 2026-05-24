@@ -1010,3 +1010,77 @@ html.light #blog-modal p {
 html.light #blog-modal .border-t {
     border-color: rgba(0, 0, 0, 0.05); /* Light border */
 }
+
+/* ===== Skills ===== */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+.skill-category {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: var(--transition-base);
+}
+.skill-category:hover {
+    border-color: rgba(56,189,248,0.25);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+}
+.skill-category__header {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+.skill-category__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    background: var(--primary-dim);
+    border-radius: var(--radius-sm);
+    color: var(--primary);
+}
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+.skill-tag {
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+}
+.skill-tag:hover {
+    background: rgba(255,255,255,0.08);
+    color: var(--text-primary);
+}
+.skill-tag--primary {
+    background: var(--primary-dim);
+    border-color: rgba(56,189,248,0.2);
+    color: var(--primary);
+}
+.skill-tag--secondary {
+    background: rgba(45,212,191,0.1);
+    border-color: rgba(45,212,191,0.2);
+    color: var(--secondary);
+}
+.skill-tag--accent {
+    background: var(--accent-dim);
+    border-color: rgba(245,158,11,0.2);
+    color: var(--accent);
+}
