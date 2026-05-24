@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initGitHubStars();
     initSectionReveal();
     initHeroParticles();
+    initTiltCards();
+    initMagneticButtons();
+    initKeyboardShortcuts();
 });
 
 window.addEventListener('load', function() {
@@ -325,6 +328,164 @@ function initHeroParticles() {
 
     const ro = new ResizeObserver(resize);
     ro.observe(hero);
+}
+
+function initTiltCards() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.querySelectorAll('.project-card').forEach(card => {
+        const shine = document.createElement('div');
+        shine.className = 'card-shine';
+        shine.setAttribute('aria-hidden', 'true');
+        card.appendChild(shine);
+
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const cx = rect.left + rect.width  / 2;
+            const cy = rect.top  + rect.height / 2;
+            const nx = (e.clientX - cx) / (rect.width  / 2); // -1 to 1
+            const ny = (e.clientY - cy) / (rect.height / 2); // -1 to 1
+
+            const rotY =  nx * 8;
+            const rotX = -ny * 6;
+
+            card.style.transition = 'box-shadow 0.15s ease, border-color 0.15s ease';
+            card.style.transform  = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+
+            const sx = ((e.clientX - rect.left) / rect.width)  * 100;
+            const sy = ((e.clientY - rect.top)  / rect.height) * 100;
+            card.style.setProperty('--shine-x', sx + '%');
+            card.style.setProperty('--shine-y', sy + '%');
+            shine.style.opacity = '1';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.45s ease, box-shadow 0.3s ease, border-color 0.3s ease';
+            card.style.transform  = '';
+            shine.style.opacity   = '0';
+        });
+    });
+}
+
+function initMagneticButtons() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const buttons = document.querySelectorAll(
+        '.hero-actions .btn-primary, .hero-actions .btn-secondary, .hero-actions .btn-ghost'
+    );
+
+    buttons.forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+            const rect = btn.getBoundingClientRect();
+            const cx = rect.left + rect.width  / 2;
+            const cy = rect.top  + rect.height / 2;
+            const dx = (e.clientX - cx) * 0.22;
+            const dy = (e.clientY - cy) * 0.22;
+            btn.style.transform = `translate(${dx}px, ${dy}px)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+        });
+    });
+}
+
+function initKeyboardShortcuts() {
+    const SECTIONS = {
+        '1': 'hero', '2': 'career',   '3': 'skills',    '4': 'experience',
+        '5': 'projects', '6': 'projects2', '7': 'education', '8': 'contact',
+    };
+
+    const SECTION_NAMES = {
+        '1': 'Home', '2': 'About', '3': 'Skills', '4': 'Experience',
+        '5': 'Projects', '6': 'Featured', '7': 'Education', '8': 'Contact',
+    };
+
+    // --- Modal ---
+    const backdrop = document.createElement('div');
+    backdrop.id = 'shortcuts-backdrop';
+    backdrop.setAttribute('role', 'dialog');
+    backdrop.setAttribute('aria-modal', 'true');
+    backdrop.setAttribute('aria-label', 'Keyboard shortcuts');
+    backdrop.innerHTML = `
+        <div id="shortcuts-panel">
+            <div class="shortcuts-header">
+                <span class="shortcuts-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+                    Keyboard Shortcuts
+                </span>
+                <button class="shortcuts-close" aria-label="Close">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="shortcuts-body">
+                <div class="shortcuts-group">
+                    <div class="shortcuts-group-label">Navigate</div>
+                    ${Object.entries(SECTION_NAMES).map(([k, v]) => `
+                    <div class="shortcut-row"><kbd>${k}</kbd><span>${v}</span></div>`).join('')}
+                </div>
+                <div class="shortcuts-group">
+                    <div class="shortcuts-group-label">Actions</div>
+                    <div class="shortcut-row"><kbd>T</kbd><span>Toggle theme</span></div>
+                    <div class="shortcut-row"><kbd>C</kbd><span>Copy email</span></div>
+                    <div class="shortcut-row"><kbd>R</kbd><span>Open resume</span></div>
+                    <div class="shortcut-row"><kbd>?</kbd><span>Toggle this panel</span></div>
+                    <div class="shortcut-row"><kbd>Esc</kbd><span>Close panel</span></div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    // --- Hint pill ---
+    const hint = document.createElement('div');
+    hint.className = 'shortcuts-hint';
+    hint.innerHTML = `<kbd>?</kbd> for shortcuts`;
+    document.body.appendChild(hint);
+
+    try {
+        if (!localStorage.getItem('shortcuts_hint_shown')) {
+            setTimeout(() => {
+                hint.classList.add('shortcuts-hint--visible');
+                setTimeout(() => hint.classList.remove('shortcuts-hint--visible'), 3500);
+            }, 2500);
+            localStorage.setItem('shortcuts_hint_shown', '1');
+        }
+    } catch (_) {}
+
+    const openPanel  = () => { backdrop.classList.add('shortcuts--open'); backdrop.querySelector('.shortcuts-close').focus(); };
+    const closePanel = () => backdrop.classList.remove('shortcuts--open');
+
+    backdrop.querySelector('.shortcuts-close').addEventListener('click', closePanel);
+    backdrop.addEventListener('click', e => { if (e.target === backdrop) closePanel(); });
+
+    document.addEventListener('keydown', e => {
+        if (e.target.matches('input, textarea, [contenteditable]')) return;
+        if (e.altKey || e.ctrlKey || e.metaKey) return;
+
+        const isOpen = backdrop.classList.contains('shortcuts--open');
+
+        if (e.key === 'Escape' && isOpen) { closePanel(); return; }
+        if (e.key === '?') { e.preventDefault(); isOpen ? closePanel() : openPanel(); return; }
+
+        if (isOpen) return; // don't fire shortcuts while panel is open
+
+        switch (e.key.toLowerCase()) {
+            case 't':
+                document.querySelector('custom-navbar')?.shadowRoot?.getElementById('theme-toggle')?.click();
+                break;
+            case 'c':
+                document.getElementById('copy-email-btn')?.click();
+                break;
+            case 'r':
+                window.open('https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_FullStack_Developer_CV.pdf', '_blank', 'noopener');
+                break;
+            default:
+                if (SECTIONS[e.key]) {
+                    document.getElementById(SECTIONS[e.key])?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+        }
+    });
 }
 
 /**
