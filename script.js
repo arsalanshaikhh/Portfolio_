@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     refreshFeatherIcons();
     initSmoothScroll();
     initScrollAnimations();
+    initAOS();
     initScrollProgress();
     initFormHandler();
     initResumeDropdown();
@@ -677,4 +678,15 @@ function getSafeUrl(value, fallback) {
     } catch {
         return fallback;
     }
+}
+
+function initAOS() {
+    if (typeof AOS === 'undefined') return;
+    AOS.init({
+        duration: 600,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 60,
+        delay: 0,
+    });
 }
