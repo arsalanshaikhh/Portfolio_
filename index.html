@@ -79,8 +79,14 @@
 <body class="site-shell text-gray-100 min-h-screen page-loading">
     <div id="cursor-dot" aria-hidden="true"></div>
     <div id="cursor-ring" aria-hidden="true"></div>
-    <div id="landing-loader" class="landing-loader" aria-live="polite" aria-label="Loading landing page">
-        <div class="landing-loader__spinner"></div>
+    <div id="landing-loader" class="landing-loader" aria-live="polite" aria-label="Loading portfolio">
+        <div class="loader-inner">
+            <div class="loader-logo">AS</div>
+            <div class="loader-bar">
+                <div class="loader-bar__fill"></div>
+            </div>
+            <p class="loader-hint">Loading portfolio…</p>
+        </div>
     </div>
     <!-- ===== Navigation ===== -->
     <custom-navbar></custom-navbar>
