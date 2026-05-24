@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initStatsCounter();
     initGitHubStars();
     initSectionReveal();
+    initHeroParticles();
 });
 
 window.addEventListener('load', function() {
@@ -215,6 +216,115 @@ function initSectionReveal() {
     }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
 
     elements.forEach(el => observer.observe(el));
+}
+
+function initHeroParticles() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const canvas = document.getElementById('hero-particles');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const hero = document.getElementById('hero');
+
+    // Brand colors as [r, g, b] for rgba() usage
+    const PALETTE = [
+        [56,  189, 248],  // #38bdf8 primary sky
+        [45,  212, 191],  // #2dd4bf secondary teal
+        [129, 140, 248],  // #818cf8 indigo accent
+    ];
+
+    const COUNT = window.innerWidth < 768 ? 38 : 72;
+    const CONNECT_DIST = 110;
+
+    let particles = [];
+    let mouse = { x: -9999, y: -9999 };
+    let rafId;
+
+    function resize() {
+        canvas.width  = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+    }
+
+    function mkParticle() {
+        const depth = Math.random();
+        const [r, g, b] = PALETTE[Math.floor(Math.random() * PALETTE.length)];
+        return {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r, g, b,
+            radius:  0.5 + depth * 2.0,
+            opacity: 0.06 + depth * 0.30,
+            vx: (Math.random() - 0.5) * (0.08 + depth * 0.20),
+            vy: (Math.random() - 0.5) * (0.08 + depth * 0.20),
+            depth,
+        };
+    }
+
+    function tick() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const mx = (mouse.x - canvas.width  / 2) / canvas.width;
+        const my = (mouse.y - canvas.height / 2) / canvas.height;
+
+        // connections behind dots
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < CONNECT_DIST) {
+                    const a = (1 - dist / CONNECT_DIST) * 0.07;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(56,189,248,${a})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        particles.forEach(p => {
+            // parallax: nearer particles shift more with mouse
+            const px = p.x + mx * p.depth * 18;
+            const py = p.y + my * p.depth * 18;
+
+            ctx.beginPath();
+            ctx.arc(px, py, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${p.opacity})`;
+            ctx.fill();
+
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // wrap with small padding so particles don't pop into view
+            const pad = 5;
+            if (p.x < -pad) p.x = canvas.width  + pad;
+            else if (p.x > canvas.width  + pad) p.x = -pad;
+            if (p.y < -pad) p.y = canvas.height + pad;
+            else if (p.y > canvas.height + pad) p.y = -pad;
+        });
+
+        rafId = requestAnimationFrame(tick);
+    }
+
+    resize();
+    particles = Array.from({ length: COUNT }, mkParticle);
+    tick();
+
+    hero.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    });
+    hero.addEventListener('mouseleave', () => {
+        mouse.x = -9999;
+        mouse.y = -9999;
+    });
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(hero);
 }
 
 /**
