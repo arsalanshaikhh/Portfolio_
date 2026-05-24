@@ -9,13 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
     refreshFeatherIcons();
     initSmoothScroll();
     initScrollAnimations();
-    initAOS();
     initScrollProgress();
     initFormHandler();
     initResumeDropdown();
     initCardHoverEffects();
     initBlogModal();
 });
+
+window.addEventListener('load', function() {
+    initAOS();
+}, { once: true });
 
 function initLandingLoader() {
     const loader = document.getElementById('landing-loader');
