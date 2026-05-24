@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initAvailabilityBadge();
     initCopyEmail();
     initBackToTop();
+    initStatsCounter();
 });
 
 window.addEventListener('load', function() {
@@ -28,6 +29,39 @@ window.addEventListener('load', function() {
     if (window.feather) feather.replace({ width: 18, height: 18, 'stroke-width': 1.8 });
     if (typeof AOS !== 'undefined') AOS.refresh();
 }, { once: true });
+
+function initStatsCounter() {
+    const stats = document.querySelectorAll('[data-stat-target]');
+    if (!stats.length) return;
+
+    const animateStat = (el) => {
+        const target = parseInt(el.dataset.statTarget, 10);
+        const suffix = el.dataset.statSuffix || '';
+        const duration = 1200;
+        const start = performance.now();
+
+        const step = (now) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+        };
+
+        requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStat(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    stats.forEach(el => observer.observe(el));
+}
 
 function initLandingLoader() {
     const loader = document.getElementById('landing-loader');
