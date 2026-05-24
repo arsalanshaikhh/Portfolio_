@@ -58,7 +58,7 @@ class CustomFooter extends HTMLElement {
                         <h3>About Arsalan</h3>
                         <p>AI-driven Full Stack Developer specializing in modern web technologies and AI-assisted development workflows. Building scalable digital solutions with cutting-edge technologies.</p>
                         <div class="social-links">
-                            <a href="https://linkedin.com/in/iarsalanshaikh" title="LinkedIn" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                            <a href="https://linkedin.com/in/arsalan-shaikh" title="LinkedIn" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
                                 <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                             </a>
                             <a href="https://github.com/arsalanshaikhh" title="GitHub" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">

@@ -404,21 +404,23 @@ window.portfolioUtils = {
 };
 
 // ===== Blog Modal Functionality =====
+let blogIsLoading = false;
+
 function initBlogModal() {
     const blogBtn = document.getElementById('read-blogs-btn');
     const modal = document.getElementById('blog-modal');
     const closeBtn = document.getElementById('close-modal-btn');
     let lastFocusedElement = null;
-    
+
     if (!blogBtn || !modal) return;
-    
+
     // Open modal
     blogBtn.addEventListener('click', () => {
         lastFocusedElement = document.activeElement;
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         document.body.style.overflow = 'hidden';
-        fetchMediumArticles();
+        if (!blogIsLoading) fetchMediumArticles();
         refreshFeatherIcons();
         closeBtn?.focus();
     });
@@ -470,6 +472,7 @@ async function fetchMediumArticles() {
     const errorEl = document.getElementById('blog-error');
     const articlesEl = document.getElementById('blog-articles');
 
+    blogIsLoading = true;
     loadingEl.classList.remove('hidden');
     loadingEl.classList.add('flex');
     errorEl.classList.add('hidden');
@@ -563,6 +566,7 @@ async function fetchMediumArticles() {
         loadingEl.classList.add('hidden');
         loadingEl.classList.remove('flex');
         articlesEl.classList.remove('hidden');
+        blogIsLoading = false;
 
     } catch (error) {
         const cachedArticles = localStorage.getItem(CACHE_KEY);
@@ -572,6 +576,7 @@ async function fetchMediumArticles() {
                 loadingEl.classList.add('hidden');
                 loadingEl.classList.remove('flex');
                 articlesEl.classList.remove('hidden');
+                blogIsLoading = false;
                 return;
             } catch (e) { /* fall through to error state */ }
         }
@@ -579,6 +584,7 @@ async function fetchMediumArticles() {
         loadingEl.classList.remove('flex');
         errorEl.classList.remove('hidden');
         errorEl.classList.add('flex');
+        blogIsLoading = false;
         refreshFeatherIcons();
     }
 }
