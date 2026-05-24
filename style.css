@@ -600,15 +600,6 @@ textarea::placeholder {
     }
 }
 
-/* ===== Gradient Text ===== */
-/* Text with gradient background effect */
-.gradient-text {
-    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Sky to teal gradient */
-    -webkit-background-clip: text; /* For Safari */
-    -webkit-text-fill-color: transparent; /* For Safari */
-    background-clip: text; /* Standard property */
-}
-
 /* ===== Section Transitions ===== */
 /* Smooth transitions for section elements */
 section {
