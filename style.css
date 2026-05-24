@@ -197,6 +197,7 @@ body.page-loading {
         linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
     background-size: 60px 60px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
     pointer-events: none;
 }
@@ -547,9 +548,6 @@ body.loader-done .delay-3 { animation-delay: 0.42s; }
 body.loader-done .delay-4 { animation-delay: 0.58s; }
 body.loader-done .delay-5 { animation-delay: 0.74s; }
 
-/* Delayed orb float — second background orb */
-.orb-delay { animation-delay: 1s; }
-
 /* ===== Smooth Scroll ===== */
 /* Enables smooth scrolling behavior for anchor links */
 html {
@@ -846,6 +844,7 @@ a:hover [data-feather] {
     margin-left: auto;
     margin-right: auto;
     gap: 1rem;
+    justify-items: center;
 }
 
 .hero-actions > a,
