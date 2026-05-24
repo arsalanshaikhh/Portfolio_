@@ -1538,6 +1538,18 @@ section + section {
     70%  { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
     100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
+html.light .avail-dot--open {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5);
+    animation: avail-pulse-light 2s ease-in-out infinite;
+}
+html.light .avail-dot--busy {
+    background: #94a3b8;
+}
+@keyframes avail-pulse-light {
+    0%   { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+    70%  { box-shadow: 0 0 0 7px rgba(22, 163, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
 
 /* ===== Copy Email ===== */
 .copy-email-row {
@@ -1564,6 +1576,15 @@ section + section {
     background: var(--primary-dim);
 }
 .copy-btn svg { width: 13px; height: 13px; }
+html.light .copy-btn {
+    border-color: rgba(15, 23, 42, 0.15);
+    color: #64748b;
+}
+html.light .copy-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(8, 145, 178, 0.08);
+}
 
 .copy-toast {
     position: fixed;
@@ -1658,7 +1679,7 @@ html.light .scroll-tooltip {
 
 /* ===== GitHub Star Badge ===== */
 .star-badge {
-    display: inline-flex;
+    display: none;
     align-items: center;
     gap: 4px;
     font-size: 0.7rem;
