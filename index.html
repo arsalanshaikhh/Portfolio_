@@ -46,6 +46,17 @@
     }
     </script>
 
+    <!-- Theme FOUC prevention: runs synchronously before first paint -->
+    <script>
+        (function(){
+            try {
+                var t = localStorage.getItem('theme');
+                if (t === 'light') document.documentElement.classList.add('light');
+                else document.documentElement.classList.remove('light');
+            } catch(e) {}
+        })();
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/my-avatar.png">
     <link rel="apple-touch-icon" href="assets/my-avatar.png">
