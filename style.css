@@ -1692,3 +1692,17 @@ html.theme-transition *::after {
         box-shadow 0.3s ease !important;
     transition-delay: 0s !important;
 }
+
+/* ===== Section Reveal ===== */
+.reveal-ready {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.text-headline.reveal-ready {
+    transition-delay: 0.1s;
+}
+.reveal-done {
+    opacity: 1;
+    transform: translateY(0);
+}

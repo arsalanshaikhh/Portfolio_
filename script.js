@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initBackToTop();
     initStatsCounter();
     initGitHubStars();
+    initSectionReveal();
 });
 
 window.addEventListener('load', function() {
@@ -192,6 +193,28 @@ function initScrollAnimations() {
             observer.observe(el);
         }
     });
+}
+
+function initSectionReveal() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const elements = document.querySelectorAll(
+        'section:not(#hero) .section-eyebrow, section:not(#hero) .text-headline'
+    );
+    if (!elements.length) return;
+
+    elements.forEach(el => el.classList.add('reveal-ready'));
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-done');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
+
+    elements.forEach(el => observer.observe(el));
 }
 
 /**
