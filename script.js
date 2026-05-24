@@ -619,6 +619,12 @@ function parseRSSItems(items) {
     return parsed.filter(item => item.title && item.link);
 }
 
+function calcReadTime(content) {
+    const text = content ? content.replace(/<[^>]*>/g, '') : '';
+    const words = text.trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.round(words / 200));
+}
+
 // ===== Render Articles =====
 function renderArticles(articles) {
     const articlesEl = document.getElementById('blog-articles');
@@ -661,11 +667,9 @@ function renderArticles(articles) {
                     </p>
                     <div class="flex items-center justify-between mt-2 pt-2 border-t border-white/5">
                         <span class="text-xs text-gray-500">${formattedDate}</span>
-                        <span class="text-xs text-emerald-400 flex items-center gap-1">
-                            Read more
-                            <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
+                        <span class="text-xs text-[#2dd4bf] flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            ${calcReadTime(article.content)} min read
                         </span>
                     </div>
                 </div>
