@@ -1412,3 +1412,8 @@ body.cursor-hover #cursor-ring {
     width: 44px; height: 44px;
     border-color: rgba(45,212,191,0.4);
 }
+
+/* Section visual rhythm */
+section + section {
+    border-top: 1px solid rgba(255,255,255,0.03);
+}
