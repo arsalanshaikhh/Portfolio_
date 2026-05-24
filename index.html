@@ -787,59 +787,64 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 relative">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Get In Touch</h2>
-            <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
-                <div class="space-y-6">
-                    <div class="glass-card p-8">
-                        <h3 class="text-2xl font-semibold text-cyan-400 mb-6">Let's Connect</h3>
-                        <p class="text-gray-400 mb-6">I'm always interested in hearing about new opportunities and exciting projects. Feel free to reach out!</p>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center"><i data-feather="map-pin" class="w-5 h-5 text-cyan-400"></i></div>
-                                <span class="text-gray-300">Jalgaon, India</span>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-cyan-500/20 flex items-center justify-center"><i data-feather="phone" class="w-5 h-5 text-cyan-400"></i></div>
-                                <a href="tel:+919284799416" class="text-gray-300 hover:text-cyan-400 transition-colors">+91 92847 99416</a>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center"><i data-feather="mail" class="w-5 h-5 text-emerald-400"></i></div>
-                                <a href="mailto:arsalan.developer7@gmail.com" class="text-gray-300 hover:text-emerald-400 transition-colors">arsalan.developer7@gmail.com</a>
-                            </div>
+    <section id="contact" class="py-24 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <div class="text-center mb-14" data-aos="fade-up">
+                <div class="section-eyebrow justify-center">Let's talk</div>
+                <h2 class="text-headline gradient-text">Get In Touch</h2>
+                <p class="text-gray-400 mt-3 max-w-lg mx-auto text-sm">Open to full-time roles, freelance projects, and interesting collaborations.</p>
+            </div>
+
+            <div class="contact-layout" data-aos="fade-up" data-aos-delay="80">
+                <!-- Info column -->
+                <div class="contact-info">
+                    <div class="contact-info__item">
+                        <span class="contact-info__icon"><i data-feather="mail"></i></span>
+                        <div>
+                            <p class="contact-info__label">Email</p>
+                            <a href="mailto:arsalan.developer7@gmail.com" class="contact-info__value">arsalan.developer7@gmail.com</a>
                         </div>
-                        <div class="flex gap-4 mt-8">
-                            <a href="https://linkedin.com/in/iarsalanshaikh" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-sky-500 flex items-center justify-center hover:shadow-lg hover:shadow-cyan-500/25 transition-all hover:-translate-y-1"><i data-feather="linkedin" class="w-6 h-6 text-white"></i></a>
-                            <a href="https://github.com/arsalanshaikhh" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center hover:shadow-lg hover:shadow-slate-700/30 transition-all hover:-translate-y-1"><i data-feather="github" class="w-6 h-6 text-white"></i></a>
-                            <a href="mailto:arsalan.developer7@gmail.com" title="Email" aria-label="Email" class="w-12 h-12 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center hover:shadow-lg hover:shadow-emerald-500/25 transition-all hover:-translate-y-1"><i data-feather="send" class="w-6 h-6 text-white"></i></a>
-                            <a href="https://medium.com/@arsalan-shaikh" title="Medium" aria-label="Medium" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/25 transition-all hover:-translate-y-1"><i data-feather="book-open" class="w-6 h-6 text-white"></i></a>
+                    </div>
+                    <div class="contact-info__item">
+                        <span class="contact-info__icon"><i data-feather="map-pin"></i></span>
+                        <div>
+                            <p class="contact-info__label">Location</p>
+                            <p class="contact-info__value">India · Remote-friendly</p>
                         </div>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://linkedin.com/in/arsalan-shaikh" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                            <i data-feather="linkedin"></i>
+                        </a>
+                        <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                            <i data-feather="github"></i>
+                        </a>
+                        <a href="https://medium.com/@arsalan-shaikh" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Medium">
+                            <i data-feather="book-open"></i>
+                        </a>
                     </div>
                 </div>
 
-                <div class="glass-card p-8">
-                    <h3 class="text-2xl font-semibold text-emerald-400 mb-6">Send Message</h3>
-                    <form id="contact-form" class="space-y-5">
-                        <div>
-                            <label for="name" class="block text-gray-400 mb-2 text-sm">Name</label>
-                            <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg bg-slate-800/50 border border-gray-700 text-gray-300 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none transition-colors" placeholder="Your Name">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-gray-400 mb-2 text-sm">Email</label>
-                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-slate-800/50 border border-gray-700 text-gray-300 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none transition-colors" placeholder="your@email.com">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-gray-400 mb-2 text-sm">Message</label>
-                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-slate-800/50 border border-gray-700 text-gray-300 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none transition-colors resize-none" placeholder="Your message..."></textarea>
-                        </div>
-                        <button type="submit" class="w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
-                            <i data-feather="send" class="w-5 h-5"></i>
-                            Compose Email
-                        </button>
-                        <p id="form-status" class="text-sm text-gray-400" aria-live="polite">This opens your email app with the message prefilled.</p>
-                    </form>
-                </div>
+                <!-- Form column -->
+                <form id="contact-form" class="contact-form glass-card p-6">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" name="name" required class="form-input" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" required class="form-input" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" name="message" rows="4" required class="form-input form-textarea" placeholder="Your message..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full justify-center">
+                        <i data-feather="send"></i>
+                        Send Message
+                    </button>
+                    <p id="form-status" class="text-sm text-gray-400 mt-3 text-center" aria-live="polite">Opens your email app with the message prefilled.</p>
+                </form>
             </div>
         </div>
     </section>
