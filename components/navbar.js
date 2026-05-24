@@ -161,10 +161,7 @@ class CustomNavbar extends HTMLElement {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) this.classList.add('scrolled');
             else this.classList.remove('scrolled');
-            this.updateActiveLink(navLinks);
         });
-
-        this.updateActiveLink(navLinks);
 
         // Load saved theme preference from localStorage
         const savedTheme = localStorage.getItem('theme');
@@ -174,46 +171,45 @@ class CustomNavbar extends HTMLElement {
         }
     }
 
-    updateActiveLink(navLinks) {
-        const sectionIds = Array.from(navLinks)
-            .map(link => link.getAttribute('href'))
-            .filter(href => href && href.length > 1);
-        let activeId = '#hero';
-        sectionIds.forEach((href) => {
-            const section = document.querySelector(href);
-            if (section && section.getBoundingClientRect().top <= 110) {
-                activeId = href;
-            }
-        });
-
-        navLinks.forEach((link) => {
-            link.classList.toggle('active', link.getAttribute('href') === activeId);
-        });
-    }
-
     _initScrollSpy() {
-        const sections = ['hero','career','skills','experience','projects','education','certifications','contact'];
+        const sections = ['hero','career','skills','experience','projects','projects2','education','contact'];
         const links = this.shadowRoot.querySelectorAll('nav a[href^="#"]');
 
+        let activeId = null;
+
         const setActive = (id) => {
+            activeId = id;
             links.forEach(link => {
                 const isActive = link.getAttribute('href') === `#${id}`;
                 link.classList.toggle('nav-link--active', isActive);
             });
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const clearIfStale = (id) => {
+            if (activeId === id) {
+                activeId = null;
+                links.forEach(link => link.classList.remove('nav-link--active'));
+            }
+        };
+
+        this._scrollSpyObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setActive(entry.target.id);
+                } else {
+                    clearIfStale(entry.target.id);
                 }
             });
         }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
 
         sections.forEach(id => {
             const el = document.getElementById(id);
-            if (el) observer.observe(el);
+            if (el) this._scrollSpyObserver.observe(el);
         });
+    }
+
+    disconnectedCallback() {
+        this._scrollSpyObserver?.disconnect();
     }
 }
 
