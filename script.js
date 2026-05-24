@@ -944,6 +944,10 @@ function initGitHubStars() {
 
     cards.forEach(async (card) => {
         const repo = card.dataset.github;
+
+        const githubLink = card.querySelector('a[aria-label="GitHub"]');
+        if (githubLink) githubLink.href = `https://github.com/${repo}`;
+
         const badge = card.querySelector('.star-badge');
         if (!badge) return;
 
