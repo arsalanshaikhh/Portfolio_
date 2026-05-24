@@ -123,12 +123,14 @@ class CustomNavbar extends HTMLElement {
         // Theme toggle functionality
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                // Toggle light/dark class on document element
+                document.documentElement.classList.add('theme-transition');
                 document.documentElement.classList.toggle('light');
-                // Also toggle on the navbar itself for styling
                 this.classList.toggle('light');
-                // Save preference to localStorage
                 localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+                clearTimeout(window._themeTransitionTimer);
+                window._themeTransitionTimer = setTimeout(() => {
+                    document.documentElement.classList.remove('theme-transition');
+                }, 350);
             });
         }
 
