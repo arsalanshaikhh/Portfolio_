@@ -1696,3 +1696,27 @@ html.light .scroll-tooltip {
     color: #334155;
     border-color: rgba(8, 145, 178, 0.3);
 }
+
+/* ===== GitHub Star Badge ===== */
+.star-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: var(--radius-full);
+    padding: 2px 8px;
+    margin-bottom: 0.5rem;
+    transition: var(--transition-fast);
+}
+.star-badge svg {
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+html.light .star-badge {
+    background: rgba(8, 145, 178, 0.06);
+    border-color: rgba(8, 145, 178, 0.2);
+}
