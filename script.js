@@ -6,6 +6,7 @@ const CONFIG = {
 
 document.addEventListener('DOMContentLoaded', function() {
     initLandingLoader();
+    initCustomCursor();
     refreshFeatherIcons();
     initSmoothScroll();
     initScrollAnimations();
@@ -712,6 +713,36 @@ function initTypewriter() {
         backDelay: 1800,
         loop: true,
         smartBackspace: true,
+    });
+}
+
+function initCustomCursor() {
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.transform = `translate(calc(-50% + ${mouseX}px), calc(-50% + ${mouseY}px))`;
+    });
+
+    const animateRing = () => {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        ring.style.transform = `translate(calc(-50% + ${ringX}px), calc(-50% + ${ringY}px))`;
+        requestAnimationFrame(animateRing);
+    };
+    animateRing();
+
+    const interactives = 'a, button, [role="button"], summary, .project-filter, .skill-tag';
+    document.querySelectorAll(interactives).forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
     });
 }
 
