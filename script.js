@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 window.addEventListener('load', function() {
     initAOS();
+    initTypewriter();
 }, { once: true });
 
 function initLandingLoader() {
@@ -691,5 +692,24 @@ function initAOS() {
         once: true,
         offset: 60,
         delay: 0,
+    });
+}
+
+function initTypewriter() {
+    const el = document.getElementById('typed-roles');
+    if (!el || typeof Typed === 'undefined') return;
+    new Typed('#typed-roles', {
+        strings: [
+            'Full-Stack Apps',
+            'AI-Powered Tools',
+            'React Interfaces',
+            'REST APIs',
+            'Cloud Solutions',
+        ],
+        typeSpeed: 55,
+        backSpeed: 30,
+        backDelay: 1800,
+        loop: true,
+        smartBackspace: true,
     });
 }

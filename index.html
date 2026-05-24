@@ -83,113 +83,92 @@
     <!-- ===== Navigation ===== -->
     <custom-navbar></custom-navbar>
  
-    <!-- ===== Hero Section - Centered ===== -->
-    <section id="hero" class="relative min-h-[92vh] lg:min-h-screen flex items-start justify-center overflow-visible pt-28 lg:pt-32 pb-16">
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-violet-500/10"></div>
-            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(156, 146, 172, 0.1)" stroke-width="1"/>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
-        </div>
-        
-        <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse orb-delay"></div>
-        
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-4xl mx-auto text-center space-y-8">
-                <div class="hero-stagger delay-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm backdrop-blur-sm">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
-                    </span>
-                    Available for opportunities
+    <!-- ===== Hero Section ===== -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
+    <!-- Background grid -->
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <!-- Glow orbs -->
+    <div class="hero-orb hero-orb--1" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb--2" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb--3" aria-hidden="true"></div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+
+            <!-- Eyebrow label -->
+            <div class="hero-stagger delay-0 section-eyebrow justify-center mb-6">
+                Available for opportunities
+            </div>
+
+            <!-- Name -->
+            <h1 class="hero-stagger delay-1 text-display gradient-text mb-4">
+                Arsalan Shaikh
+            </h1>
+
+            <!-- Typewriter role -->
+            <div class="hero-stagger delay-2 flex items-center justify-center gap-3 mb-6 text-xl sm:text-2xl text-gray-300 font-medium">
+                <span class="text-gray-500">I build</span>
+                <span id="typed-roles" class="text-primary font-semibold"></span>
+            </div>
+
+            <!-- Bio -->
+            <p class="hero-stagger delay-3 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed mb-10">
+                Full-stack developer with 3+ years crafting scalable applications, AI-powered tools, and seamless digital experiences.
+            </p>
+
+            <!-- Stats row -->
+            <div class="hero-stagger delay-4 grid grid-cols-3 gap-4 max-w-md mx-auto mb-10">
+                <div class="hero-stat">
+                    <span class="hero-stat__number">3+</span>
+                    <span class="hero-stat__label">Years</span>
                 </div>
-
-                <h1 class="hero-stagger delay-1 text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent leading-tight">
-                    Arsalan Shaikh
-                </h1>
-
-                <div class="hero-stagger delay-2 space-y-3">
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl text-gray-300 font-light">AI-Driven Full Stack Developer</h2>
-                    <h3 class="text-lg sm:text-xl lg:text-2xl text-violet-400 font-medium">AI Assisted Development Specialist</h3>
+                <div class="hero-stat">
+                    <span class="hero-stat__number">15+</span>
+                    <span class="hero-stat__label">Projects</span>
                 </div>
-
-                <p class="hero-stagger delay-3 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                    Building scalable digital products with AI-enhanced development workflows.
-                    Specializing in MERN stack, Django, and cutting-edge AI integration.
-                </p>
-
-                <div class="hero-stagger delay-4 flex flex-wrap justify-center gap-8 pt-4">
-                    <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-cyan-400">3+</div>
-                        <div class="text-sm text-gray-500">Years Experience</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-violet-400">15+</div>
-                        <div class="text-sm text-gray-500">Projects Completed</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl lg:text-4xl font-bold text-purple-400">10+</div>
-                        <div class="text-sm text-gray-500">Technologies</div>
-                    </div>
-                </div>
-
-                <div class="hero-stagger delay-5 hero-actions pt-6 pb-10">
-                    <a href="https://github.com/arsalanshaikhh" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold ring-2 ring-cyan-400/30 hover:ring-cyan-400/60 hover:shadow-lg hover:shadow-cyan-500/30 transform hover:-translate-y-1 transition-all duration-300">
-                        <i data-feather="github" class="w-5 h-5"></i>
-                        View GitHub
-                    </a>
-                    <a href="https://linkedin.com/in/iarsalanshaikh" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-violet-500 to-purple-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300">
-                        <i data-feather="linkedin" class="w-5 h-5"></i>
-                        Connect on LinkedIn
-                    </a>
-                    <button id="read-blogs-btn" class="group inline-flex items-center gap-2 px-7 py-3.5 border-2 border-teal-500/60 text-teal-400 rounded-xl font-semibold hover:bg-teal-500/10 hover:border-teal-400 transform hover:-translate-y-1 transition-all duration-300">
-                        <i data-feather="book-open" class="w-5 h-5"></i>
-                        Read My Blogs
-                    </button>
-                    <!-- Resume Dropdown -->
-                    <details class="resume-dropdown relative">
-                        <summary class="inline-flex items-center gap-2 px-7 py-3.5 border-2 border-gray-600 text-gray-300 rounded-xl font-semibold hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 cursor-pointer list-none">
-                            <i data-feather="download" class="w-5 h-5"></i>
-                            Download Resume
-                            <i data-feather="chevron-down" class="w-4 h-4"></i>
-                        </summary>
-                        <div id="resume-menu" class="resume-menu bg-slate-800 border border-gray-600 rounded-xl shadow-lg">
-                            <a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_FullStack_Developer_CV.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-4 hover:bg-slate-700/50 transition-colors rounded-t-xl">
-                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center">
-                                    <i data-feather="code" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-white font-semibold">Full Stack Developer</div>
-                                    <div class="text-gray-400 text-xs">MERN, Django, AI Integration</div>
-                                </div>
-                            </a>
-                            <a href="https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_Frontend_Developer_CV.pdf" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-4 hover:bg-slate-700/50 transition-colors rounded-b-xl">
-                                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 flex items-center justify-center">
-                                    <i data-feather="layout" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-white font-semibold">Frontend Developer</div>
-                                    <div class="text-gray-400 text-xs">React, UI/UX, Modern JS</div>
-                                </div>
-                            </a>
-                        </div>
-                    </details>
+                <div class="hero-stat">
+                    <span class="hero-stat__number">10+</span>
+                    <span class="hero-stat__label">Technologies</span>
                 </div>
             </div>
+
+            <!-- CTAs -->
+            <div class="hero-stagger delay-5 hero-actions flex flex-wrap items-center justify-center gap-4">
+                <button id="read-blogs-btn" class="btn-primary">
+                    <i data-feather="book-open"></i>
+                    Read Blogs
+                </button>
+                <a href="#contact" class="btn-secondary">
+                    <i data-feather="mail"></i>
+                    Contact Me
+                </a>
+                <details class="resume-dropdown relative" aria-label="Download resume">
+                    <summary class="btn-ghost list-none cursor-pointer">
+                        <i data-feather="download"></i>
+                        Resume
+                        <i data-feather="chevron-down" class="resume-chevron"></i>
+                    </summary>
+                    <div id="resume-menu" class="resume-menu">
+                        <a href="https://arsalan-cv.vercel.app/cv-pdf/full-stack-developer-resume.pdf" target="_blank" rel="noopener" class="resume-menu__item">
+                            <i data-feather="layers"></i> Full Stack
+                        </a>
+                        <a href="https://arsalan-cv.vercel.app/cv-pdf/front-end-developer-resume.pdf" target="_blank" rel="noopener" class="resume-menu__item">
+                            <i data-feather="monitor"></i> Frontend
+                        </a>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="hero-stagger delay-5 mt-16 flex justify-center">
+                <a href="#career" class="scroll-indicator" aria-label="Scroll down">
+                    <i data-feather="chevron-down"></i>
+                </a>
+            </div>
+
         </div>
-        
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#career" class="text-gray-500 hover:text-cyan-400 transition-colors">
-                <i data-feather="chevron-down" class="w-8 h-8"></i>
-            </a>
-        </div>
-    </section>
+    </div>
+</section>
 
      <!-- ===== Career Summary ===== -->
      <section id="career" class="py-20 relative">

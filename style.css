@@ -189,6 +189,196 @@ body.page-loading {
     box-shadow: 0 26px 55px rgba(2, 12, 20, 0.32); /* Increased shadow on hover */
 }
 
+/* ===== Hero ===== */
+.hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    pointer-events: none;
+}
+
+.hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: orb-pulse 8s ease-in-out infinite;
+}
+.hero-orb--1 {
+    width: 500px; height: 500px;
+    top: -10%; left: -5%;
+    background: radial-gradient(circle, rgba(56,189,248,0.12), transparent 70%);
+    animation-delay: 0s;
+}
+.hero-orb--2 {
+    width: 400px; height: 400px;
+    top: 20%; right: -5%;
+    background: radial-gradient(circle, rgba(45,212,191,0.10), transparent 70%);
+    animation-delay: -3s;
+}
+.hero-orb--3 {
+    width: 300px; height: 300px;
+    bottom: 10%; left: 30%;
+    background: radial-gradient(circle, rgba(139,92,246,0.08), transparent 70%);
+    animation-delay: -6s;
+}
+@keyframes orb-pulse {
+    0%, 100% { transform: scale(1) translate(0,0); opacity: 0.7; }
+    33%       { transform: scale(1.08) translate(15px, -10px); opacity: 1; }
+    66%       { transform: scale(0.95) translate(-10px, 12px); opacity: 0.8; }
+}
+
+/* Hero stat cards */
+.hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(8px);
+}
+.hero-stat__number {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hero-stat__label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; height: 40px;
+    border: 1px solid var(--surface-border);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    transition: var(--transition-base);
+    animation: bounce-y 2s ease-in-out infinite;
+}
+.scroll-indicator:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+@keyframes bounce-y {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(6px); }
+}
+
+/* Shared button system */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #071521;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-base);
+    text-decoration: none;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(56,189,248,0.35);
+}
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1.5px solid rgba(45,212,191,0.4);
+    cursor: pointer;
+    transition: var(--transition-base);
+    text-decoration: none;
+}
+.btn-secondary:hover {
+    background: rgba(45,212,191,0.08);
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+}
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--surface-border);
+    cursor: pointer;
+    transition: var(--transition-base);
+    text-decoration: none;
+}
+.btn-ghost:hover {
+    border-color: rgba(56,189,248,0.3);
+    color: var(--text-primary);
+}
+
+/* Resume dropdown */
+.resume-dropdown { position: relative; }
+.resume-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 160px;
+    background: #0b1d2e;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    z-index: 50;
+}
+.resume-menu__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+.resume-menu__item:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+}
+.resume-chevron {
+    width: 14px !important;
+    height: 14px !important;
+    transition: transform var(--transition-fast);
+}
+.resume-dropdown[open] .resume-chevron {
+    transform: rotate(180deg);
+}
+
 /* ===== Skill Chips ===== */
 /* Styling for skill badges displayed in the skills section */
 /* Uses cyan color scheme with hover effects */
