@@ -662,22 +662,6 @@ textarea::placeholder {
     color: #64748b; /* Gray placeholder text */
 }
 
-/* ===== Button Styles ===== */
-/* Primary button styling with gradient background */
-.btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Sky to teal gradient */
-    color: white;
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-/* Hover state for primary button */
-.btn-primary:hover {
-    transform: translateY(-2px); /* Lift effect */
-    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.28); /* Shadow on hover */
-}
 
 /* ===== Mobile Responsive ===== */
 /* Responsive adjustments for different screen sizes */
