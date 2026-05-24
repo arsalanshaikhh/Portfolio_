@@ -19,6 +19,7 @@ class CustomNavbar extends HTMLElement {
     connectedCallback() {
         this.render();
         this.initEventListeners();
+        this._initScrollSpy();
     }
 
     /**
@@ -44,6 +45,8 @@ class CustomNavbar extends HTMLElement {
                 .nav-links a.active { color: #38bdf8; }
                 .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(to right, #38bdf8, #2dd4bf); transition: width 0.3s ease; border-radius: 1px; }
                 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+                .nav-link--active { color: var(--primary, #38bdf8) !important; }
+                .nav-link--active::after { width: 100% !important; opacity: 1 !important; }
                 .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
                 .theme-toggle, .mobile-menu-button { width: 42px; height: 42px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #e2e8f0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
                 .theme-toggle:hover, .mobile-menu-button:hover { background: rgba(255, 255, 255, 0.15); transform: scale(1.05); }
@@ -185,6 +188,31 @@ class CustomNavbar extends HTMLElement {
 
         navLinks.forEach((link) => {
             link.classList.toggle('active', link.getAttribute('href') === activeId);
+        });
+    }
+
+    _initScrollSpy() {
+        const sections = ['hero','career','skills','experience','projects','education','certifications','contact'];
+        const links = this.shadowRoot.querySelectorAll('nav a[href^="#"]');
+
+        const setActive = (id) => {
+            links.forEach(link => {
+                const isActive = link.getAttribute('href') === `#${id}`;
+                link.classList.toggle('nav-link--active', isActive);
+            });
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActive(entry.target.id);
+                }
+            });
+        }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
         });
     }
 }
