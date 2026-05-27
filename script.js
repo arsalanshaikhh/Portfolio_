@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initProjectFilter();
     initAvailabilityBadge();
     initCopyEmail();
+    initFloatingResume();
     initFloatingContact();
     initBackToTop();
     initStatsCounter();
@@ -1446,18 +1447,18 @@ function showCopyToast(toast) {
     }, 2000);
 }
 
-function initFloatingContact() {
-    const container = document.getElementById('float-contact');
-    const toggle = document.getElementById('float-contact-toggle');
-    const menu = document.getElementById('float-contact-menu');
-    const items = container?.querySelectorAll('.float-contact__item');
+function initFloatingResume() {
+    const container = document.getElementById('float-resume');
+    const toggle = document.getElementById('float-resume-toggle');
+    const menu = document.getElementById('float-resume-menu');
+    const items = container?.querySelectorAll('.float-resume__item');
     if (!container || !toggle) return;
 
     let open = false;
 
     function openMenu() {
         open = true;
-        container.classList.add('float-contact--open');
+        container.classList.add('float-resume--open');
         toggle.setAttribute('aria-expanded', 'true');
         menu.setAttribute('aria-hidden', 'false');
         items.forEach((item, i) => { item.style.transitionDelay = `${i * 55}ms`; });
@@ -1465,7 +1466,7 @@ function initFloatingContact() {
 
     function closeMenu() {
         open = false;
-        container.classList.remove('float-contact--open');
+        container.classList.remove('float-resume--open');
         toggle.setAttribute('aria-expanded', 'false');
         menu.setAttribute('aria-hidden', 'true');
         items.forEach(item => { item.style.transitionDelay = '0ms'; });
@@ -1475,13 +1476,90 @@ function initFloatingContact() {
     document.addEventListener('click', e => { if (open && !container.contains(e.target)) closeMenu(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) closeMenu(); });
 
+    items.forEach(link => {
+        link.addEventListener('click', () => {
+            const variant = link.dataset.tooltip?.toLowerCase() === 'frontend' ? 'frontend' : 'fullstack';
+            trackResumeDownload(variant);
+            closeMenu();
+        });
+    });
+
+    // Hide when hero is visible — resume button already present in the hero CTA
+    const heroSection = document.getElementById('hero');
+    if (heroSection && 'IntersectionObserver' in window) {
+        new IntersectionObserver(([entry]) => {
+            container.classList.toggle('float-resume--hidden', entry.isIntersecting);
+            if (entry.isIntersecting) closeMenu();
+        }, { threshold: 0.1 }).observe(heroSection);
+    }
+}
+
+function initFloatingContact() {
+    const container = document.getElementById('float-contact');
+    const toggle = document.getElementById('float-contact-toggle');
+    const menu = document.getElementById('float-contact-menu');
+    const items = container?.querySelectorAll('.float-contact__item');
+    if (!container || !toggle) return;
+
+    const resumeEl = document.getElementById('float-resume');
+    let open = false;
+    let contactSectionVisible = false;
+
+    function isMobile() { return window.innerWidth <= 768; }
+
+    // Single source of truth for resume button's vertical position.
+    // Called on every contact state change so resume always sits correctly.
+    function syncResumeBottom() {
+        if (!resumeEl) return;
+        const mob = isMobile();
+        if (contactSectionVisible) {
+            // Contact button is hidden — resume slides down into its spot
+            resumeEl.style.bottom = mob ? '4.75rem' : '5.5rem';
+        } else if (open) {
+            // Contact menu is expanded (3 items: ~8.7rem) — push resume above them
+            // Contact top: 5.5rem+2.75rem=8.25rem, menu gap: 0.6rem, menu: 8.7rem → top ~17.55rem
+            resumeEl.style.bottom = mob ? '17.5rem' : '18.5rem';
+        } else {
+            // Default stacked position directly above the contact toggle
+            resumeEl.style.bottom = mob ? '8.25rem' : '9rem';
+        }
+    }
+
+    function openMenu() {
+        open = true;
+        container.classList.add('float-contact--open');
+        toggle.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        items.forEach((item, i) => { item.style.transitionDelay = `${i * 55}ms`; });
+        syncResumeBottom();
+    }
+
+    function closeMenu() {
+        open = false;
+        container.classList.remove('float-contact--open');
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        items.forEach(item => { item.style.transitionDelay = '0ms'; });
+        syncResumeBottom();
+    }
+
+    toggle.addEventListener('click', e => { e.stopPropagation(); open ? closeMenu() : openMenu(); });
+    document.addEventListener('click', e => { if (open && !container.contains(e.target)) closeMenu(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) closeMenu(); });
+
     const contactSection = document.getElementById('contact');
     if (contactSection && 'IntersectionObserver' in window) {
         new IntersectionObserver(([entry]) => {
+            contactSectionVisible = entry.isIntersecting;
             container.classList.toggle('float-contact--hidden', entry.isIntersecting);
+            // closeMenu sets open=false then calls syncResumeBottom with correct state
             if (entry.isIntersecting) closeMenu();
+            else syncResumeBottom(); // contact reappeared, restore resume to stacked position
         }, { threshold: 0.2 }).observe(contactSection);
     }
+
+    // Recalculate on resize so mobile/desktop breakpoint stays correct
+    window.addEventListener('resize', syncResumeBottom, { passive: true });
 }
 
 function initAvailabilityBadge() {

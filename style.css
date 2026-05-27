@@ -1712,10 +1712,6 @@ html.light .copy-btn:hover {
     bottom: 5.5rem;
     right: 2rem;
     z-index: 890;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .float-contact__toggle {
@@ -1730,8 +1726,6 @@ html.light .copy-btn:hover {
     cursor: pointer;
     box-shadow: var(--shadow-md);
     transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    position: relative;
-    z-index: 2;
 }
 .float-contact__toggle:hover {
     background: var(--primary-dim);
@@ -1743,6 +1737,9 @@ html.light .copy-btn:hover {
 }
 .float-contact__toggle svg { width: 17px; height: 17px; }
 .float-contact__menu {
+    position: absolute;
+    bottom: calc(100% + 0.6rem);
+    right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1816,6 +1813,120 @@ html.light .float-contact__item::before {
 @media (max-width: 768px) {
     .float-contact {
         bottom: 4.75rem;
+        right: 1.25rem;
+    }
+}
+
+/* ===== Floating Resume Button ===== */
+/* Sits directly above the floating contact toggle:
+   contact bottom = 5.5rem, toggle height = 2.75rem → top = 8.25rem, gap = 0.75rem → resume bottom = 9rem */
+.float-resume {
+    position: fixed;
+    bottom: 9rem;
+    right: 2rem;
+    z-index: 890;
+    transition: opacity 0.3s ease, transform 0.3s ease, bottom 0.3s ease;
+}
+.float-resume__toggle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(167,139,250,0.25);
+    background: var(--surface);
+    color: #a78bfa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.float-resume__toggle:hover {
+    background: rgba(167,139,250,0.12);
+    box-shadow: 0 6px 20px rgba(167,139,250,0.3);
+    transform: scale(1.08);
+}
+.float-resume--open .float-resume__toggle {
+    background: rgba(167,139,250,0.12);
+}
+.float-resume__toggle svg { width: 17px; height: 17px; }
+.float-resume__menu {
+    position: absolute;
+    bottom: calc(100% + 0.6rem);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    pointer-events: none;
+}
+.float-resume--open .float-resume__menu {
+    pointer-events: auto;
+}
+.float-resume__item {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid rgba(167,139,250,0.2);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    opacity: 0;
+    transform: scale(0.6) translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.float-resume__item svg { width: 15px; height: 15px; }
+.float-resume__item:hover {
+    background: rgba(167,139,250,0.12);
+    color: #a78bfa;
+    box-shadow: 0 4px 16px rgba(167,139,250,0.25);
+}
+.float-resume__item::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(6,15,26,0.92);
+    color: var(--text-primary);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    border: 1px solid var(--surface-border);
+}
+.float-resume__item:hover::before { opacity: 1; }
+.float-resume--open .float-resume__item {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.float-resume--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+}
+html.light .float-resume__toggle,
+html.light .float-resume__item {
+    background: rgba(255,255,255,0.88);
+    border-color: rgba(167,139,250,0.25);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+html.light .float-resume__item::before {
+    background: rgba(255,255,255,0.96);
+    color: #0f172a;
+    border-color: rgba(15,23,42,0.12);
+}
+@media (max-width: 768px) {
+    .float-resume {
+        /* contact mobile: 4.75rem + 2.75rem toggle + 0.75rem gap = 8.25rem */
+        bottom: 8.25rem;
         right: 1.25rem;
     }
 }
