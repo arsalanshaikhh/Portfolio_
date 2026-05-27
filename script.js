@@ -222,6 +222,13 @@ function initHeroParticles() {
     const canvas = document.getElementById('hero-particles');
     if (!canvas) return;
 
+    // Skip particles for users who prefer reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Skip particles on low-end devices (fewer than 4 logical cores)
+    const cores = navigator.hardwareConcurrency || 4;
+    if (cores < 4) return;
+
     const ctx = canvas.getContext('2d');
     const hero = document.getElementById('hero');
 
@@ -887,24 +894,36 @@ async function fetchMediumArticles() {
 
         // Method 1: Netlify serverless function (no CORS, most reliable)
         try {
-            const response = await fetch('/.netlify/functions/medium-feed');
-            if (response.ok) {
-                const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                const items = xml.querySelectorAll('item');
-                if (items.length > 0) articles = parseRSSItems(items);
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 8000);
+            try {
+                const response = await fetch('/.netlify/functions/medium-feed', { signal: ctrl.signal });
+                if (response.ok) {
+                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
+                    const items = xml.querySelectorAll('item');
+                    if (items.length > 0) articles = parseRSSItems(items);
+                }
+            } catch (e) { /* try next proxy */ } finally {
+                clearTimeout(timer);
             }
         } catch (e) { /* try next proxy */ }
 
         // Method 2: allorigins.win
         if (!articles || articles.length === 0) {
         try {
-            const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}&t=${Date.now()}`);
-            const data = await response.json();
-            if (data.contents) {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data.contents, 'text/xml');
-                const items = xml.querySelectorAll('item');
-                if (items.length > 0) articles = parseRSSItems(items);
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 8000);
+            try {
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}&t=${Date.now()}`, { signal: ctrl.signal });
+                const data = await response.json();
+                if (data.contents) {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data.contents, 'text/xml');
+                    const items = xml.querySelectorAll('item');
+                    if (items.length > 0) articles = parseRSSItems(items);
+                }
+            } catch (e) { /* try next proxy */ } finally {
+                clearTimeout(timer);
             }
         } catch (e) { /* try next proxy */ }
         }
@@ -912,10 +931,16 @@ async function fetchMediumArticles() {
         // Method 3: rss2json API
         if (!articles || articles.length === 0) {
             try {
-                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`);
-                const data = await response.json();
-                if (data.status === 'ok' && data.items?.length > 0) {
-                    articles = data.items.filter(item => item.title && item.link);
+                const ctrl = new AbortController();
+                const timer = setTimeout(() => ctrl.abort(), 8000);
+                try {
+                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`, { signal: ctrl.signal });
+                    const data = await response.json();
+                    if (data.status === 'ok' && data.items?.length > 0) {
+                        articles = data.items.filter(item => item.title && item.link);
+                    }
+                } catch (e) { /* try next proxy */ } finally {
+                    clearTimeout(timer);
                 }
             } catch (e) { /* try next proxy */ }
         }
@@ -923,11 +948,17 @@ async function fetchMediumArticles() {
         // Method 4: corsproxy.io
         if (!articles || articles.length === 0) {
             try {
-                const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(RSS_URL)}`);
-                if (response.ok) {
-                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                    const items = xml.querySelectorAll('item');
-                    if (items.length > 0) articles = parseRSSItems(items);
+                const ctrl = new AbortController();
+                const timer = setTimeout(() => ctrl.abort(), 8000);
+                try {
+                    const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(RSS_URL)}`, { signal: ctrl.signal });
+                    if (response.ok) {
+                        const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
+                        const items = xml.querySelectorAll('item');
+                        if (items.length > 0) articles = parseRSSItems(items);
+                    }
+                } catch (e) { /* try next proxy */ } finally {
+                    clearTimeout(timer);
                 }
             } catch (e) { /* try next proxy */ }
         }
@@ -935,11 +966,17 @@ async function fetchMediumArticles() {
         // Method 5: allorigins raw
         if (!articles || articles.length === 0) {
             try {
-                const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`);
-                if (response.ok) {
-                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                    const items = xml.querySelectorAll('item');
-                    if (items.length > 0) articles = parseRSSItems(items);
+                const ctrl = new AbortController();
+                const timer = setTimeout(() => ctrl.abort(), 8000);
+                try {
+                    const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`, { signal: ctrl.signal });
+                    if (response.ok) {
+                        const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
+                        const items = xml.querySelectorAll('item');
+                        if (items.length > 0) articles = parseRSSItems(items);
+                    }
+                } catch (e) { /* try next proxy */ } finally {
+                    clearTimeout(timer);
                 }
             } catch (e) { /* try next proxy */ }
         }
@@ -947,11 +984,17 @@ async function fetchMediumArticles() {
         // Method 6: codetabs proxy
         if (!articles || articles.length === 0) {
             try {
-                const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(RSS_URL)}`);
-                if (response.ok) {
-                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                    const items = xml.querySelectorAll('item');
-                    if (items.length > 0) articles = parseRSSItems(items);
+                const ctrl = new AbortController();
+                const timer = setTimeout(() => ctrl.abort(), 8000);
+                try {
+                    const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(RSS_URL)}`, { signal: ctrl.signal });
+                    if (response.ok) {
+                        const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
+                        const items = xml.querySelectorAll('item');
+                        if (items.length > 0) articles = parseRSSItems(items);
+                    }
+                } catch (e) { /* try next proxy */ } finally {
+                    clearTimeout(timer);
                 }
             } catch (e) { /* try next proxy */ }
         }
@@ -960,7 +1003,7 @@ async function fetchMediumArticles() {
             throw new Error('Unable to fetch articles from Medium');
         }
 
-        localStorage.setItem(CACHE_KEY, JSON.stringify(articles.slice(0, 12)));
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), articles: articles.slice(0, 12) }));
         renderArticles(articles);
 
         loadingEl.classList.add('hidden');
@@ -973,12 +1016,20 @@ async function fetchMediumArticles() {
         try { cachedArticles = localStorage.getItem(CACHE_KEY); } catch (_) {}
         if (cachedArticles) {
             try {
-                renderArticles(JSON.parse(cachedArticles));
-                loadingEl.classList.add('hidden');
-                loadingEl.classList.remove('flex');
-                articlesEl.classList.remove('hidden');
-                blogIsLoading = false;
-                return;
+                const cached = JSON.parse(cachedArticles);
+                // support both old format (plain array) and new format ({ts, articles})
+                const cacheAge = cached.ts ? Date.now() - cached.ts : Infinity;
+                const cacheArticles = cached.articles || cached; // fallback for old format
+                if (cacheAge < 86400000 && Array.isArray(cacheArticles) && cacheArticles.length > 0) {
+                    renderArticles(cacheArticles);
+                    loadingEl.classList.add('hidden');
+                    loadingEl.classList.remove('flex');
+                    articlesEl.classList.remove('hidden');
+                    blogIsLoading = false;
+                    return;
+                } else {
+                    throw new Error('Cache expired');
+                }
             } catch (e) { /* fall through to error state */ }
         }
         loadingEl.classList.add('hidden');
@@ -1120,6 +1171,7 @@ function initAOS() {
 function initTypewriter() {
     const el = document.getElementById('typed-roles');
     if (!el || typeof Typed === 'undefined') return;
+    const ariaEl = document.getElementById('typed-roles-aria');
     new Typed('#typed-roles', {
         strings: [
             'Full-Stack Apps',
@@ -1133,6 +1185,9 @@ function initTypewriter() {
         backDelay: 1800,
         loop: true,
         smartBackspace: true,
+        onStringTyped(arrayPos, self) {
+            if (ariaEl) ariaEl.textContent = self.strings[arrayPos];
+        },
     });
 }
 
