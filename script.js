@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initTiltCards();
     initMagneticButtons();
     initKeyboardShortcuts();
+    initCommandPalette();
 });
 
 window.addEventListener('load', function() {
@@ -98,6 +99,22 @@ function refreshFeatherIcons() {
     }
 }
 
+function trackResumeDownload(variant) {
+    try {
+        const body = new URLSearchParams({
+            'form-name': 'resume-downloads',
+            variant,
+            timestamp: new Date().toISOString()
+        }).toString();
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body,
+            keepalive: true
+        }).catch(() => {});
+    } catch (_) {}
+}
+
 function initResumeDropdown() {
     const dropdown = document.querySelector('.resume-dropdown');
     const toggle = dropdown?.querySelector('summary');
@@ -117,7 +134,11 @@ function initResumeDropdown() {
     });
 
     menu.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => setOpen(false));
+        link.addEventListener('click', () => {
+            setOpen(false);
+            const variant = link.textContent.trim().toLowerCase().includes('frontend') ? 'frontend' : 'fullstack';
+            trackResumeDownload(variant);
+        });
     });
 
     document.addEventListener('pointerdown', (event) => {
@@ -490,6 +511,145 @@ function initKeyboardShortcuts() {
     });
 }
 
+function initCommandPalette() {
+    const COMMANDS = [
+        { group: 'Navigate', label: 'Home',           icon: 'home',          action: () => scrollTo('hero') },
+        { group: 'Navigate', label: 'Skills',          icon: 'zap',           action: () => scrollTo('skills') },
+        { group: 'Navigate', label: 'Experience',      icon: 'briefcase',     action: () => scrollTo('experience') },
+        { group: 'Navigate', label: 'Projects',        icon: 'code',          action: () => scrollTo('projects') },
+        { group: 'Navigate', label: 'Featured Work',   icon: 'star',          action: () => scrollTo('projects2') },
+        { group: 'Navigate', label: 'Education',       icon: 'book-open',     action: () => scrollTo('education') },
+        { group: 'Navigate', label: 'Certifications',  icon: 'award',         action: () => scrollTo('certifications') },
+        { group: 'Navigate', label: 'Contact',         icon: 'mail',          action: () => scrollTo('contact') },
+        { group: 'Actions',  label: 'Toggle theme',    icon: 'sun',           action: () => document.querySelector('custom-navbar')?.shadowRoot?.getElementById('theme-toggle')?.click() },
+        { group: 'Actions',  label: 'Copy email',      icon: 'copy',          action: () => document.getElementById('copy-email-btn')?.click() },
+        { group: 'Actions',  label: 'Read blogs',      icon: 'rss',           action: () => document.getElementById('read-blogs-btn')?.click() },
+        { group: 'Actions',  label: 'Download CV',     icon: 'download',      action: () => window.open('https://arsalan-cv.vercel.app/cv-pdf/Arsalan_Shaikh_FullStack_Developer_CV.pdf', '_blank', 'noopener') },
+        { group: 'Actions',  label: 'GitHub profile',  icon: 'github',        action: () => window.open('https://github.com/arsalanshaikhh', '_blank', 'noopener') },
+        { group: 'Actions',  label: 'LinkedIn profile', icon: 'linkedin',     action: () => window.open('https://linkedin.com/in/arsalan-shaikh', '_blank', 'noopener') },
+    ];
+
+    function scrollTo(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+    function featherSvg(name) {
+        const icon = feather?.icons?.[name];
+        return icon ? icon.toSvg({ width: 15, height: 15, 'stroke-width': 2 }) : '';
+    }
+
+    // Build overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'cmd-palette';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Command palette');
+    overlay.innerHTML = `
+        <div id="cmd-palette-inner">
+            <div id="cmd-palette-search-row">
+                <span id="cmd-palette-search-icon"></span>
+                <input id="cmd-palette-input" type="text" placeholder="Search commands…" autocomplete="off" spellcheck="false" aria-label="Search commands">
+                <kbd id="cmd-palette-esc">esc</kbd>
+            </div>
+            <div id="cmd-palette-results" role="listbox" aria-label="Commands"></div>
+            <div id="cmd-palette-footer">
+                <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+                <span><kbd>↵</kbd> select</span>
+                <span><kbd>esc</kbd> close</span>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Render search icon via feather after icons are ready
+    setTimeout(() => {
+        const iconEl = document.getElementById('cmd-palette-search-icon');
+        if (iconEl) iconEl.innerHTML = featherSvg('search');
+    }, 500);
+
+    const input    = overlay.querySelector('#cmd-palette-input');
+    const results  = overlay.querySelector('#cmd-palette-results');
+    let activeIdx  = -1;
+    let filtered   = [];
+
+    function open() {
+        overlay.classList.add('cmd-palette--open');
+        input.value = '';
+        render('');
+        input.focus();
+    }
+
+    function close() {
+        overlay.classList.remove('cmd-palette--open');
+        activeIdx = -1;
+    }
+
+    function render(query) {
+        const q = query.toLowerCase().trim();
+        filtered = q ? COMMANDS.filter(c => c.label.toLowerCase().includes(q) || c.group.toLowerCase().includes(q)) : COMMANDS;
+        activeIdx = filtered.length ? 0 : -1;
+
+        if (!filtered.length) {
+            results.innerHTML = `<div class="cmd-palette-empty">No commands found</div>`;
+            return;
+        }
+
+        let html = '';
+        let lastGroup = '';
+        filtered.forEach((cmd, i) => {
+            if (cmd.group !== lastGroup) {
+                html += `<div class="cmd-palette-group">${cmd.group}</div>`;
+                lastGroup = cmd.group;
+            }
+            html += `<div class="cmd-palette-item${i === activeIdx ? ' cmd-palette-item--active' : ''}" role="option" aria-selected="${i === activeIdx}" data-idx="${i}">
+                <span class="cmd-palette-item__icon">${featherSvg(cmd.icon)}</span>
+                <span class="cmd-palette-item__label">${cmd.label}</span>
+            </div>`;
+        });
+        results.innerHTML = html;
+    }
+
+    function setActive(idx) {
+        activeIdx = Math.max(0, Math.min(filtered.length - 1, idx));
+        results.querySelectorAll('.cmd-palette-item').forEach((el, i) => {
+            el.classList.toggle('cmd-palette-item--active', i === activeIdx);
+            el.setAttribute('aria-selected', i === activeIdx);
+            if (i === activeIdx) el.scrollIntoView({ block: 'nearest' });
+        });
+    }
+
+    function execute(idx) {
+        if (filtered[idx]) { close(); filtered[idx].action(); }
+    }
+
+    input.addEventListener('input', () => render(input.value));
+
+    input.addEventListener('keydown', e => {
+        if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIdx + 1); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIdx - 1); }
+        else if (e.key === 'Enter') { e.preventDefault(); execute(activeIdx); }
+        else if (e.key === 'Escape') { e.preventDefault(); close(); }
+    });
+
+    results.addEventListener('click', e => {
+        const item = e.target.closest('.cmd-palette-item');
+        if (item) execute(Number(item.dataset.idx));
+    });
+
+    results.addEventListener('mouseover', e => {
+        const item = e.target.closest('.cmd-palette-item');
+        if (item) setActive(Number(item.dataset.idx));
+    });
+
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+
+    // Cmd+K / Ctrl+K
+    document.addEventListener('keydown', e => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            overlay.classList.contains('cmd-palette--open') ? close() : open();
+        }
+    });
+}
+
 /**
  * ===== Scroll Progress Bar =====
  * Creates and manages a visual progress bar indicating scroll position
@@ -812,6 +972,8 @@ window.portfolioUtils = {
 
 // ===== Blog Modal Functionality =====
 let blogIsLoading = false;
+let prefetchedArticles = null;
+let prefetchPromise = null;
 
 function initBlogModal() {
     const blogBtn = document.getElementById('read-blogs-btn');
@@ -820,6 +982,22 @@ function initBlogModal() {
     let lastFocusedElement = null;
 
     if (!blogBtn || !modal) return;
+
+    // Prefetch articles when the button scrolls into view (400px before)
+    const prefetchObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !prefetchedArticles && !prefetchPromise) {
+            prefetchObserver.disconnect();
+            prefetchPromise = loadArticlesFromNetwork()
+                .then(articles => {
+                    prefetchedArticles = articles;
+                    try {
+                        localStorage.setItem('medium-articles-cache-v1', JSON.stringify({ ts: Date.now(), articles: articles.slice(0, 12) }));
+                    } catch (_) {}
+                })
+                .catch(() => {});
+        }
+    }, { rootMargin: '400px' });
+    prefetchObserver.observe(blogBtn);
 
     // Open modal
     blogBtn.addEventListener('click', () => {
@@ -874,166 +1052,138 @@ function initBlogModal() {
 }
 
 // ===== Fetch Medium Articles via RSS =====
+// Pure data fetcher — no DOM interaction. Returns articles array or throws.
+async function loadArticlesFromNetwork() {
+    const RSS_URL = CONFIG.mediumFeedUrl;
+    let articles = null;
+
+    const tryFetch = async (url, parse) => {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 8000);
+        try {
+            const res = await fetch(url, { signal: ctrl.signal });
+            return await parse(res);
+        } catch (_) { return null; } finally { clearTimeout(timer); }
+    };
+
+    // Method 1: Netlify function
+    articles = await tryFetch('/.netlify/functions/medium-feed', async res => {
+        if (!res.ok) return null;
+        const xml = new DOMParser().parseFromString(await res.text(), 'text/xml');
+        const items = xml.querySelectorAll('item');
+        return items.length ? parseRSSItems(items) : null;
+    });
+
+    // Method 2: allorigins.win
+    if (!articles?.length) articles = await tryFetch(
+        `https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}&t=${Date.now()}`,
+        async res => {
+            const data = await res.json();
+            if (!data.contents) return null;
+            const xml = new DOMParser().parseFromString(data.contents, 'text/xml');
+            const items = xml.querySelectorAll('item');
+            return items.length ? parseRSSItems(items) : null;
+        }
+    );
+
+    // Method 3: rss2json
+    if (!articles?.length) articles = await tryFetch(
+        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`,
+        async res => {
+            const data = await res.json();
+            return data.status === 'ok' && data.items?.length ? data.items.filter(i => i.title && i.link) : null;
+        }
+    );
+
+    // Method 4: corsproxy.io
+    if (!articles?.length) articles = await tryFetch(
+        `https://corsproxy.io/?${encodeURIComponent(RSS_URL)}`,
+        async res => {
+            if (!res.ok) return null;
+            const xml = new DOMParser().parseFromString(await res.text(), 'text/xml');
+            const items = xml.querySelectorAll('item');
+            return items.length ? parseRSSItems(items) : null;
+        }
+    );
+
+    // Method 5: allorigins raw
+    if (!articles?.length) articles = await tryFetch(
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`,
+        async res => {
+            if (!res.ok) return null;
+            const xml = new DOMParser().parseFromString(await res.text(), 'text/xml');
+            const items = xml.querySelectorAll('item');
+            return items.length ? parseRSSItems(items) : null;
+        }
+    );
+
+    // Method 6: codetabs
+    if (!articles?.length) articles = await tryFetch(
+        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(RSS_URL)}`,
+        async res => {
+            if (!res.ok) return null;
+            const xml = new DOMParser().parseFromString(await res.text(), 'text/xml');
+            const items = xml.querySelectorAll('item');
+            return items.length ? parseRSSItems(items) : null;
+        }
+    );
+
+    if (!articles?.length) throw new Error('Unable to fetch articles from Medium');
+    return articles;
+}
+
 async function fetchMediumArticles() {
     const loadingEl = document.getElementById('blog-loading');
-    const errorEl = document.getElementById('blog-error');
+    const errorEl   = document.getElementById('blog-error');
     const articlesEl = document.getElementById('blog-articles');
+    const CACHE_KEY = 'medium-articles-cache-v1';
 
     blogIsLoading = true;
+
+    // Instant path — already prefetched in background
+    if (prefetchedArticles) {
+        renderArticles(prefetchedArticles);
+        loadingEl.classList.add('hidden');
+        articlesEl.classList.remove('hidden');
+        blogIsLoading = false;
+        return;
+    }
+
+    // Show skeleton while fetching
     loadingEl.classList.remove('hidden');
-    loadingEl.classList.add('flex');
     errorEl.classList.add('hidden');
     errorEl.classList.remove('flex');
     articlesEl.classList.add('hidden');
 
-    const RSS_URL = CONFIG.mediumFeedUrl;
-    const CACHE_KEY = 'medium-articles-cache-v1';
-
     try {
-        let articles = null;
-
-        // Method 1: Netlify serverless function (no CORS, most reliable)
+        // If prefetch is in-flight, wait for it; otherwise start fresh
+        const articles = await (prefetchPromise || loadArticlesFromNetwork());
+        prefetchedArticles = articles;
         try {
-            const ctrl = new AbortController();
-            const timer = setTimeout(() => ctrl.abort(), 8000);
-            try {
-                const response = await fetch('/.netlify/functions/medium-feed', { signal: ctrl.signal });
-                if (response.ok) {
-                    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                    const items = xml.querySelectorAll('item');
-                    if (items.length > 0) articles = parseRSSItems(items);
-                }
-            } catch (e) { /* try next proxy */ } finally {
-                clearTimeout(timer);
-            }
-        } catch (e) { /* try next proxy */ }
-
-        // Method 2: allorigins.win
-        if (!articles || articles.length === 0) {
-        try {
-            const ctrl = new AbortController();
-            const timer = setTimeout(() => ctrl.abort(), 8000);
-            try {
-                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(RSS_URL)}&t=${Date.now()}`, { signal: ctrl.signal });
-                const data = await response.json();
-                if (data.contents) {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data.contents, 'text/xml');
-                    const items = xml.querySelectorAll('item');
-                    if (items.length > 0) articles = parseRSSItems(items);
-                }
-            } catch (e) { /* try next proxy */ } finally {
-                clearTimeout(timer);
-            }
-        } catch (e) { /* try next proxy */ }
-        }
-
-        // Method 3: rss2json API
-        if (!articles || articles.length === 0) {
-            try {
-                const ctrl = new AbortController();
-                const timer = setTimeout(() => ctrl.abort(), 8000);
-                try {
-                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}&count=50`, { signal: ctrl.signal });
-                    const data = await response.json();
-                    if (data.status === 'ok' && data.items?.length > 0) {
-                        articles = data.items.filter(item => item.title && item.link);
-                    }
-                } catch (e) { /* try next proxy */ } finally {
-                    clearTimeout(timer);
-                }
-            } catch (e) { /* try next proxy */ }
-        }
-
-        // Method 4: corsproxy.io
-        if (!articles || articles.length === 0) {
-            try {
-                const ctrl = new AbortController();
-                const timer = setTimeout(() => ctrl.abort(), 8000);
-                try {
-                    const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(RSS_URL)}`, { signal: ctrl.signal });
-                    if (response.ok) {
-                        const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                        const items = xml.querySelectorAll('item');
-                        if (items.length > 0) articles = parseRSSItems(items);
-                    }
-                } catch (e) { /* try next proxy */ } finally {
-                    clearTimeout(timer);
-                }
-            } catch (e) { /* try next proxy */ }
-        }
-
-        // Method 5: allorigins raw
-        if (!articles || articles.length === 0) {
-            try {
-                const ctrl = new AbortController();
-                const timer = setTimeout(() => ctrl.abort(), 8000);
-                try {
-                    const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`, { signal: ctrl.signal });
-                    if (response.ok) {
-                        const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                        const items = xml.querySelectorAll('item');
-                        if (items.length > 0) articles = parseRSSItems(items);
-                    }
-                } catch (e) { /* try next proxy */ } finally {
-                    clearTimeout(timer);
-                }
-            } catch (e) { /* try next proxy */ }
-        }
-
-        // Method 6: codetabs proxy
-        if (!articles || articles.length === 0) {
-            try {
-                const ctrl = new AbortController();
-                const timer = setTimeout(() => ctrl.abort(), 8000);
-                try {
-                    const response = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(RSS_URL)}`, { signal: ctrl.signal });
-                    if (response.ok) {
-                        const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
-                        const items = xml.querySelectorAll('item');
-                        if (items.length > 0) articles = parseRSSItems(items);
-                    }
-                } catch (e) { /* try next proxy */ } finally {
-                    clearTimeout(timer);
-                }
-            } catch (e) { /* try next proxy */ }
-        }
-
-        if (!articles || articles.length === 0) {
-            throw new Error('Unable to fetch articles from Medium');
-        }
-
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), articles: articles.slice(0, 12) }));
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), articles: articles.slice(0, 12) }));
+        } catch (_) {}
         renderArticles(articles);
-
         loadingEl.classList.add('hidden');
-        loadingEl.classList.remove('flex');
         articlesEl.classList.remove('hidden');
         blogIsLoading = false;
-
     } catch (error) {
-        let cachedArticles = null;
-        try { cachedArticles = localStorage.getItem(CACHE_KEY); } catch (_) {}
-        if (cachedArticles) {
-            try {
-                const cached = JSON.parse(cachedArticles);
-                // support both old format (plain array) and new format ({ts, articles})
-                const cacheAge = cached.ts ? Date.now() - cached.ts : Infinity;
-                const cacheArticles = cached.articles || cached; // fallback for old format
-                if (cacheAge < 86400000 && Array.isArray(cacheArticles) && cacheArticles.length > 0) {
-                    renderArticles(cacheArticles);
+        // Fallback: localStorage cache
+        try {
+            const raw = localStorage.getItem(CACHE_KEY);
+            if (raw) {
+                const cached = JSON.parse(raw);
+                const age = cached.ts ? Date.now() - cached.ts : Infinity;
+                const arts = cached.articles || cached;
+                if (age < 86400000 && Array.isArray(arts) && arts.length) {
+                    renderArticles(arts);
                     loadingEl.classList.add('hidden');
-                    loadingEl.classList.remove('flex');
                     articlesEl.classList.remove('hidden');
                     blogIsLoading = false;
                     return;
-                } else {
-                    throw new Error('Cache expired');
                 }
-            } catch (e) { /* fall through to error state */ }
-        }
+            }
+        } catch (_) {}
         loadingEl.classList.add('hidden');
-        loadingEl.classList.remove('flex');
         errorEl.classList.remove('hidden');
         errorEl.classList.add('flex');
         blogIsLoading = false;

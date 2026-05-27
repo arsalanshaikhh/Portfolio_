@@ -73,7 +73,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/tailwind.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" defer></script>
     
     <!-- Components -->
@@ -137,10 +137,10 @@
             </p>
 
             <!-- Stats row -->
-            <div class="hero-stagger delay-4 grid grid-cols-3 gap-4 max-w-md mx-auto mb-10">
+            <div class="hero-stagger delay-4 hero-stats mb-10">
                 <div class="hero-stat">
                     <span class="hero-stat__number" data-stat-target="3" data-stat-suffix="+">3+</span>
-                    <span class="hero-stat__label">Years</span>
+                    <span class="hero-stat__label">Years Exp.</span>
                 </div>
                 <div class="hero-stat">
                     <span class="hero-stat__number" data-stat-target="15" data-stat-suffix="+">15+</span>
@@ -209,6 +209,8 @@
         </div>
     </section>
 
+<div class="section-divider" aria-hidden="true"></div>
+
 <section id="skills" class="py-24 relative">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-14" data-aos="fade-up">
@@ -276,8 +278,10 @@
                     <span>AI & ML</span>
                 </div>
                 <div class="skill-tags">
-                    <span class="skill-tag skill-tag--accent">Claude API</span>
-                    <span class="skill-tag skill-tag--accent">OpenAI</span>
+                    <span class="skill-tag skill-tag--accent">Claude Code</span>
+                    <span class="skill-tag skill-tag--accent">OpenAI Codex</span>
+                    <span class="skill-tag skill-tag--accent">Github Copilot</span>
+                    <span class="skill-tag skill-tag--accent">OpenAI Api</span>
                     <span class="skill-tag">LangChain</span>
                     <span class="skill-tag">LLM Integration</span>
                     <span class="skill-tag">Prompt Engineering</span>
@@ -320,6 +324,8 @@
         </div>
     </div>
 </section>
+
+<div class="section-divider" aria-hidden="true"></div>
 
 <section id="experience" class="py-24 relative">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
@@ -425,6 +431,8 @@
         </div>
     </div>
 </section>
+
+<div class="section-divider" aria-hidden="true"></div>
 
      <!-- ===== Projects Section ===== -->
 <section id="projects" class="py-24 relative">
@@ -586,6 +594,9 @@
         </div>
     </div>
 </section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
     <section id="projects2" class="py-24 relative">
         <div class="container mx-auto px-6">
             <div class="text-center mb-14" data-aos="fade-up">
@@ -667,6 +678,9 @@
             </div>
         </div>
     </section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
     <!-- Education -->
     <section id="education" class="py-24 relative">
         <div class="container mx-auto px-6">
@@ -721,6 +735,8 @@
             </div>
         </div>
     </section>
+
+<div class="section-divider" aria-hidden="true"></div>
 
     <!-- Certifications -->
     <section id="certifications" class="py-24 relative">
@@ -837,6 +853,8 @@
         </div>
     </section>
 
+<div class="section-divider" aria-hidden="true"></div>
+
     <!-- Contact Section -->
     <section id="contact" class="py-24 relative">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
@@ -936,13 +954,86 @@
             
             <!-- Modal Content -->
             <div id="blog-content" class="flex-1 overflow-y-auto p-6">
-                <!-- Loading State -->
-                <div id="blog-loading" class="flex flex-col items-center justify-center py-12">
-                    <svg class="animate-spin w-12 h-12 text-emerald-400 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <p class="text-gray-400">Fetching articles from Medium...</p>
+                <!-- Loading State — Skeleton Cards -->
+                <div id="blog-loading" class="hidden grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading articles" aria-busy="true">
+                    <div class="skeleton-card glass-card p-4 flex flex-col gap-3">
+                        <div class="skeleton skeleton--image"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="skeleton skeleton--line" style="width:90%"></div>
+                            <div class="skeleton skeleton--line" style="width:65%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:100%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:80%"></div>
+                            <div class="skeleton-footer">
+                                <div class="skeleton skeleton--pill"></div>
+                                <div class="skeleton skeleton--pill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card glass-card p-4 flex flex-col gap-3">
+                        <div class="skeleton skeleton--image"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="skeleton skeleton--line" style="width:85%"></div>
+                            <div class="skeleton skeleton--line" style="width:70%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:100%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:60%"></div>
+                            <div class="skeleton-footer">
+                                <div class="skeleton skeleton--pill"></div>
+                                <div class="skeleton skeleton--pill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card glass-card p-4 flex flex-col gap-3">
+                        <div class="skeleton skeleton--image"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="skeleton skeleton--line" style="width:75%"></div>
+                            <div class="skeleton skeleton--line" style="width:90%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:100%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:70%"></div>
+                            <div class="skeleton-footer">
+                                <div class="skeleton skeleton--pill"></div>
+                                <div class="skeleton skeleton--pill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card glass-card p-4 flex flex-col gap-3">
+                        <div class="skeleton skeleton--image"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="skeleton skeleton--line" style="width:80%"></div>
+                            <div class="skeleton skeleton--line" style="width:55%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:100%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:75%"></div>
+                            <div class="skeleton-footer">
+                                <div class="skeleton skeleton--pill"></div>
+                                <div class="skeleton skeleton--pill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card glass-card p-4 flex flex-col gap-3">
+                        <div class="skeleton skeleton--image"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="skeleton skeleton--line" style="width:95%"></div>
+                            <div class="skeleton skeleton--line" style="width:60%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:100%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:85%"></div>
+                            <div class="skeleton-footer">
+                                <div class="skeleton skeleton--pill"></div>
+                                <div class="skeleton skeleton--pill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card glass-card p-4 flex flex-col gap-3">
+                        <div class="skeleton skeleton--image"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="skeleton skeleton--line" style="width:70%"></div>
+                            <div class="skeleton skeleton--line" style="width:88%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:100%"></div>
+                            <div class="skeleton skeleton--line skeleton--line-sm" style="width:50%"></div>
+                            <div class="skeleton-footer">
+                                <div class="skeleton skeleton--pill"></div>
+                                <div class="skeleton skeleton--pill"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Error State -->
@@ -962,6 +1053,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Hidden form for resume download tracking via Netlify Forms -->
+    <form name="resume-downloads" data-netlify="true" style="display:none" aria-hidden="true">
+        <input type="hidden" name="form-name" value="resume-downloads">
+        <input type="hidden" name="variant" value="">
+        <input type="hidden" name="timestamp" value="">
+    </form>
 
     <!-- Footer -->
     <custom-footer></custom-footer>

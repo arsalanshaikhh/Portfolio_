@@ -3,3 +3,4 @@
 .kilo/kilo.json
 FRONTEND_UI_ANALYSIS_REPORT.md
 .env
+node_modules/
