@@ -598,45 +598,65 @@ function initFormHandler() {
             const name = (formData.get('name') || '').toString().trim();
             const email = (formData.get('email') || '').toString().trim();
             const message = (formData.get('message') || '').toString().trim();
-            const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
-            const body = encodeURIComponent([
-                `Name: ${name}`,
-                `Email: ${email}`,
-                '',
-                message
-            ].join('\n'));
-            
+
             submitButton.innerHTML = `
                 <svg class="animate-spin w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Opening Email...
+                Sending...
             `;
             submitButton.disabled = true;
 
-            window.location.href = `mailto:${CONFIG.email}?subject=${subject}&body=${body}`;
+            const body = new URLSearchParams({
+                'form-name': 'contact',
+                name,
+                email,
+                message
+            }).toString();
 
-            submitButton.innerHTML = `
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                Email Ready
-            `;
-            submitButton.classList.add('success');
-
-            if (status) {
-                status.textContent = `Your email app should open with the message prefilled. If it does not, email me directly at ${CONFIG.email}.`;
-                status.classList.add('text-emerald-400');
-                status.classList.remove('text-gray-400', 'text-red-400');
-            }
-
-            setTimeout(() => {
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body
+            })
+            .then(() => {
+                submitButton.innerHTML = `
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Message Sent!
+                `;
+                submitButton.classList.add('success');
+                if (status) {
+                    status.textContent = "Thanks! I'll get back to you within 24 hours.";
+                    status.classList.add('text-emerald-400');
+                    status.classList.remove('text-gray-400', 'text-red-400');
+                }
+                form.reset();
+                setTimeout(() => {
+                    submitButton.innerHTML = originalContent;
+                    submitButton.classList.remove('success');
+                    submitButton.disabled = false;
+                    refreshFeatherIcons();
+                    if (status) {
+                        status.textContent = "I'll get back to you within 24 hours.";
+                        status.classList.remove('text-emerald-400');
+                        status.classList.add('text-gray-400');
+                    }
+                }, 4000);
+            })
+            .catch(() => {
                 submitButton.innerHTML = originalContent;
                 submitButton.classList.remove('success');
                 submitButton.disabled = false;
                 refreshFeatherIcons();
-            }, 3000);
+                if (status) {
+                    status.textContent = `Something went wrong. Please email me directly at ${CONFIG.email}`;
+                    status.classList.add('text-red-400');
+                    status.classList.remove('text-gray-400', 'text-emerald-400');
+                }
+            });
         });
         
         // Real-time validation
