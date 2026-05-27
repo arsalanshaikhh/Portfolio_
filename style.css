@@ -1357,6 +1357,11 @@ html.light #blog-modal .border-t {
     background: var(--primary-dim);
 }
 .project-link svg { width: 14px; height: 14px; }
+.project-link[href="#"] {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
 .project-card__title {
     font-family: var(--font-display);
     font-size: 1rem;

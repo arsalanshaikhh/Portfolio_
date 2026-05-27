@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initCopyEmail();
     initBackToTop();
     initStatsCounter();
-    initGitHubStars();
     initSectionReveal();
     initHeroParticles();
     initTiltCards();
@@ -134,19 +133,15 @@ function initResumeDropdown() {
  */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        const targetId = anchor.getAttribute('href');
+        if (targetId === '#') return; // bare hash — no section; let browser/link handle it
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
             const target = document.querySelector(targetId);
-            
             if (target) {
                 const navbarHeight = 80;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
             }
         });
     });
@@ -1227,38 +1222,3 @@ function initAvailabilityBadge() {
     }
 }
 
-function initGitHubStars() {
-    const cards = document.querySelectorAll('[data-github]');
-    if (!cards.length) return;
-
-    const formatStars = (n) => {
-        if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-        return String(n);
-    };
-
-    cards.forEach(async (card) => {
-        const repo = card.dataset.github;
-
-        const githubLink = card.querySelector('a[aria-label="GitHub"]');
-        if (githubLink) githubLink.href = `https://github.com/${repo}`;
-
-        const badge = card.querySelector('.star-badge');
-        if (!badge) return;
-
-        try {
-            const res = await fetch(`https://api.github.com/repos/${repo}`, {
-                headers: { Accept: 'application/vnd.github.v3+json' },
-            });
-            if (!res.ok) return;
-            const data = await res.json();
-            const stars = data.stargazers_count;
-            badge.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                ${formatStars(stars)}
-            `;
-            badge.style.display = 'inline-flex';
-        } catch {
-            // Network error or private repo — badge stays hidden
-        }
-    });
-}
