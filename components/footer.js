@@ -50,6 +50,9 @@ class CustomFooter extends HTMLElement {
                 .footer-bottom p { margin: 0; }
                 .made-with { display: flex; align-items: center; gap: 0.5rem; }
                 @media (max-width: 768px) { .footer-bottom { flex-direction: column; text-align: center; } }
+                .footer-meta { margin-top: 1.25rem; text-align: center; }
+                .time-counter { font-size: 0.72rem; color: #475569; letter-spacing: 0.04em; font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+                :host-context(html.light) .time-counter { color: #94a3b8; }
             </style>
             <footer>
                 <div class="footer-content">
@@ -103,8 +106,33 @@ class CustomFooter extends HTMLElement {
                         <span>Built with code, coffee, and curiosity.</span>
                     </div>
                 </div>
+                <div class="footer-meta">
+                    <span id="time-on-page" class="time-counter"></span>
+                </div>
             </footer>
         `;
+        this._timerInterval = this.startTimer();
+    }
+
+    disconnectedCallback() {
+        clearInterval(this._timerInterval);
+    }
+
+    startTimer() {
+        const start = Date.now();
+        const el = this.shadowRoot.getElementById('time-on-page');
+        if (!el) return;
+
+        const fmt = (ms) => {
+            const total = Math.floor(ms / 1000);
+            const m = Math.floor(total / 60);
+            const s = total % 60;
+            return m > 0 ? `${m}m ${s}s` : `${total}s`;
+        };
+
+        const tick = () => { el.textContent = `You've been here ${fmt(Date.now() - start)}`; };
+        tick();
+        return setInterval(tick, 1000);
     }
 }
 
