@@ -1706,6 +1706,120 @@ html.light .copy-btn:hover {
     }
 }
 
+/* ===== Floating Contact Button ===== */
+.float-contact {
+    position: fixed;
+    bottom: 5.5rem;
+    right: 2rem;
+    z-index: 890;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.float-contact__toggle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--surface-border);
+    background: var(--surface);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 2;
+}
+.float-contact__toggle:hover {
+    background: var(--primary-dim);
+    box-shadow: 0 6px 20px rgba(56,189,248,0.3);
+    transform: scale(1.08);
+}
+.float-contact--open .float-contact__toggle {
+    background: var(--primary-dim);
+}
+.float-contact__toggle svg { width: 17px; height: 17px; }
+.float-contact__menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    pointer-events: none;
+}
+.float-contact--open .float-contact__menu {
+    pointer-events: auto;
+}
+.float-contact__item {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    opacity: 0;
+    transform: scale(0.6) translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.float-contact__item svg { width: 15px; height: 15px; }
+.float-contact__item:hover {
+    background: var(--primary-dim);
+    color: var(--primary);
+    box-shadow: 0 4px 16px rgba(56,189,248,0.25);
+}
+.float-contact__item::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(6,15,26,0.92);
+    color: var(--text-primary);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    border: 1px solid var(--surface-border);
+}
+.float-contact__item:hover::before { opacity: 1; }
+.float-contact--open .float-contact__item {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+.float-contact--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+}
+html.light .float-contact__toggle,
+html.light .float-contact__item {
+    background: rgba(255,255,255,0.88);
+    border-color: rgba(15,23,42,0.12);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+html.light .float-contact__item::before {
+    background: rgba(255,255,255,0.96);
+    color: #0f172a;
+    border-color: rgba(15,23,42,0.12);
+}
+@media (max-width: 768px) {
+    .float-contact {
+        bottom: 4.75rem;
+        right: 1.25rem;
+    }
+}
+
 /* ===== Scroll Progress Tooltip ===== */
 .scroll-tooltip {
     position: fixed;

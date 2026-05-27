@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initProjectFilter();
     initAvailabilityBadge();
     initCopyEmail();
+    initFloatingContact();
     initBackToTop();
     initStatsCounter();
     initSectionReveal();
@@ -1443,6 +1444,44 @@ function showCopyToast(toast) {
     toast._hideTimer = setTimeout(() => {
         toast.classList.remove('copy-toast--visible');
     }, 2000);
+}
+
+function initFloatingContact() {
+    const container = document.getElementById('float-contact');
+    const toggle = document.getElementById('float-contact-toggle');
+    const menu = document.getElementById('float-contact-menu');
+    const items = container?.querySelectorAll('.float-contact__item');
+    if (!container || !toggle) return;
+
+    let open = false;
+
+    function openMenu() {
+        open = true;
+        container.classList.add('float-contact--open');
+        toggle.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        items.forEach((item, i) => { item.style.transitionDelay = `${i * 55}ms`; });
+    }
+
+    function closeMenu() {
+        open = false;
+        container.classList.remove('float-contact--open');
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        items.forEach(item => { item.style.transitionDelay = '0ms'; });
+    }
+
+    toggle.addEventListener('click', e => { e.stopPropagation(); open ? closeMenu() : openMenu(); });
+    document.addEventListener('click', e => { if (open && !container.contains(e.target)) closeMenu(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) closeMenu(); });
+
+    const contactSection = document.getElementById('contact');
+    if (contactSection && 'IntersectionObserver' in window) {
+        new IntersectionObserver(([entry]) => {
+            container.classList.toggle('float-contact--hidden', entry.isIntersecting);
+            if (entry.isIntersecting) closeMenu();
+        }, { threshold: 0.2 }).observe(contactSection);
+    }
 }
 
 function initAvailabilityBadge() {
