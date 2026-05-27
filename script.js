@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initMagneticButtons();
     initKeyboardShortcuts();
     initCommandPalette();
+    initMatrixEasterEgg();
 });
 
 window.addEventListener('load', function() {
@@ -413,6 +414,81 @@ function initMagneticButtons() {
             btn.style.transform = '';
         });
     });
+}
+
+function initMatrixEasterEgg() {
+    const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/\\|{}[]';
+    const canvas = document.getElementById('matrix-canvas');
+    const toast  = document.getElementById('matrix-toast');
+    const ctx    = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+
+    let seq = [], running = false, animId = null;
+
+    function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function triggerRain() {
+        if (running) return;
+        running = true;
+        resize();
+        canvas.classList.add('matrix--active');
+
+        // "KONAMI UNLOCKED" flash
+        if (toast) {
+            toast.classList.add('matrix-toast--visible');
+            setTimeout(() => toast.classList.remove('matrix-toast--visible'), 1800);
+        }
+
+        const fontSize = 15;
+        const cols   = Math.floor(canvas.width / fontSize);
+        const drops  = Array.from({ length: cols }, () => Math.floor(Math.random() * -50));
+
+        function draw() {
+            // Semi-transparent black overlay creates the trailing fade
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+                const y = drops[i] * fontSize;
+
+                // Bright white head, green trail
+                ctx.fillStyle = drops[i] > 0 && Math.random() > 0.9 ? '#ffffff' : '#00ff41';
+                ctx.font = `${fontSize}px monospace`;
+                ctx.fillText(char, i * fontSize, y);
+
+                if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            animId = requestAnimationFrame(draw);
+        }
+
+        draw();
+
+        // Fade out after 4s, then clean up
+        setTimeout(() => {
+            canvas.classList.remove('matrix--active');
+            setTimeout(() => {
+                cancelAnimationFrame(animId);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                running = false;
+            }, 500);
+        }, 4000);
+    }
+
+    document.addEventListener('keydown', e => {
+        // Don't capture while typing in form fields
+        if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
+        seq.push(e.key);
+        if (seq.length > KONAMI.length) seq.shift();
+        if (seq.join(',') === KONAMI.join(',')) { seq = []; triggerRain(); }
+    });
+
+    window.addEventListener('resize', () => { if (running) resize(); }, { passive: true });
 }
 
 function initKeyboardShortcuts() {
