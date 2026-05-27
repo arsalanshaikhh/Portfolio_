@@ -595,8 +595,8 @@ function initFormHandler() {
             if (!submitButton) return;
             const originalContent = submitButton.innerHTML;
             const formData = new FormData(form);
-            const name = (formData.get('name') || '').toString().trim();
-            const email = (formData.get('email') || '').toString().trim();
+            const senderName = (formData.get('name') || '').toString().trim();
+            const senderEmail = (formData.get('email') || '').toString().trim();
             const message = (formData.get('message') || '').toString().trim();
 
             submitButton.innerHTML = `
@@ -608,57 +608,68 @@ function initFormHandler() {
             `;
             submitButton.disabled = true;
 
-            const body = new URLSearchParams({
-                'form-name': 'contact',
-                name,
-                email,
-                message
-            }).toString();
-
-            fetch('/', {
+            fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    access_key: (form.querySelector('input[name="access_key"]') || {}).value || '',
+                    name: senderName,
+                    email: senderEmail,
+                    message
+                })
             })
-            .then(() => {
-                submitButton.innerHTML = `
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Message Sent!
-                `;
-                submitButton.classList.add('success');
-                if (status) {
-                    status.textContent = "Thanks! I'll get back to you within 24 hours.";
-                    status.classList.add('text-emerald-400');
-                    status.classList.remove('text-gray-400', 'text-red-400');
-                }
-                form.reset();
-                setTimeout(() => {
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const successCard = document.getElementById('form-success');
+                    const successNameEl = document.getElementById('form-success-name');
+                    if (successNameEl) successNameEl.textContent = `Hi ${senderName}, thanks for reaching out!`;
+                    form.classList.add('hidden');
+                    if (successCard) {
+                        successCard.classList.remove('hidden');
+                        void successCard.offsetWidth;
+                        successCard.classList.add('form-success-card--visible');
+                    }
+                    form.reset();
                     submitButton.innerHTML = originalContent;
-                    submitButton.classList.remove('success');
                     submitButton.disabled = false;
                     refreshFeatherIcons();
-                    if (status) {
-                        status.textContent = "I'll get back to you within 24 hours.";
-                        status.classList.remove('text-emerald-400');
-                        status.classList.add('text-gray-400');
-                    }
-                }, 4000);
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
             })
-            .catch(() => {
+            .catch((err) => {
+                console.error('[Contact form error]', err);
                 submitButton.innerHTML = originalContent;
-                submitButton.classList.remove('success');
                 submitButton.disabled = false;
                 refreshFeatherIcons();
                 if (status) {
-                    status.textContent = `Something went wrong. Please email me directly at ${CONFIG.email}`;
+                    status.textContent = `Something went wrong. Email me directly at ${CONFIG.email}`;
                     status.classList.add('text-red-400');
                     status.classList.remove('text-gray-400', 'text-emerald-400');
                 }
             });
         });
         
+        // Reset button on success card
+        const resetBtn = document.getElementById('form-success-reset');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                const successCard = document.getElementById('form-success');
+                if (successCard) {
+                    successCard.classList.remove('form-success-card--visible');
+                    successCard.classList.add('hidden');
+                }
+                form.classList.remove('hidden');
+                if (status) {
+                    status.textContent = "I'll get back to you within 24 hours.";
+                    status.classList.remove('text-emerald-400', 'text-red-400');
+                    status.classList.add('text-gray-400');
+                }
+                refreshFeatherIcons();
+            });
+        }
+
         // Real-time validation
         const inputs = form.querySelectorAll('input, textarea');
         inputs.forEach(input => {
